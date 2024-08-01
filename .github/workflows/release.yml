@@ -5,7 +5,7 @@ name: Release build
 on:
   release:
     branches:
-      - 'main'
+      - 'master'
     types: [created]
 
 jobs:
@@ -54,10 +54,10 @@ jobs:
             exit 1
           fi
 
-      - name: Checkout to the [main]
+      - name: Checkout to the [master]
         run: |
-          if git branch -a | grep -qw "origin/main"; then
-            git checkout main
+          if git branch -a | grep -qw "origin/master"; then
+            git checkout master
           else
             echo "No known branch found!"
             exit 1
@@ -105,4 +105,4 @@ jobs:
           git add ./_run/values/ver.txt
 
           git commit -m "actions [$new_version] "$'\n'"Build: [${{ env.BUILD_VER }}] >> [$new_version]"
-          git push origin HEAD:main
+          git push origin HEAD:master
