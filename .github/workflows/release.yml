@@ -60,28 +60,27 @@ jobs:
       - name: Run build
         run: go build -o esptool
 
+      - name: Set [win] namespace
+        if: ${{ matrix.os == 'ubuntu-latest' }}
+        run: echo "FILE_EX=exe" | Out-File -FilePath $env:GITHUB_ENV -Append -Encoding utf8
+        shell: pwsh
 
+      - name: Set [linux] namespace
+        if: ${{ matrix.os == 'windows-latest' }}
+        run: echo "FILE_EX=bin" >> $GITHUB_ENV
 
-      - name: Save [linux] build
-        if: ${{ matrix.os != 'windows-latest' }}
+      - name: Set [mac] namespace
+        if: ${{ matrix.os == 'macos-latest' }}
+        run: echo "FILE_EX=app" >> $GITHUB_ENV
+
+      - name: Save build
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ github.event.release.upload_url }}
           asset_path: esptool
-          asset_name: "esptool.${{ env.BUILD_VER }}.${{ matrix.os }}.bin"
-          asset_content_type: application/octet-stream
-
-      - name: Save [win] build
-        if:  ${{ matrix.os == 'windows-latest' }}
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ github.event.release.upload_url }}
-          asset_path: esptool
-          asset_name: "esptool.${{ env.BUILD_VER }}.${{ matrix.os }}.exe"
+          asset_name: "esptool-cmd.${{ env.FILE_EX }}"
           asset_content_type: application/octet-stream
 
    ########################################################################################################################

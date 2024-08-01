@@ -3,10 +3,10 @@ package main
 const (
 	GlobalName       string = "EspToolMod"
 	GlobalDateUpdate string = "08-01-2024"
-	GlobalHash       string = "772adb259b9e6406a3172f3208733f275dcf73e6"
+	GlobalHash       string = "fdf94a3543a570b6f59e3bf6315c0c74ee94f09f"
 
-	GlobalVersion      string = "v0.6.1"
+	GlobalVersion      string = "v0.6.2"
 	GlobalVersionMajor string = "v0"
 	GlobalVersionMinor uint16 = 6
-	GlobalVersionPatch uint16 = 1
+	GlobalVersionPatch uint16 = 2
 )
