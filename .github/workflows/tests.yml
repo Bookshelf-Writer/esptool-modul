@@ -13,7 +13,6 @@ on:
       - 'const.go'
       - '**/*.txt'
       - '*.md'
-  release: null
 
 jobs:
   test:
