@@ -76,8 +76,7 @@ func (e *ESP32ROM) Connect(maxRetries uint) (err error) {
 		return
 	}
 
-	var bb []byte
-	_, err = e.SerialPort.Read(bb)
+	err = e.SerialPort.Flush()
 	if err != nil {
 		return
 	}
@@ -127,6 +126,7 @@ func (e *ESP32ROM) ExecuteCommand(command *common.Command, timeout time.Duration
 		return nil, err
 	}
 	for retryCount := 0; retryCount < 16; retryCount++ {
+
 		responseBuf, err := e.SlipReadWriter.Read(timeout)
 		if err != nil {
 			return nil, err
@@ -170,7 +170,14 @@ func (e *ESP32ROM) ChangeBaudrate(newBaudrate uint32) error {
 		return err
 	}
 
-	//todo перезапуск порта с новой скоростью
+	err = e.SerialPort.SetBaudrate(newBaudrate)
+	if err != nil {
+		return err
+	}
+
+	e.logger.Printf("Changed baudrate to %d", e.SerialPort.GetBaudrate())
+	time.Sleep(10 * time.Millisecond)
+	e.SerialPort.Flush() // get rid of crap sent during baud rate change
 	return nil
 }
 

@@ -1,33 +1,17 @@
 package serial
 
 import (
-	"github.com/jacobsa/go-serial/serial"
-	"io"
+	"go.bug.st/serial"
 	"time"
-)
-
-type StopBits byte
-
-const (
-	StopBitsOne StopBits = iota
-	StopBitsTwo
-)
-
-type Parity byte
-
-const (
-	ParityNone Parity = iota
-	ParityOdd
-	ParityEven
 )
 
 type Config struct {
 	PortName    string
 	BaudRate    uint32
 	ReadTimeout time.Duration
-	DataBits    uint
-	StopBits    StopBits
-	Parity      Parity
+	DataBits    int
+	StopBits    serial.StopBits
+	Parity      serial.Parity
 }
 
 func NewConfig(portName string, baudRate uint32) *Config {
@@ -36,32 +20,30 @@ func NewConfig(portName string, baudRate uint32) *Config {
 		BaudRate:    baudRate,
 		ReadTimeout: time.Millisecond,
 		DataBits:    8,
-		StopBits:    StopBitsOne,
-		Parity:      ParityNone,
+		StopBits:    serial.OneStopBit,
+		Parity:      serial.NoParity,
 	}
 }
 
 type Port struct {
-	port io.ReadWriteCloser
+	port serial.Port
+	mode *serial.Mode
 }
 
 func OpenPort(config *Config) (*Port, error) {
-	options := serial.OpenOptions{
-		PortName:              config.PortName,
-		BaudRate:              uint(config.BaudRate),
-		DataBits:              config.DataBits,
-		StopBits:              uint(config.StopBits),
-		ParityMode:            serial.ParityMode(config.Parity),
-		InterCharacterTimeout: uint(config.ReadTimeout.Milliseconds()),
-		MinimumReadSize:       1,
+	mode := &serial.Mode{
+		BaudRate: int(config.BaudRate),
+		DataBits: config.DataBits,
+		StopBits: config.StopBits,
+		Parity:   config.Parity,
 	}
 
-	port, err := serial.Open(options)
+	port, err := serial.Open(config.PortName, mode)
 	if err != nil {
 		return nil, err
 	}
 
-	return &Port{port: port}, nil
+	return &Port{port: port, mode: mode}, nil
 }
 
 func (p *Port) Close() error {
@@ -77,9 +59,35 @@ func (p *Port) Read(b []byte) (int, error) {
 }
 
 func (p *Port) SetDTR(dtr bool) error {
-	return nil
+	return p.port.SetDTR(dtr)
 }
 
 func (p *Port) SetRTS(rts bool) error {
-	return nil
+	return p.port.SetRTS(rts)
+}
+
+func (p *Port) SetReadTimeout(t time.Duration) error {
+	return p.port.SetReadTimeout(t)
+}
+
+func (p *Port) Flush() error {
+	err := p.port.ResetInputBuffer()
+	if err != nil {
+		return err
+	}
+
+	return p.port.ResetInputBuffer()
+}
+
+func (p *Port) SetBaudrate(newBaudrate uint32) error {
+	return p.port.SetMode(&serial.Mode{
+		BaudRate: int(newBaudrate),
+		DataBits: p.mode.DataBits,
+		StopBits: p.mode.StopBits,
+		Parity:   p.mode.Parity,
+	})
+}
+
+func (p *Port) GetBaudrate() int {
+	return p.mode.BaudRate
 }

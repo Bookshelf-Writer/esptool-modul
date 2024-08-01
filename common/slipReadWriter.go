@@ -2,19 +2,19 @@ package common
 
 import (
 	"bytes"
+	"esptool/common/serial"
 	"fmt"
-	"io"
 	"log"
 	"time"
 )
 
 type SlipReadWriter struct {
-	BaseReadWriter io.ReadWriter
+	BaseReadWriter *serial.Port
 	Timeout        time.Duration
 	logger         *log.Logger
 }
 
-func NewSlipReadWriter(base io.ReadWriter, logger *log.Logger) *SlipReadWriter {
+func NewSlipReadWriter(base *serial.Port, logger *log.Logger) *SlipReadWriter {
 	return &SlipReadWriter{
 		BaseReadWriter: base,
 		logger:         logger,
@@ -62,12 +62,18 @@ func (s *SlipReadWriter) Read(timeout time.Duration) ([]byte, error) {
 
 	result := make([]byte, 0)
 
+	err := s.BaseReadWriter.SetReadTimeout(timeout)
+	if err != nil {
+		return nil, err
+	}
+
 	for {
 		if time.Since(startTime) > timeout {
 			err := fmt.Errorf("Read timeout after %v. Received %d bytes", time.Since(startTime), len(result))
 			s.logger.Print(err)
 			return nil, err
 		}
+
 		n, err := s.BaseReadWriter.Read(byteBuf)
 		if err != nil {
 			if err.Error() == "EOF" {
