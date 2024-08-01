@@ -61,12 +61,12 @@ jobs:
         run: go build -o esptool
 
       - name: Set [win] namespace
-        if: ${{ matrix.os == 'ubuntu-latest' }}
+        if: ${{ matrix.os == 'windows-latest' }}
         run: echo "FILE_EX=exe" | Out-File -FilePath $env:GITHUB_ENV -Append -Encoding utf8
         shell: pwsh
 
       - name: Set [linux] namespace
-        if: ${{ matrix.os == 'windows-latest' }}
+        if: ${{ matrix.os == 'ubuntu-latest' }}
         run: echo "FILE_EX=bin" >> $GITHUB_ENV
 
       - name: Set [mac] namespace
