@@ -55,15 +55,6 @@ jobs:
             exit 1
           fi
 
-      - name: Checkout to the [master]
-        run: |
-          if git branch -a | grep -qw "origin/master"; then
-            git checkout master
-          else
-            echo "No known branch found!"
-            exit 1
-          fi
-
       ########################################################################################################################
 
       - name: Run build
