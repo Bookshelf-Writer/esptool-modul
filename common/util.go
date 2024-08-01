@@ -1,5 +1,7 @@
 package common
 
+//###########################################################//
+
 func Uint16ToBytes(value uint16) []byte {
 	return []byte{byte(value & 0xFF),
 		byte((value >> 8) & 0xFF)}
