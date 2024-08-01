@@ -2,11 +2,12 @@ package common
 
 import (
 	"bytes"
+	"esptool/common/code"
 )
 
 type Command struct {
 	Direction Direction
-	Opcode    Opcode
+	Opcode    code.OpType
 	Data      []byte
 	Checksum  []byte
 }
@@ -29,7 +30,7 @@ func (c *Command) ToBytes() []byte {
 	return b
 }
 
-func NewCommand(opcode Opcode, data []byte) *Command {
+func NewCommand(opcode code.OpType, data []byte) *Command {
 	return &Command{
 		Direction: DirectionRequest,
 		Opcode:    opcode,
@@ -40,7 +41,7 @@ func NewCommand(opcode Opcode, data []byte) *Command {
 
 func NewReadRegisterCommand(register uint32) *Command {
 	return NewCommand(
-		OpcodeReadReg,
+		code.OpReadRegister,
 		Uint32ToBytes(register),
 	)
 }
@@ -50,13 +51,13 @@ func NewSyncCommand() *Command {
 	payload = append(payload, bytes.Repeat([]byte{0x55}, 32)...)
 
 	return NewCommand(
-		OpcodeSync,
+		code.OpSync,
 		payload,
 	)
 }
 
 func NewAttachSpiFlashCommand() *Command {
-	return NewCommand(OpcodeSpiAttachFlash, make([]byte, 8))
+	return NewCommand(code.OpSpiAttachFlash, make([]byte, 8))
 }
 
 func NewReadFlashCommand(offset uint32, size uint32) *Command {
@@ -64,7 +65,7 @@ func NewReadFlashCommand(offset uint32, size uint32) *Command {
 	payload = append(payload, Uint32ToBytes(size)...)
 
 	return NewCommand(
-		OpcodeReadFlash,
+		code.OpReadFlash,
 		payload,
 	)
 }
@@ -74,7 +75,7 @@ func NewChangeBaudrateCommand(newBaudrate uint32, oldBaudrate uint32) *Command {
 	payload = append(payload, Uint32ToBytes(oldBaudrate)...)
 
 	return NewCommand(
-		OpcodeChangeBaudrate,
+		code.OpChangeBaudrate,
 		payload,
 	)
 }
@@ -85,7 +86,7 @@ func NewBeginFlashCommand(eraseSize uint32, numBlocks uint32, blockSize uint32, 
 	payload = append(payload, Uint32ToBytes(blockSize)...)
 	payload = append(payload, Uint32ToBytes(offset)...)
 
-	return NewCommand(OpcodeFlashBegin, payload)
+	return NewCommand(code.OpFlashBegin, payload)
 }
 
 func NewBeginFlashDeflCommand(eraseSize uint32, numBlocks uint32, blockSize uint32, offset uint32) *Command {
@@ -94,7 +95,7 @@ func NewBeginFlashDeflCommand(eraseSize uint32, numBlocks uint32, blockSize uint
 	payload = append(payload, Uint32ToBytes(blockSize)...)
 	payload = append(payload, Uint32ToBytes(offset)...)
 
-	return NewCommand(OpcodeFlashDeflBegin, payload)
+	return NewCommand(code.OpFlashDeflateBegin, payload)
 }
 
 func calculateChecksum(data []byte) []byte {
@@ -114,7 +115,7 @@ func NewFlashDataCommand(data []byte, sequence uint32) *Command {
 	payload = append(payload, Uint32ToBytes(0)...)
 	payload = append(payload, data...)
 
-	cmd := NewCommand(OpcodeFlashData, payload)
+	cmd := NewCommand(code.OpFlashData, payload)
 	cmd.Checksum = checksum
 
 	return cmd
@@ -128,7 +129,7 @@ func NewFlashDataDeflCommand(data []byte, sequence uint32) *Command {
 	payload = append(payload, Uint32ToBytes(0)...)
 	payload = append(payload, data...)
 
-	cmd := NewCommand(OpcodeFlashDeflData, payload)
+	cmd := NewCommand(code.OpFlashDeflateLData, payload)
 	cmd.Checksum = checksum
 
 	return cmd
@@ -140,7 +141,7 @@ func NewFlashEndCommand(reboot bool) *Command {
 		param = 1
 	}
 	return NewCommand(
-		OpcodeFlashEnd,
+		code.OpFlashEnd,
 		Uint32ToBytes(param),
 	)
 }

@@ -1,6 +1,7 @@
 package common
 
 import (
+	"esptool/common/code"
 	"fmt"
 )
 
@@ -11,12 +12,12 @@ const (
 
 type ResponseStatus struct {
 	Success   bool
-	ErrorCode ErrorCode
+	ErrorCode code.ErrType
 }
 
 type Response struct {
 	Direction Direction
-	Opcode    Opcode
+	Opcode    code.OpType
 	Size      uint16
 	Value     [4]byte
 	Data      []byte
@@ -33,7 +34,7 @@ func NewResponseStatus(data []byte) (*ResponseStatus, error) {
 	}
 	return &ResponseStatus{
 		Success:   data[0] == 0,
-		ErrorCode: ErrorCode(data[1]),
+		ErrorCode: code.ErrType(data[1]),
 	}, nil
 }
 
@@ -43,7 +44,7 @@ func NewResponse(data []byte) (*Response, error) {
 	}
 	response := &Response{
 		Direction: Direction(data[0]),
-		Opcode:    Opcode(data[1]),
+		Opcode:    code.OpType(data[1]),
 		Size:      BytesToUint16(data[2:4]),
 		Data:      data[8 : len(data)-1],
 	}
