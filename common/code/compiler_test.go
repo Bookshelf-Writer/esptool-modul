@@ -1,42 +1,39 @@
 package code
 
-import "testing"
+import (
+	"esptool/common/generator"
+	"testing"
+)
 
-func (obj *generatorObj) Build(t *testing.T) {
+func build(t *testing.T, obj *generator.GeneratorObj) {
 
 	obj.PrintLN("const (")
-	for _, code := range obj.val.list {
-		text := obj.val.maps[code]
+	for _, code := range obj.GetList() {
+		text := obj.GetText(code)
 
 		obj.Repeat(1).ConstCode(text).Print(" ").Type().Print(" = ").Byte(code).LN()
 
-		_, ok := obj.val.delim[code]
-		if ok {
-			obj.LN()
-		}
+		obj.SetDelim(code)
 	}
 	obj.PrintLN(")").LN()
 
 	//
 
 	obj.PrintLN("const (")
-	for _, code := range obj.val.list {
-		text := obj.val.maps[code]
+	for _, code := range obj.GetList() {
+		text := obj.GetText(code)
 
 		obj.Repeat(1).ConstText(text).Print(" = ").PrintString(text).LN()
 
-		_, ok := obj.val.delim[code]
-		if ok {
-			obj.LN()
-		}
+		obj.SetDelim(code)
 	}
 	obj.PrintLN(")").LN()
 
 	//
 
 	obj.Print("var ").Map().Print(" = map[").Type().PrintLN("]string{")
-	for _, code := range obj.val.list {
-		text := obj.val.maps[code]
+	for _, code := range obj.GetList() {
+		text := obj.GetText(code)
 
 		obj.Repeat(1).ConstCode(text).Print(": ").ConstText(text).PrintLN(",")
 	}
@@ -50,7 +47,7 @@ func (obj *generatorObj) Build(t *testing.T) {
 
 	//
 
-	err := obj.SaveFile()
+	err := obj.SaveFile("code")
 	if err != nil {
 		t.Fatal(err)
 	}
