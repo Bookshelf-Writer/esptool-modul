@@ -1,6 +1,6 @@
 module esptool
 
-go 1.15
+go 1.22
 
 require (
 	github.com/pkg/term v1.1.0
