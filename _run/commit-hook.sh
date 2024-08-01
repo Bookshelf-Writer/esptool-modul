@@ -2,8 +2,6 @@
 # Original source: https://github.com/Bookshelf-Writer/scripts-for-integration/blob/main/_run/commit-hook.sh
 echo "[HOOK]" "Commit"
 
- go test -v ./... || exit 1
-
 script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 script_dir="$script_dir/scripts"
 

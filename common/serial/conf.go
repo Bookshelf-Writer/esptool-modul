@@ -16,12 +16,12 @@ type ConfigObj struct {
 	Parity      serial.Parity
 }
 
-func NewConfig(portName string, baudRate uint32) *ConfigObj {
+func ConfigInit(portName string, baudRate uint32) *ConfigObj {
 	return &ConfigObj{
 		PortName:    portName,
 		BaudRate:    baudRate,
-		ReadTimeout: time.Millisecond,
-		DataBits:    8,
+		ReadTimeout: ReadTimeout,
+		DataBits:    DataBits,
 		StopBits:    serial.OneStopBit,
 		Parity:      serial.NoParity,
 	}
