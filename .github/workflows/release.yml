@@ -15,7 +15,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ ubuntu-latest, macos-latest, windows-latest, ubuntu-20.04, macos-12, windows-2019, windows-2022 ]
+        os: [ ubuntu-latest, macos-latest, windows-latest ]
         go-version: [1.22]
     permissions:
       contents: write
@@ -33,7 +33,7 @@ jobs:
       ########################################################################################################################
 
       - name: Load Info from Build
-        if: ${{ matrix.os != 'windows-latest' && matrix.os != 'windows-2022' && matrix.os != 'windows-2019' }}
+        if: ${{ matrix.os != 'windows-latest' }}
         run: |
           nameBuild=$(./_run/scripts/sys.sh -n)
           versionBuild=$(./_run/scripts/sys.sh -v)
@@ -45,7 +45,7 @@ jobs:
           echo "VER: $versionBuild"
 
       - name: Check Tag [linux]
-        if: ${{ matrix.os != 'windows-latest' && matrix.os != 'windows-2022' && matrix.os != 'windows-2019' }}
+        if: ${{ matrix.os != 'windows-latest'}}
         run: |
           if [[ "${{ github.event.release.tag_name }}" != "${{ env.BUILD_VER }}" ]]; then
             curl -X DELETE -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
@@ -56,7 +56,7 @@ jobs:
           fi
 
       - name: Check Tag [win]
-        if: ${{ matrix.os == 'windows-latest' || matrix.os == 'windows-2022' || matrix.os == 'windows-2019' }}
+        if: ${{ matrix.os == 'windows-latest'}}
         run: |
           if [[ "${{ github.event.release.tag_name }}" != "${{ env.BUILD_VER }}" ]]; then
             echo "::error ::Incorrect release tag. Should match the [${{ env.BUILD_VER }}]."
@@ -80,7 +80,7 @@ jobs:
 
 
       - name: Save [linux] build
-        if: ${{ matrix.os != 'windows-latest' && matrix.os != 'windows-2022' && matrix.os != 'windows-2019' }}
+        if: ${{ matrix.os != 'windows-latest' }}
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -91,7 +91,7 @@ jobs:
           asset_content_type: application/octet-stream
 
       - name: Save [win] build
-        if:  ${{ matrix.os == 'windows-latest' || matrix.os == 'windows-2022' || matrix.os == 'windows-2019' }}
+        if:  ${{ matrix.os == 'windows-latest' }}
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
