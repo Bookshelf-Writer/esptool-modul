@@ -9,12 +9,12 @@ import (
 )
 
 type SlipReadWriter struct {
-	BaseReadWriter *serial.Port
+	BaseReadWriter *serial.PortObj
 	Timeout        time.Duration
 	logger         *log.Logger
 }
 
-func NewSlipReadWriter(base *serial.Port, logger *log.Logger) *SlipReadWriter {
+func NewSlipReadWriter(base *serial.PortObj, logger *log.Logger) *SlipReadWriter {
 	return &SlipReadWriter{
 		BaseReadWriter: base,
 		logger:         logger,

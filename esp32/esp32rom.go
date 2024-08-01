@@ -26,7 +26,7 @@ var (
 )
 
 type ESP32ROM struct {
-	SerialPort     *serial.Port
+	SerialPort     *serial.PortObj
 	SlipReadWriter *common.SlipReadWriter
 	flashAttached  bool
 	logger         *log.Logger
@@ -34,7 +34,7 @@ type ESP32ROM struct {
 	defaultRetries int
 }
 
-func NewESP32ROM(serialPort *serial.Port, logger *log.Logger) *ESP32ROM {
+func NewESP32ROM(serialPort *serial.PortObj, logger *log.Logger) *ESP32ROM {
 	return &ESP32ROM{
 		SerialPort:     serialPort,
 		SlipReadWriter: common.NewSlipReadWriter(serialPort, logger),
