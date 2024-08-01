@@ -25,6 +25,7 @@ jobs:
       - name: Load Info from Build
         if: ${{ matrix.os == 'ubuntu-latest' }}
         run: |
+          ls -a
           nameBuild=$(./_run/scripts/sys.sh -n)
           versionBuild=$(./_run/scripts/sys.sh -v)
 
