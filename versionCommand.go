@@ -4,31 +4,27 @@ import (
 	"encoding/json"
 	"fmt"
 	"os"
-	"strings"
 )
 
 type VersionInfo struct {
 	Name        string
 	Description string
 	Version     string
-	Authors     []string
 }
 
 func GetVersionInfo() *VersionInfo {
 	return &VersionInfo{
 		Name:        "Esptool",
 		Description: "ESP32 flashing utility written in GoLang",
-		Version:     version,
-		Authors:     []string{"@fluepke"},
+		Version:     GlobalVersion,
 	}
 }
 
 func (v *VersionInfo) String() string {
-	return fmt.Sprintf("%s\n\n%s\nVersion: %s\nAuthors: %s",
+	return fmt.Sprintf("%s\n\n%s\nVersion: %s\n",
 		v.Name,
 		v.Description,
 		v.Version,
-		strings.Join(v.Authors, ", "),
 	)
 }
 

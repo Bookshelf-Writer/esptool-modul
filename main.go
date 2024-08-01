@@ -9,7 +9,6 @@ import (
 	"time"
 )
 
-const version string = "1.0"
 const defaultConnectBaudrate uint = 115200
 const defaultTransferBaudrate uint = 921600
 

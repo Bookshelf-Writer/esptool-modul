@@ -2,9 +2,9 @@ package esp32
 
 import (
 	"bytes"
+	"esptool/common"
+	"esptool/common/serial"
 	"fmt"
-	"github.com/fluepke/esptool/common"
-	"github.com/fluepke/esptool/common/serial"
 	"log"
 	"time"
 )

@@ -6,8 +6,8 @@
 ## Compilation
 
 ```bash
-go get github.com/fluepke/esptool
-cd ${GOPATH-$HOME/go}/src/github.com/fluepke/esptool
+go get esptool
+cd ${GOPATH-$HOME/go}/src/esptool
 go build
 ./esptool <args>
 ```

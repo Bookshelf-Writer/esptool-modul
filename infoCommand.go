@@ -2,8 +2,8 @@ package main
 
 import (
 	"encoding/json"
+	"esptool/esp32"
 	"fmt"
-	"github.com/fluepke/esptool/esp32"
 	"os"
 	"strconv"
 	"strings"

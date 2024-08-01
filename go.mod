@@ -1,4 +1,4 @@
-module github.com/fluepke/esptool
+module esptool
 
 go 1.15
 

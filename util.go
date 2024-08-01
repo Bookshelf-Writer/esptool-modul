@@ -1,9 +1,9 @@
 package main
 
 import (
+	"esptool/common/serial"
+	"esptool/esp32"
 	"fmt"
-	"github.com/fluepke/esptool/common/serial"
-	"github.com/fluepke/esptool/esp32"
 	"log"
 )
 
