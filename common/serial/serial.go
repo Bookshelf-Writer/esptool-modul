@@ -7,26 +7,30 @@ import (
 
 //###########################################################//
 
-type PortObj struct {
-	port serial.Port
-	mode *serial.Mode
+type PortBaudRateObj struct {
+	obj *PortObj
 }
 
-func OpenPort(config *ConfigObj) (*PortObj, error) {
-	mode := &serial.Mode{
-		BaudRate: int(config.BaudRate),
-		DataBits: config.DataBits,
-		StopBits: config.StopBits,
-		Parity:   config.Parity,
-	}
+type PortObj struct {
+	port serial.Port
+	conf *ConfigObj
 
-	port, err := serial.Open(config.PortName, mode)
+	BaudRate PortBaudRateObj
+}
+
+func PortInit(config *ConfigObj) (obj *PortObj, err error) {
+	obj.conf = config
+	obj.BaudRate.obj = obj
+
+	obj.port, err = serial.Open(config.PortName, config.Mode())
 	if err != nil {
 		return nil, err
 	}
 
-	return &PortObj{port: port, mode: mode}, nil
+	return obj, nil
 }
+
+////////
 
 func (p *PortObj) Close() error {
 	return p.port.Close()
@@ -50,26 +54,4 @@ func (p *PortObj) SetRTS(rts bool) error {
 
 func (p *PortObj) SetReadTimeout(t time.Duration) error {
 	return p.port.SetReadTimeout(t)
-}
-
-func (p *PortObj) Flush() error {
-	err := p.port.ResetInputBuffer()
-	if err != nil {
-		return err
-	}
-
-	return p.port.ResetInputBuffer()
-}
-
-func (p *PortObj) SetBaudrate(newBaudrate uint32) error {
-	return p.port.SetMode(&serial.Mode{
-		BaudRate: int(newBaudrate),
-		DataBits: p.mode.DataBits,
-		StopBits: p.mode.StopBits,
-		Parity:   p.mode.Parity,
-	})
-}
-
-func (p *PortObj) GetBaudrate() int {
-	return p.mode.BaudRate
 }

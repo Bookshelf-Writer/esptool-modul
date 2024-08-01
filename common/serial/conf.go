@@ -26,3 +26,12 @@ func ConfigInit(portName string, baudRate uint32) *ConfigObj {
 		Parity:      serial.NoParity,
 	}
 }
+
+func (config *ConfigObj) Mode() *serial.Mode {
+	return &serial.Mode{
+		BaudRate: int(config.BaudRate),
+		DataBits: config.DataBits,
+		StopBits: config.StopBits,
+		Parity:   config.Parity,
+	}
+}

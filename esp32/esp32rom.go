@@ -170,12 +170,12 @@ func (e *ESP32ROM) ChangeBaudrate(newBaudrate uint32) error {
 		return err
 	}
 
-	err = e.SerialPort.SetBaudrate(newBaudrate)
+	err = e.SerialPort.BaudRate.Set(newBaudrate)
 	if err != nil {
 		return err
 	}
 
-	e.logger.Printf("Changed baudrate to %d", e.SerialPort.GetBaudrate())
+	e.logger.Printf("Changed baudrate to %d", e.SerialPort.BaudRate.Get())
 	time.Sleep(10 * time.Millisecond)
 	e.SerialPort.Flush() // get rid of crap sent during baud rate change
 	return nil
