@@ -55,14 +55,6 @@ jobs:
             exit 1
           fi
 
-      - name: Check Tag [win]
-        if: ${{ matrix.os == 'windows-latest'}}
-        run: |
-          if [[ "${{ github.event.release.tag_name }}" != "${{ env.BUILD_VER }}" ]]; then
-            echo "::error ::Incorrect release tag. Should match the [${{ env.BUILD_VER }}]."
-            exit 1
-          fi
-
       - name: Checkout to the [master]
         run: |
           if git branch -a | grep -qw "origin/master"; then
