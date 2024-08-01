@@ -9,20 +9,24 @@ const (
 	ErrReceivedMessageIsInvalid     ErrType = 5
 	ErrFailedToActOnReceivedMessage ErrType = 6
 	ErrInvalidCRCInMessage          ErrType = 7
-	ErrFlashWriteError              ErrType = 8
-	ErrFlashReadError               ErrType = 9
-	ErrFlashReadLengthError         ErrType = 10
-	ErrDeflateError                 ErrType = 11
+
+	ErrFlashWriteError      ErrType = 8
+	ErrFlashReadError       ErrType = 9
+	ErrFlashReadLengthError ErrType = 10
+
+	ErrDeflateError ErrType = 11
 )
 
 const (
 	ErrTextReceivedMessageIsInvalid     = "Received message is invalid"
 	ErrTextFailedToActOnReceivedMessage = "Failed to act on received message"
 	ErrTextInvalidCRCInMessage          = "Invalid CRC in message"
-	ErrTextFlashWriteError              = "Flash write error"
-	ErrTextFlashReadError               = "Flash read error"
-	ErrTextFlashReadLengthError         = "Flash read length error"
-	ErrTextDeflateError                 = "Deflate error"
+
+	ErrTextFlashWriteError      = "Flash write error"
+	ErrTextFlashReadError       = "Flash read error"
+	ErrTextFlashReadLengthError = "Flash read length error"
+
+	ErrTextDeflateError = "Deflate error"
 )
 
 var ErrMap = map[ErrType]string{
@@ -40,5 +44,5 @@ func (obj ErrType) String() string {
 	if ok {
 		return val
 	}
-	return "Unknown Err"
+	return "Unknown ErrType"
 }
