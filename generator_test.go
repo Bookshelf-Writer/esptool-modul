@@ -1,5 +1,3 @@
-//go:build ignore
-
 package main
 
 import (
@@ -50,7 +48,16 @@ func TestCliTrig(t *testing.T) {
 		obj.ConstCode(code).Print(", false, ")
 		obj.ConstText(code).PrintLN("),")
 	}
-	obj.Repeat(1).PrintLN("}").PrintLN("}")
+	obj.Repeat(1).PrintLN("}").PrintLN("}").LN()
+
+	//
+
+	obj.Print("var ").Type().PrintLN("Map = map[string]*bool{")
+	for _, code := range obj.GetStrings() {
+		obj.Repeat(1).PrintString(code).Print(": ")
+		obj.Type().Print(".").TitleCase(code).PrintLN(",")
+	}
+	obj.PrintLN("}")
 
 	//
 

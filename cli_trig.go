@@ -58,3 +58,14 @@ func init() {
 		FlashWrite: flag.Bool(CliTrigFlashWrite, false, CliTrigTextFlashWrite),
 	}
 }
+
+var CliTrigTypeMap = map[string]*bool{
+	"help":       CliTrigType.Help,
+	"version":    CliTrigType.Version,
+	"json":       CliTrigType.Json,
+	"noColor":    CliTrigType.NoColor,
+	"list":       CliTrigType.List,
+	"info":       CliTrigType.Info,
+	"flashRead":  CliTrigType.FlashRead,
+	"flashWrite": CliTrigType.FlashWrite,
+}
