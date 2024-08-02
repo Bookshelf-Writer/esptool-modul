@@ -1,10 +1,27 @@
 package main
 
-import "github.com/rs/zerolog"
+import (
+	"github.com/rs/zerolog"
+	"github.com/rs/zerolog/log"
+	"os"
+)
 
 //###########################################################//
 
-const TextLogMsgInit = "INIT"
+const (
+	TextLogMsgInit = "INIT"
+	LvlLogDef      = zerolog.InfoLevel
+	LvlLogDebug    = zerolog.DebugLevel
+	LvlLogTrase    = zerolog.TraceLevel
+)
+
+var (
+	LogConsoleColor = log.Output(zerolog.ConsoleWriter{Out: os.Stdout, NoColor: false})
+	LogConsole      = log.Output(zerolog.ConsoleWriter{Out: os.Stdout, NoColor: true})
+	LogJson         = zerolog.New(os.Stdout).With().Timestamp().Logger()
+
+	LogLvl = LvlLogDef
+)
 
 type LogObj struct {
 	log   zerolog.Logger
@@ -15,10 +32,10 @@ type LogObj struct {
 
 func NewLog(log zerolog.Logger, root string) *LogObj {
 	obj := LogObj{index: root}
+	log = log.Level(LogLvl)
 
 	newLogger := log.With().Str("index", obj.index).Logger()
 	obj.log = newLogger
-	newLogger.Debug().Msg(TextLogMsgInit)
 
 	return &obj
 }
