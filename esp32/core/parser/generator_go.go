@@ -12,6 +12,9 @@ import (
 //###########################################################//
 
 func buildGO(maps map[string]*core.ModulStruct, namespace map[string]string) {
+	objMap := generator.Init("Esp", "esp32/core/map.go")
+	objMap.PrintLN("var EspList = []*ModulStruct{")
+
 	for filename, key := range namespace {
 		if strings.Contains(key, "beta") {
 			continue
@@ -23,6 +26,7 @@ func buildGO(maps map[string]*core.ModulStruct, namespace map[string]string) {
 			continue
 		}
 		mod := *buf
+		objMap.Repeat(1).PrintLN("&" + key + ",")
 
 		obj.Print("var ").Print(key).PrintLN(" = ModulStruct{")
 		obj.Repeat(1).Print("Name: ").PrintString(mod.Name).PrintLN(",").LN()
@@ -71,8 +75,8 @@ func buildGO(maps map[string]*core.ModulStruct, namespace map[string]string) {
 		obj.SaveFileBuf("core")
 	}
 
-	obj := generator.Init("MAP", "esp32/core/map.go")
-	obj.SaveFileBuf("core")
+	objMap.PrintLN("}")
+	objMap.SaveFileBuf("core")
 
 	fmt.Println("GO generated")
 }
