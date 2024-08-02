@@ -12,10 +12,10 @@ const (
 	FeatureSingleCore FeatureType = 31
 	FeatureDualCore   FeatureType = 32
 
-	Feature80MHz  FeatureType = 51
-	Feature160MHz FeatureType = 52
-	Feature240MHz FeatureType = 53
-	Feature320MHz FeatureType = 54
+	FeatureClock80MHz  FeatureType = 51
+	FeatureClock160MHz FeatureType = 52
+	FeatureClock240MHz FeatureType = 53
+	FeatureClock320MHz FeatureType = 54
 
 	FeatureEmbeddedFlash         FeatureType = 101
 	FeatureVRefCalibration       FeatureType = 102
@@ -34,10 +34,10 @@ const (
 	FeatureTextSingleCore = "Single Core"
 	FeatureTextDualCore   = "Dual Core"
 
-	FeatureText80MHz  = "80MHz"
-	FeatureText160MHz = "160MHz"
-	FeatureText240MHz = "240MHz"
-	FeatureText320MHz = "320MHz"
+	FeatureTextClock80MHz  = "Clock 80MHz"
+	FeatureTextClock160MHz = "Clock 160MHz"
+	FeatureTextClock240MHz = "Clock 240MHz"
+	FeatureTextClock320MHz = "Clock 320MHz"
 
 	FeatureTextEmbeddedFlash         = "Embedded Flash"
 	FeatureTextVRefCalibration       = "VRef calibration"
@@ -54,10 +54,10 @@ var FeatureMap = map[FeatureType]string{
 	FeatureBluetooth:             FeatureTextBluetooth,
 	FeatureSingleCore:            FeatureTextSingleCore,
 	FeatureDualCore:              FeatureTextDualCore,
-	Feature80MHz:                 FeatureText80MHz,
-	Feature160MHz:                FeatureText160MHz,
-	Feature240MHz:                FeatureText240MHz,
-	Feature320MHz:                FeatureText320MHz,
+	FeatureClock80MHz:            FeatureTextClock80MHz,
+	FeatureClock160MHz:           FeatureTextClock160MHz,
+	FeatureClock240MHz:           FeatureTextClock240MHz,
+	FeatureClock320MHz:           FeatureTextClock320MHz,
 	FeatureEmbeddedFlash:         FeatureTextEmbeddedFlash,
 	FeatureVRefCalibration:       FeatureTextVRefCalibration,
 	FeatureBLK3PartiallyReserved: FeatureTextBLK3PartiallyReserved,

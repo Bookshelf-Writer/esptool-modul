@@ -19,10 +19,10 @@ func TestFeatureCode(t *testing.T) {
 	val.Add(31, "Single Core")
 	val.Add(32, "Dual Core").Delim()
 
-	val.Add(51, "80MHz")
-	val.Add(52, "160MHz")
-	val.Add(53, "240MHz")
-	val.Add(54, "320MHz").Delim()
+	val.Add(51, "Clock 80MHz")
+	val.Add(52, "Clock 160MHz")
+	val.Add(53, "Clock 240MHz")
+	val.Add(54, "Clock 320MHz").Delim()
 
 	val.Add(101, "Embedded Flash")
 	val.Add(102, "VRef calibration")
