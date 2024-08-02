@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
 	"os"
@@ -16,8 +17,8 @@ const (
 )
 
 var (
-	LogConsoleColor = log.Output(zerolog.ConsoleWriter{Out: os.Stdout, NoColor: false, TimeFormat: "15:04:05"})
-	LogConsole      = log.Output(zerolog.ConsoleWriter{Out: os.Stdout, NoColor: true, TimeFormat: "15:04:05"})
+	LogConsoleColor = log.Output(consoleWriter(false))
+	LogConsole      = log.Output(consoleWriter(true))
 	LogJson         = zerolog.New(os.Stdout).With().Timestamp().Logger()
 )
 
@@ -27,6 +28,19 @@ type LogObj struct {
 }
 
 ////
+
+func consoleWriter(NoColor bool) zerolog.ConsoleWriter {
+	obj := zerolog.ConsoleWriter{Out: os.Stdout, NoColor: NoColor, TimeFormat: "15:04:05"}
+
+	obj.FormatMessage = func(i interface{}) string {
+		return fmt.Sprintf("%-16s", i)
+	}
+
+	obj.FormatFieldValue = func(i interface{}) string {
+		return fmt.Sprintf("%-6s", i)
+	}
+	return obj
+}
 
 func NewLog(log zerolog.Logger, root string) *LogObj {
 	obj := LogObj{index: root}

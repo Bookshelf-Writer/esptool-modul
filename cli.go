@@ -22,7 +22,6 @@ type CliFlashObj struct {
 	Offset   *uint64
 	Size     *uint64
 	FilePath *string
-	Name     *string
 }
 
 ////
@@ -51,5 +50,4 @@ func init() {
 	CLI.Flash.Offset = flag.Uint64(CliValFlashOffset, 0, CliValTextFlashOffset)
 	CLI.Flash.Size = flag.Uint64(CliValFlashSize, 0, CliValTextFlashSize)
 	CLI.Flash.FilePath = flag.String(CliValFlashFile, "", CliValTextFlashFile)
-	CLI.Flash.Name = flag.String(CliValFlashName, "PARTITION", CliValTextFlashName)
 }

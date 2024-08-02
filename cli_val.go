@@ -15,7 +15,6 @@ const (
 	CliValFlashOffset   = "flashOffset"
 	CliValFlashSize     = "flashSize"
 	CliValFlashFile     = "flashFile"
-	CliValFlashName     = "flashName"
 )
 
 const (
@@ -30,5 +29,4 @@ const (
 	CliValTextFlashOffset   = "The point where we start"
 	CliValTextFlashSize     = "How many bytes do we capture?"
 	CliValTextFlashFile     = "File path"
-	CliValTextFlashName     = "Partition name"
 )

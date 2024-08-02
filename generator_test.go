@@ -86,7 +86,6 @@ func TestCliValue(t *testing.T) {
 	val.Add("flashOffset", "The point where we start")
 	val.Add("flashSize", "How many bytes do we capture?")
 	val.Add("flashFile", "File path")
-	val.Add("flashName", "Partition name").Delim()
 
 	//
 
