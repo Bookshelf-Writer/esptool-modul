@@ -9,7 +9,8 @@ import (
 
 //###########################################################//
 
-func isAccessible(device string) bool {
+/*Checking device availability */
+func IsAccessible(device string) bool {
 	file, err := os.Open(device)
 	if err != nil {
 		return false
@@ -51,7 +52,7 @@ func ListSerial() ([]string, error) {
 
 	for _, device := range deviceList {
 		device = strings.TrimSpace(device)
-		if device != "" && isAccessible(device) {
+		if device != "" && IsAccessible(device) {
 			accessibleDevices = append(accessibleDevices, device)
 		}
 	}

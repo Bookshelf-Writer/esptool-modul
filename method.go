@@ -22,3 +22,11 @@ func (obj *MethodObj) EndInvalid() {
 	}
 	os.Exit(1)
 }
+
+////
+
+const (
+	MethodRequiredParameterMissing = "Required parameter missing"
+	MethodDevNotAvailable          = "Device not available"
+	MethodFileNotFound             = "File not found"
+)
