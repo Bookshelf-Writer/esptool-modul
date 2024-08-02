@@ -70,3 +70,13 @@ func (obj *LogObj) Fatal() *zerolog.Event {
 func (obj *LogObj) Panic() *zerolog.Event {
 	return obj.log.Panic()
 }
+
+////
+
+type StringArray []string
+
+func (a StringArray) MarshalZerologArray(arr *zerolog.Array) {
+	for _, s := range a {
+		arr.Str(s)
+	}
+}

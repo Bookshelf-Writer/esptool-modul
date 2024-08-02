@@ -1,5 +1,7 @@
 package main
 
+import "esptool/common/cmd"
+
 //###########################################################//
 
 func (obj *MethodObj) Help() {
@@ -21,6 +23,18 @@ func (obj *MethodObj) Version() {
 }
 
 func (obj *MethodObj) List() {
+	newLog := obj.log.NewLog("List")
+
+	list, err := cmd.ListSerial()
+	if err != nil {
+		newLog.Debug().Err(err).Send()
+		newLog.Warn().Msg("Devices not found")
+		obj.End()
+	}
+
+	for _, serialDev := range list {
+		newLog.Info().Msg(serialDev)
+	}
 
 	obj.End()
 }
