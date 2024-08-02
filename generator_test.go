@@ -7,7 +7,7 @@ import (
 
 //###########################################################//
 
-func TestCLI(t *testing.T) {
+func TestCliTrig(t *testing.T) {
 	obj := generator.Init("CliTrig", "cli_trig.go")
 	val := obj.GetStringVal()
 
@@ -26,27 +26,8 @@ func TestCLI(t *testing.T) {
 
 	//
 
-	obj.PrintLN("const (")
-	for _, code := range obj.GetStrings() {
-		text := obj.GetTextString(code)
-
-		obj.Repeat(1).ConstCode(text).Print(" ").Print(" = ").PrintString(code).LN()
-
-		obj.SetDelimString(code)
-	}
-	obj.PrintLN(")").LN()
-
-	//
-
-	obj.PrintLN("const (")
-	for _, code := range obj.GetStrings() {
-		text := obj.GetTextString(code)
-
-		obj.Repeat(1).ConstText(text).Print(" = ").PrintString(text).LN()
-
-		obj.SetDelimString(code)
-	}
-	obj.PrintLN(")").LN()
+	obj.PrintLN("import \"flag\"").LN()
+	build(t, obj)
 
 	//
 
@@ -59,14 +40,48 @@ func TestCLI(t *testing.T) {
 
 	//
 
-	obj.Print("var ").Type().Print(" = ").Type().PrintLN("Obj{")
+	obj.Print("var ").Type().Print(" ").Type().PrintLN("Obj").LN()
+	obj.PrintLN("func init(){")
+	obj.Repeat(1).Type().Print(" = ").Type().PrintLN("Obj{")
 	for _, code := range obj.GetStrings() {
-		text := obj.GetTextString(code)
-		obj.Repeat(1).TitleCase(code).Print(": flag.Bool( ")
-		obj.ConstCode(text).Print(", false, ")
-		obj.ConstText(text).PrintLN("),")
+		obj.Repeat(2).TitleCase(code).Print(": flag.Bool( ")
+		obj.ConstCode(code).Print(", false, ")
+		obj.ConstText(code).PrintLN("),")
 	}
-	obj.PrintLN("}")
+	obj.Repeat(1).PrintLN("}").PrintLN("}")
+
+	//
+
+	err := obj.SaveFileBuf("main")
+	if err != nil {
+		t.Fatal(err)
+	}
+
+}
+
+func TestCliValue(t *testing.T) {
+	obj := generator.Init("CliVal", "cli_val.go")
+	val := obj.GetStringVal()
+
+	//
+
+	val.Add("port", "Device name or path")
+
+	val.Add("baudConnect", "Serial signalling rate during connect phase")
+	val.Add("baudTransfer", "Serial signalling rate during data transfer").Delim()
+
+	val.Add("connTimeout", "Timeout to wait for chip response upon connecting")
+	val.Add("connRetries", "How often to retry connecting").Delim()
+
+	val.Add("flashCompress", "Use compression for transfer")
+	val.Add("flashOffset", "The point where we start")
+	val.Add("flashSize", "How many bytes do we capture?")
+	val.Add("flashFile", "File path")
+	val.Add("flashName", "Partition name").Delim()
+
+	//
+
+	build(t, obj)
 
 	//
 
