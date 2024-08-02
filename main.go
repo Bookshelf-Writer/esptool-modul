@@ -21,6 +21,9 @@ func main() {
 		case "logdebug":
 			logLVL = LvlLogDebug
 
+		case "v", "ver":
+			*CliTrigType.Version = true
+
 		default:
 			fl, ok := CliTrigTypeMap[arg]
 			if ok {

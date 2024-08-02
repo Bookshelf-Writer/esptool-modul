@@ -1,8 +1,8 @@
 package cmd
 
 import (
+	"esptool/common/serial"
 	"fmt"
-	"os"
 	"runtime"
 	"strings"
 )
@@ -11,11 +11,12 @@ import (
 
 /*Checking device availability */
 func IsAccessible(device string) bool {
-	file, err := os.Open(device)
+	serialPort, err := serial.PortInit(serial.ConfigInit(device, 115200))
 	if err != nil {
 		return false
 	}
-	file.Close()
+
+	serialPort.Close()
 	return true
 }
 
