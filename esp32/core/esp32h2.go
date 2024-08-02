@@ -7,7 +7,7 @@ var ESP32H2ROM = ModulStruct{
 	Name: "ESP32-H2",
 
 	Sys: ModulSystemStruct{
-		UF2:         858203894,
+		UF2:         858203894, //0x332726f6
 		Chip:        16,
 		LenStatus:   2,
 		FlashOffset: 0,
@@ -16,6 +16,8 @@ var ESP32H2ROM = ModulStruct{
 		WriteAlign: 0,
 		Supports:   false,
 	},
-	MagicValue: []uint64{3619110528},
-	Memory:     map[string]ModulMapStruct{},
+	MagicValue: []uint64{
+		3619110528, //0xd7b73e80
+	},
+	Memory: map[string]ModulMapStruct{},
 }

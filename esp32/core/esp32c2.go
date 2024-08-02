@@ -7,7 +7,7 @@ var ESP32C2ROM = ModulStruct{
 	Name: "ESP32-C2",
 
 	Sys: ModulSystemStruct{
-		UF2:         730387100,
+		UF2:         730387100, //0x2b88d29c
 		Chip:        12,
 		LenStatus:   2,
 		FlashOffset: 0,
@@ -16,15 +16,18 @@ var ESP32C2ROM = ModulStruct{
 		WriteAlign: 0,
 		Supports:   false,
 	},
-	MagicValue: []uint64{1867591791, 2084675695},
+	MagicValue: []uint64{
+		1867591791, //0x6f51306f
+		2084675695, //0x7c41a06f
+	},
 	Memory: map[string]ModulMapStruct{
-		"PADDING":         {0, 65536},
-		"DROM":            {1006632960, 1010827264},
-		"BYTE_ACCESSIBLE": {1070104576, 1070596096},
-		"DRAM":            {1070202880, 1070465024},
-		"DROM_MASK":       {1072693248, 1073020928},
-		"IROM_MASK":       {1073741824, 1074331648},
-		"IRAM":            {1077395456, 1077673984},
-		"IROM":            {1107296256, 1111490560},
+		"PADDING":         {0, 65536},               //0x00 0x10000
+		"DROM":            {1006632960, 1010827264}, //0x3c000000 0x3c400000
+		"BYTE_ACCESSIBLE": {1070104576, 1070596096}, //0x3fc88000 0x3fd00000
+		"DRAM":            {1070202880, 1070465024}, //0x3fca0000 0x3fce0000
+		"DROM_MASK":       {1072693248, 1073020928}, //0x3ff00000 0x3ff50000
+		"IROM_MASK":       {1073741824, 1074331648}, //0x40000000 0x40090000
+		"IRAM":            {1077395456, 1077673984}, //0x4037c000 0x403c0000
+		"IROM":            {1107296256, 1111490560}, //0x42000000 0x42400000
 	},
 }

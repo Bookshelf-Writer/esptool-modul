@@ -7,7 +7,7 @@ var ESP8266ROM = ModulStruct{
 	Name: "ESP8266",
 
 	Sys: ModulSystemStruct{
-		UF2:         2125160941,
+		UF2:         2125160941, //0x7eab61ed
 		Chip:        0,
 		LenStatus:   0,
 		FlashOffset: 0,
@@ -16,11 +16,13 @@ var ESP8266ROM = ModulStruct{
 		WriteAlign: 0,
 		Supports:   false,
 	},
-	MagicValue: []uint64{4293968129},
+	MagicValue: []uint64{
+		4293968129, //0xfff0c101
+	},
 	Memory: map[string]ModulMapStruct{
-		"DPORT": {1072693248, 1072693264},
-		"DRAM":  {1073643520, 1073741824},
-		"IRAM":  {1074790400, 1074823168},
-		"IROM":  {1075843088, 1076760592},
+		"DPORT": {1072693248, 1072693264}, //0x3ff00000 0x3ff00010
+		"DRAM":  {1073643520, 1073741824}, //0x3ffe8000 0x40000000
+		"IRAM":  {1074790400, 1074823168}, //0x40100000 0x40108000
+		"IROM":  {1075843088, 1076760592}, //0x40201010 0x402e1010
 	},
 }
