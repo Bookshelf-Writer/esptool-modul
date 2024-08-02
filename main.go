@@ -124,12 +124,12 @@ var (
 		},
 	}
 
-	port            = flag.String("port", "", "Serial port device")
-	baudrate        = flag.Uint("baudrate", 115200, "Serial port baud rate used when flashing/reading")
+	port            = flag.String("#port", "", "Serial port device")
+	baudrate        = flag.Uint("#baudrate", 115200, "Serial port baud rate used when flashing/reading")
 	connectTimeout  = flag.Duration("timeout.connect", 500*time.Millisecond, "Timeout to wait for chip response upon connecting")
 	responseTimeout = flag.Duration("timeout.response", 10*time.Millisecond, "Timeout to wait for chip to respond")
 
-	server        = flag.NewFlagSet("server", flag.ExitOnError)
+	server        = flag.NewFlagSet("#server", flag.ExitOnError)
 	listenAddress = server.String("listen-address", ":8080", "Port and andress to listen on")
 )
 
