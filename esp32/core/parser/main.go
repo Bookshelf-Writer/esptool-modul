@@ -33,6 +33,7 @@ func main() {
 		list[value] = obj
 	}
 
+	fmt.Println("")
 	buildJSON(list)
 	buildGO(list, *maps)
 }

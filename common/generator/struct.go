@@ -49,3 +49,15 @@ func (gen *GeneratorObj) SaveFile(pack string) error {
 	file.Write(gen.buf.Bytes())
 	return nil
 }
+
+func (gen *GeneratorObj) SaveFileBuf(pack string) error {
+	file, err := os.OpenFile(gen.filename, os.O_RDWR|os.O_CREATE|os.O_TRUNC, 0644)
+	if err != nil {
+		return err
+	}
+	defer file.Close()
+
+	file.WriteString(head(pack))
+	file.Write(gen.buf.Bytes())
+	return nil
+}
