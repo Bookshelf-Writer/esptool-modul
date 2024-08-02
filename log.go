@@ -16,11 +16,9 @@ const (
 )
 
 var (
-	LogConsoleColor = log.Output(zerolog.ConsoleWriter{Out: os.Stdout, NoColor: false})
-	LogConsole      = log.Output(zerolog.ConsoleWriter{Out: os.Stdout, NoColor: true})
+	LogConsoleColor = log.Output(zerolog.ConsoleWriter{Out: os.Stdout, NoColor: false, TimeFormat: "15:04:05"})
+	LogConsole      = log.Output(zerolog.ConsoleWriter{Out: os.Stdout, NoColor: true, TimeFormat: "15:04:05"})
 	LogJson         = zerolog.New(os.Stdout).With().Timestamp().Logger()
-
-	LogLvl = LvlLogDef
 )
 
 type LogObj struct {
@@ -32,7 +30,6 @@ type LogObj struct {
 
 func NewLog(log zerolog.Logger, root string) *LogObj {
 	obj := LogObj{index: root}
-	log = log.Level(LogLvl)
 
 	newLogger := log.With().Str("index", obj.index).Logger()
 	obj.log = newLogger

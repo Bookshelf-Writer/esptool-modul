@@ -26,6 +26,7 @@ func (v *VersionInfo) String() string {
 		v.Description,
 		v.Version,
 	)
+
 }
 
 func versionCommand(jsonOutput bool) error {
