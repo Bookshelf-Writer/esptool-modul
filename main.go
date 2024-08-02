@@ -1,6 +1,7 @@
 package main
 
 import (
+	"esptool/common/cmd"
 	"flag"
 	"fmt"
 	"io/ioutil"
@@ -167,7 +168,7 @@ func printHelp() {
 
 func printDevList() {
 	fmt.Println("Getting a list of available devices")
-	list, err := listDevices()
+	list, err := cmd.ListSerial()
 	if err != nil {
 		fmt.Println(err)
 		os.Exit(1)
