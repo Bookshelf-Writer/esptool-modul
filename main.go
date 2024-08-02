@@ -34,7 +34,7 @@ var (
 	infoRetries          = infoFlagSet.Uint("serial.connect.retries", 5, "How often to retry connecting")
 	infoJson             = infoFlagSet.Bool("json", false, "Display chip info in JSON format")
 
-	flashReadFlagSet          = flag.NewFlagSet("readFlash", flag.ExitOnError)
+	flashReadFlagSet          = flag.NewFlagSet("flashRead", flag.ExitOnError)
 	flashReadPort             = flashReadFlagSet.String("serial.port", "", "Serial port device file")
 	flashReadConnectBaudrate  = flashReadFlagSet.Uint("serial.baudrate.connect", defaultConnectBaudrate, "Serial signalling rate during connect phase")
 	flashReadTransferBaudrate = flashReadFlagSet.Uint("serial.baudrate.transfer", defaultTransferBaudrate, "Serial signalling rate during data transfer")
@@ -45,7 +45,7 @@ var (
 	flashReadFile             = flashReadFlagSet.String("flash.file", "", "File to read flash contents into")
 	flashReadPartitionName    = flashReadFlagSet.String("flash.partition.name", "", "Partition to read")
 
-	flashWriteFlagSet          = flag.NewFlagSet("writeFlash", flag.ExitOnError)
+	flashWriteFlagSet          = flag.NewFlagSet("flashWrite", flag.ExitOnError)
 	flashWritePort             = flashWriteFlagSet.String("serial.port", "", "Serial port device file")
 	flashWriteConnectBaudrate  = flashWriteFlagSet.Uint("serial.baudrate.connect", defaultConnectBaudrate, "Serial signalling rate during connect phase")
 	flashWriteTransferBaudrate = flashWriteFlagSet.Uint("serial.baudrate.transfer", defaultTransferBaudrate, "Serial signalling rate during data transfer")
@@ -102,6 +102,8 @@ var (
 			Description: "Write flash contents",
 			FlagSet:     flashWriteFlagSet,
 			Callback: func(logger *log.Logger) error {
+				fmt.Println("Start Write")
+
 				flashWriteFlagSet.Parse(os.Args[2:])
 				contents, err := ioutil.ReadFile(*flashWriteFile)
 				if err != nil {
@@ -135,12 +137,11 @@ func main() {
 	flag.Parse()
 
 	switch {
-	case *help:
-		printHelp()
-
 	case *devList:
 		printDevList()
 
+	case *help, len(os.Args) < 2:
+		printHelp()
 	}
 
 	logger := log.New(os.Stderr, bold("[LOG]: "), log.Ltime|log.Lshortfile)

@@ -68,6 +68,8 @@ func compressImage(data []byte) ([]byte, error) {
 }
 
 func (e *ESP32ROM) WriteFlash(offset uint32, data []byte, useCompression bool) (err error) {
+	fmt.Println("Write...")
+
 	if !e.flashAttached {
 		err = e.AttachSpiFlash()
 		if err != nil {
