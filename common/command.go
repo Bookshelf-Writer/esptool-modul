@@ -13,10 +13,11 @@ type Command struct {
 }
 
 func (c *Command) ToBytes() []byte {
-	b := make([]byte, len(c.Data)+8)
+	sizeM := len(c.Data)
+	b := make([]byte, sizeM+8)
 	b[0] = byte(c.Direction)
 	b[1] = byte(c.Opcode)
-	size := Uint16ToBytes(uint16(len(c.Data)))
+	size := Uint16ToBytes(uint16(sizeM))
 	b[2] = size[0]
 	b[3] = size[1]
 	b[4] = c.Checksum[0]
