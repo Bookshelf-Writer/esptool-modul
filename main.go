@@ -23,7 +23,8 @@ var (
 	versionFlagSet = flag.NewFlagSet("version", flag.ExitOnError)
 	versionJson    = versionFlagSet.Bool("json", false, "Display version info in JSON format")
 
-	help = flag.Bool("help", false, "Show a help page")
+	help    = flag.Bool("help", false, "Show a help page")
+	devList = flag.Bool("list", false, "Show available devices")
 
 	infoFlagSet          = flag.NewFlagSet("info", flag.ExitOnError)
 	infoPort             = infoFlagSet.String("serial.port", "", "Serial port device file")
@@ -132,8 +133,14 @@ var (
 
 func main() {
 	flag.Parse()
-	if len(os.Args) < 2 || *help {
+
+	switch {
+	case *help:
 		printHelp()
+
+	case *devList:
+		printDevList()
+
 	}
 
 	logger := log.New(os.Stderr, bold("[LOG]: "), log.Ltime|log.Lshortfile)
@@ -154,5 +161,19 @@ func printHelp() {
 	for _, command := range cliCommands {
 		fmt.Printf("  * \033[1m%s\033[0m: %s\n", command.Name, command.Description)
 	}
-	os.Exit(1)
+	os.Exit(0)
+}
+
+func printDevList() {
+	fmt.Println("Getting a list of available devices")
+	list, err := listDevices()
+	if err != nil {
+		fmt.Println(err)
+		os.Exit(1)
+	}
+
+	for _, adr := range list {
+		fmt.Println(adr)
+	}
+	os.Exit(0)
 }
