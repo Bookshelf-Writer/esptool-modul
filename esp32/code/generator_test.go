@@ -37,3 +37,19 @@ func TestFeatureCode(t *testing.T) {
 
 	build(t, obj)
 }
+
+func TestEspCode(t *testing.T) {
+	obj := generator.Init("Esp", "esp.go")
+	val := obj.GetVal()
+
+	//
+
+	val.Add(0x00, "ESP32 D0-WD Q6")
+	val.Add(0x01, "ESP32 D0-WD Q5")
+	val.Add(0x02, "ESP32 D2-WD Q5")
+	val.Add(0x05, "ESP32 PICO D4")
+
+	//
+
+	build(t, obj)
+}

@@ -1,9 +1,12 @@
 package esp32
 
-import "fmt"
+import (
+	"esptool/esp32/code"
+	"fmt"
+)
 
 type ChipDescription struct {
-	ChipType ChipType
+	ChipType code.EspType
 	Revision byte
 }
 
@@ -40,7 +43,7 @@ func (e *ESP32ROM) GetChipDescription() (*ChipDescription, error) {
 	}
 
 	return &ChipDescription{
-		ChipType: ChipType((word3[1] >> 1) & 0x07),
+		ChipType: code.EspType((word3[1] >> 1) & 0x07),
 		Revision: revision,
 	}, nil
 }
