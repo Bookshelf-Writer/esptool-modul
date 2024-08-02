@@ -4,6 +4,7 @@ import (
 	"esptool/common/generator"
 	"esptool/esp32/core"
 	"fmt"
+	"sort"
 	"strconv"
 )
 
@@ -39,8 +40,20 @@ func buildGO(maps map[string]*core.ModulStruct, namespace map[string]string) {
 		}
 		obj.PrintLN("},")
 
-		obj.Repeat(1).PrintLN("Memory: map[string]ModulMapStruct{")
+		var bufMapKeys []string
+		bufKey := make(map[string]string)
 		for keyMemo, objMemo := range mod.Memory {
+			kk := fmt.Sprintf("%d:%d:%s", objMemo.Start, objMemo.End, keyMemo)
+			bufKey[kk] = keyMemo
+			bufMapKeys = append(bufMapKeys, kk)
+		}
+		sort.Strings(bufMapKeys)
+
+		obj.Repeat(1).PrintLN("Memory: map[string]ModulMapStruct{")
+		for _, posKey := range bufMapKeys {
+			keyMemo := bufKey[posKey]
+			objMemo := mod.Memory[keyMemo]
+
 			obj.Repeat(2).PrintString(keyMemo).Print(": {")
 			obj.Print(strconv.FormatUint(objMemo.Start, 10) + ",")
 			obj.Print(strconv.FormatUint(objMemo.End, 10))

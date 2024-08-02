@@ -18,9 +18,9 @@ var ESP8266ROM = ModulStruct{
 	},
 	MagicValue: []uint64{4293968129},
 	Memory: map[string]ModulMapStruct{
+		"DPORT": {1072693248, 1072693264},
 		"DRAM":  {1073643520, 1073741824},
 		"IRAM":  {1074790400, 1074823168},
 		"IROM":  {1075843088, 1076760592},
-		"DPORT": {1072693248, 1072693264},
 	},
 }
