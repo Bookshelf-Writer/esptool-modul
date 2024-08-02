@@ -1,0 +1,679 @@
+{
+  "ESP32C2ROM": {
+    "name": "ESP32-C2",
+    "chipId": 0,
+    "lenStatus": 2,
+    "flashEncryptedWriteAlign": 0,
+    "IROM": {
+      "start": 1107296256,
+      "end": 1111490560
+    },
+    "DROM": {
+      "start": 1006632960,
+      "end": 1010827264
+    },
+    "magicValue": [
+      1867591791,
+      2084675695
+    ],
+    "bootloaderFlashOffset": 0,
+    "uf2FamilyId": 730387100,
+    "supportsEncryptedFlash": false,
+    "isStub": true,
+    "memory": {
+      "BYTE_ACCESSIBLE": {
+        "start": 1070104576,
+        "end": 1070596096
+      },
+      "DRAM": {
+        "start": 1070202880,
+        "end": 1070465024
+      },
+      "DROM": {
+        "start": 1006632960,
+        "end": 1010827264
+      },
+      "DROM_MASK": {
+        "start": 1072693248,
+        "end": 1073020928
+      },
+      "IRAM": {
+        "start": 1077395456,
+        "end": 1077673984
+      },
+      "IROM": {
+        "start": 1107296256,
+        "end": 1111490560
+      },
+      "IROM_MASK": {
+        "start": 1073741824,
+        "end": 1074331648
+      },
+      "PADDING": {
+        "start": 0,
+        "end": 65536
+      }
+    }
+  },
+  "ESP32C3ROM": {
+    "name": "ESP32-C3",
+    "chipId": 0,
+    "lenStatus": 2,
+    "flashEncryptedWriteAlign": 16,
+    "IROM": {
+      "start": 1107296256,
+      "end": 1115684864
+    },
+    "DROM": {
+      "start": 1006632960,
+      "end": 1015021568
+    },
+    "magicValue": [
+      1763790959,
+      456216687,
+      1216438383,
+      1130455151
+    ],
+    "bootloaderFlashOffset": 0,
+    "uf2FamilyId": 3559628908,
+    "supportsEncryptedFlash": true,
+    "isStub": true,
+    "memory": {
+      "BYTE_ACCESSIBLE": {
+        "start": 1070104576,
+        "end": 1070596096
+      },
+      "DRAM": {
+        "start": 1070071808,
+        "end": 1070465024
+      },
+      "DROM": {
+        "start": 1006632960,
+        "end": 1015021568
+      },
+      "DROM_MASK": {
+        "start": 1072693248,
+        "end": 1072824320
+      },
+      "IRAM": {
+        "start": 1077395456,
+        "end": 1077805056
+      },
+      "IROM": {
+        "start": 1107296256,
+        "end": 1115684864
+      },
+      "IROM_MASK": {
+        "start": 1073741824,
+        "end": 1074135040
+      },
+      "MEM_INTERNAL2": {
+        "start": 1611653120,
+        "end": 1611661312
+      },
+      "PADDING": {
+        "start": 0,
+        "end": 65536
+      },
+      "RTC_DRAM": {
+        "start": 1342177280,
+        "end": 1342185472
+      },
+      "RTC_IRAM": {
+        "start": 1342177280,
+        "end": 1342185472
+      }
+    }
+  },
+  "ESP32C5ROM": {
+    "name": "ESP32-C5",
+    "chipId": 0,
+    "lenStatus": 2,
+    "flashEncryptedWriteAlign": 0,
+    "IROM": {
+      "start": 1107296256,
+      "end": 1115684864
+    },
+    "DROM": {
+      "start": 1115684864,
+      "end": 1124073472
+    },
+    "magicValue": [
+      285294703
+    ],
+    "bootloaderFlashOffset": 0,
+    "uf2FamilyId": 4145808195,
+    "supportsEncryptedFlash": false,
+    "isStub": true,
+    "memory": {
+      "BYTE_ACCESSIBLE": {
+        "start": 1082130432,
+        "end": 1082523648
+      },
+      "DRAM": {
+        "start": 1082130432,
+        "end": 1082523648
+      },
+      "DROM": {
+        "start": 1115684864,
+        "end": 1124073472
+      },
+      "DROM_MASK": {
+        "start": 1073979392,
+        "end": 1074003968
+      },
+      "IRAM": {
+        "start": 1082130432,
+        "end": 1082523648
+      },
+      "IROM": {
+        "start": 1107296256,
+        "end": 1115684864
+      },
+      "IROM_MASK": {
+        "start": 1073741824,
+        "end": 1073979392
+      },
+      "MEM_INTERNAL2": {
+        "start": 1611653120,
+        "end": 1611661312
+      },
+      "PADDING": {
+        "start": 0,
+        "end": 65536
+      },
+      "RTC_DRAM": {
+        "start": 1342177280,
+        "end": 1342193664
+      },
+      "RTC_IRAM": {
+        "start": 1342177280,
+        "end": 1342193664
+      }
+    }
+  },
+  "ESP32C61ROM": {
+    "name": "ESP32-C61",
+    "chipId": 0,
+    "lenStatus": 0,
+    "flashEncryptedWriteAlign": 0,
+    "IROM": {
+      "start": 0,
+      "end": 0
+    },
+    "DROM": {
+      "start": 0,
+      "end": 0
+    },
+    "magicValue": [
+      871374959
+    ],
+    "bootloaderFlashOffset": 0,
+    "uf2FamilyId": 2010665156,
+    "supportsEncryptedFlash": false,
+    "isStub": false,
+    "memory": {
+      "BYTE_ACCESSIBLE": {
+        "start": 1082130432,
+        "end": 1082523648
+      },
+      "DRAM": {
+        "start": 1082130432,
+        "end": 1082523648
+      },
+      "DROM": {
+        "start": 1098907648,
+        "end": 1107296256
+      },
+      "DROM_MASK": {
+        "start": 1074048000,
+        "end": 1074069504
+      },
+      "IRAM": {
+        "start": 1082130432,
+        "end": 1082523648
+      },
+      "IROM": {
+        "start": 1090519040,
+        "end": 1098907648
+      },
+      "IROM_MASK": {
+        "start": 1073741824,
+        "end": 1074048000
+      },
+      "MEM_INTERNAL2": {
+        "start": 1611653120,
+        "end": 1611661312
+      },
+      "PADDING": {
+        "start": 0,
+        "end": 65536
+      },
+      "RTC_DRAM": {
+        "start": 1342177280,
+        "end": 1342193664
+      },
+      "RTC_IRAM": {
+        "start": 1342177280,
+        "end": 1342193664
+      }
+    }
+  },
+  "ESP32C6ROM": {
+    "name": "ESP32-C6",
+    "chipId": 0,
+    "lenStatus": 2,
+    "flashEncryptedWriteAlign": 16,
+    "IROM": {
+      "start": 1107296256,
+      "end": 1115684864
+    },
+    "DROM": {
+      "start": 1115684864,
+      "end": 1124073472
+    },
+    "magicValue": [
+      752910447
+    ],
+    "bootloaderFlashOffset": 0,
+    "uf2FamilyId": 1410195298,
+    "supportsEncryptedFlash": true,
+    "isStub": true,
+    "memory": {
+      "BYTE_ACCESSIBLE": {
+        "start": 1082130432,
+        "end": 1082654720
+      },
+      "DRAM": {
+        "start": 1082130432,
+        "end": 1082654720
+      },
+      "DROM": {
+        "start": 1115684864,
+        "end": 1124073472
+      },
+      "DROM_MASK": {
+        "start": 1074048000,
+        "end": 1074069504
+      },
+      "IRAM": {
+        "start": 1082130432,
+        "end": 1082654720
+      },
+      "IROM": {
+        "start": 1107296256,
+        "end": 1115684864
+      },
+      "IROM_MASK": {
+        "start": 1073741824,
+        "end": 1074048000
+      },
+      "MEM_INTERNAL2": {
+        "start": 1611653120,
+        "end": 1611661312
+      },
+      "PADDING": {
+        "start": 0,
+        "end": 65536
+      },
+      "RTC_DRAM": {
+        "start": 1342177280,
+        "end": 1342193664
+      },
+      "RTC_IRAM": {
+        "start": 1342177280,
+        "end": 1342193664
+      }
+    }
+  },
+  "ESP32H2ROM": {
+    "name": "ESP32-H2",
+    "chipId": 0,
+    "lenStatus": 2,
+    "flashEncryptedWriteAlign": 0,
+    "IROM": {
+      "start": 0,
+      "end": 0
+    },
+    "DROM": {
+      "start": 0,
+      "end": 0
+    },
+    "magicValue": [
+      3619110528
+    ],
+    "bootloaderFlashOffset": 0,
+    "uf2FamilyId": 858203894,
+    "supportsEncryptedFlash": false,
+    "isStub": true,
+    "memory": null
+  },
+  "ESP32P4ROM": {
+    "name": "ESP32-P4",
+    "chipId": 0,
+    "lenStatus": 2,
+    "flashEncryptedWriteAlign": 16,
+    "IROM": {
+      "start": 1073741824,
+      "end": 1275068416
+    },
+    "DROM": {
+      "start": 1073741824,
+      "end": 1275068416
+    },
+    "magicValue": [
+      0,
+      182303440
+    ],
+    "bootloaderFlashOffset": 8192,
+    "uf2FamilyId": 1026592404,
+    "supportsEncryptedFlash": true,
+    "isStub": true,
+    "memory": {
+      "BYTE_ACCESSIBLE": {
+        "start": 1341128704,
+        "end": 1341784064
+      },
+      "DRAM": {
+        "start": 1341128704,
+        "end": 1341784064
+      },
+      "DROM": {
+        "start": 1073741824,
+        "end": 1275068416
+      },
+      "DROM_MASK": {
+        "start": 1337982976,
+        "end": 1338114048
+      },
+      "IRAM": {
+        "start": 1341128704,
+        "end": 1341784064
+      },
+      "IROM": {
+        "start": 1073741824,
+        "end": 1275068416
+      },
+      "IROM_MASK": {
+        "start": 1337982976,
+        "end": 1338114048
+      },
+      "MEM_INTERNAL2": {
+        "start": 1611653120,
+        "end": 1611661312
+      },
+      "PADDING": {
+        "start": 0,
+        "end": 65536
+      },
+      "RTC_DRAM": {
+        "start": 1343258624,
+        "end": 1343291392
+      },
+      "RTC_IRAM": {
+        "start": 1343258624,
+        "end": 1343291392
+      }
+    }
+  },
+  "ESP32ROM": {
+    "name": "ESP32",
+    "chipId": 0,
+    "lenStatus": 2,
+    "flashEncryptedWriteAlign": 32,
+    "IROM": {
+      "start": 1074593792,
+      "end": 1077936128
+    },
+    "DROM": {
+      "start": 1061158912,
+      "end": 1065353216
+    },
+    "magicValue": [
+      15736195
+    ],
+    "bootloaderFlashOffset": 4096,
+    "uf2FamilyId": 475996592,
+    "supportsEncryptedFlash": false,
+    "isStub": true,
+    "memory": {
+      "BYTE_ACCESSIBLE": {
+        "start": 1073283072,
+        "end": 1073741824
+      },
+      "CACHE_APP": {
+        "start": 1074233344,
+        "end": 1074266112
+      },
+      "CACHE_PRO": {
+        "start": 1074200576,
+        "end": 1074233344
+      },
+      "DIRAM_DRAM": {
+        "start": 1073610752,
+        "end": 1073741820
+      },
+      "DIRAM_IRAM": {
+        "start": 1074397184,
+        "end": 1074528252
+      },
+      "DRAM": {
+        "start": 1073405952,
+        "end": 1073741824
+      },
+      "DROM": {
+        "start": 1061158912,
+        "end": 1065353216
+      },
+      "EXTRAM_DATA": {
+        "start": 1065353216,
+        "end": 1069547520
+      },
+      "IRAM": {
+        "start": 1074266112,
+        "end": 1074397184
+      },
+      "IROM": {
+        "start": 1074593792,
+        "end": 1077936128
+      },
+      "PADDING": {
+        "start": 0,
+        "end": 65536
+      },
+      "RTC_DATA": {
+        "start": 1342177280,
+        "end": 1342185472
+      },
+      "RTC_DRAM": {
+        "start": 1073217536,
+        "end": 1073225728
+      },
+      "RTC_IRAM": {
+        "start": 1074528256,
+        "end": 1074536448
+      }
+    }
+  },
+  "ESP32S2ROM": {
+    "name": "ESP32-S2",
+    "chipId": 0,
+    "lenStatus": 2,
+    "flashEncryptedWriteAlign": 16,
+    "IROM": {
+      "start": 1074266112,
+      "end": 1085800448
+    },
+    "DROM": {
+      "start": 1056964608,
+      "end": 1061093376
+    },
+    "magicValue": [
+      1990
+    ],
+    "bootloaderFlashOffset": 0,
+    "uf2FamilyId": 3218951918,
+    "supportsEncryptedFlash": true,
+    "isStub": true,
+    "memory": {
+      "BYTE_ACCESSIBLE": {
+        "start": 1073340416,
+        "end": 1073741824
+      },
+      "DRAM": {
+        "start": 1073414144,
+        "end": 1073741824
+      },
+      "DROM": {
+        "start": 1056964608,
+        "end": 1073217536
+      },
+      "EXTRAM_DATA": {
+        "start": 1062207488,
+        "end": 1073217536
+      },
+      "IRAM": {
+        "start": 1073872896,
+        "end": 1074200576
+      },
+      "IROM": {
+        "start": 1074266112,
+        "end": 1082130432
+      },
+      "IROM_MASK": {
+        "start": 1073741824,
+        "end": 1073848576
+      },
+      "MEM_INTERNAL": {
+        "start": 1073340416,
+        "end": 1074208768
+      },
+      "PADDING": {
+        "start": 0,
+        "end": 65536
+      },
+      "RTC_DATA": {
+        "start": 1342177280,
+        "end": 1342185472
+      },
+      "RTC_DRAM": {
+        "start": 1073340416,
+        "end": 1073348608
+      },
+      "RTC_IRAM": {
+        "start": 1074200576,
+        "end": 1074208768
+      }
+    }
+  },
+  "ESP32S3ROM": {
+    "name": "ESP32-S3",
+    "chipId": 0,
+    "lenStatus": 2,
+    "flashEncryptedWriteAlign": 16,
+    "IROM": {
+      "start": 1107296256,
+      "end": 1140850688
+    },
+    "DROM": {
+      "start": 1006632960,
+      "end": 1040187392
+    },
+    "magicValue": [
+      9
+    ],
+    "bootloaderFlashOffset": 0,
+    "uf2FamilyId": 3296614247,
+    "supportsEncryptedFlash": true,
+    "isStub": true,
+    "memory": {
+      "BYTE_ACCESSIBLE": {
+        "start": 1070104576,
+        "end": 1070596096
+      },
+      "DRAM": {
+        "start": 1070104576,
+        "end": 1070596096
+      },
+      "DROM": {
+        "start": 1006632960,
+        "end": 1023410176
+      },
+      "EXTRAM_DATA": {
+        "start": 1023410176,
+        "end": 1040187392
+      },
+      "IRAM": {
+        "start": 1077346304,
+        "end": 1077805056
+      },
+      "IROM": {
+        "start": 1107296256,
+        "end": 1115684864
+      },
+      "IROM_MASK": {
+        "start": 1073741824,
+        "end": 1073848576
+      },
+      "MEM_INTERNAL": {
+        "start": 1070104576,
+        "end": 1077813248
+      },
+      "PADDING": {
+        "start": 0,
+        "end": 65536
+      },
+      "RTC_DATA": {
+        "start": 1342177280,
+        "end": 1342185472
+      },
+      "RTC_DRAM": {
+        "start": 1611653120,
+        "end": 1611661312
+      },
+      "RTC_IRAM": {
+        "start": 1611653120,
+        "end": 1611661312
+      }
+    }
+  },
+  "ESP8266ROM": {
+    "name": "ESP8266",
+    "chipId": 0,
+    "lenStatus": 0,
+    "flashEncryptedWriteAlign": 0,
+    "IROM": {
+      "start": 0,
+      "end": 0
+    },
+    "DROM": {
+      "start": 0,
+      "end": 0
+    },
+    "magicValue": [
+      4293968129
+    ],
+    "bootloaderFlashOffset": 0,
+    "uf2FamilyId": 2125160941,
+    "supportsEncryptedFlash": false,
+    "isStub": true,
+    "memory": {
+      "DPORT": {
+        "start": 1072693248,
+        "end": 1072693264
+      },
+      "DRAM": {
+        "start": 1073643520,
+        "end": 1073741824
+      },
+      "IRAM": {
+        "start": 1074790400,
+        "end": 1074823168
+      },
+      "IROM": {
+        "start": 1075843088,
+        "end": 1076760592
+      }
+    }
+  }
+}
