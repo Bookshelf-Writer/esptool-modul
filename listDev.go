@@ -41,10 +41,10 @@ func listDevices() ([]string, error) {
 	switch runtime.GOOS {
 	case "linux":
 		cmd = "sh"
-		args = append(args, "-c", "ls /dev/tty* | grep -E 'ttyUSB[0-9]+|ttyACM[0-9]+'")
+		args = append(args, "-c", "ls /dev/tty* | grep -E 'ttyUSB.*|ttyACM.*'")
 	case "windows":
 		cmd = "powershell"
-		args = append(args, "Get-WmiObject Win32_SerialPort | Select-Object -ExpandProperty DeviceID")
+		args = append(args, "Get-ItemProperty HKLM:\\HARDWARE\\DEVICEMAP\\SERIALCOMM | Select-Object -Property * -ExcludeProperty PSPath, PSParentPath, PSChildName, PSDrive, PSProvider | ForEach-Object { $_.PSObject.Properties.Value }")
 	case "darwin":
 		cmd = "sh"
 		args = append(args, "-c", "ls /dev/tty.*")
