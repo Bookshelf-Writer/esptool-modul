@@ -29,6 +29,8 @@ const (
 	OpEraseRegion   OpType = 209
 	OpReadFlashFast OpType = 210
 	OpRunUserCode   OpType = 211
+
+	OpFlashEncryptData OpType = 212
 )
 
 const (
@@ -55,6 +57,8 @@ const (
 	OpTextEraseRegion   = "Erase Region"
 	OpTextReadFlashFast = "Read Flash Fast"
 	OpTextRunUserCode   = "Run User Code"
+
+	OpTextFlashEncryptData = "Flash Encrypt Data"
 )
 
 var OpMap = map[OpType]string{
@@ -79,6 +83,7 @@ var OpMap = map[OpType]string{
 	OpEraseRegion:       OpTextEraseRegion,
 	OpReadFlashFast:     OpTextReadFlashFast,
 	OpRunUserCode:       OpTextRunUserCode,
+	OpFlashEncryptData:  OpTextFlashEncryptData,
 }
 
 func (obj OpType) String() string {

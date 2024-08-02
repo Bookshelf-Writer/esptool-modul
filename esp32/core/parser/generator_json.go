@@ -16,7 +16,7 @@ func buildJSON(maps map[string]*core.ModulStruct) {
 		return
 	}
 
-	err = os.WriteFile("esp32/core/parser/esptool-list.json", jsonData, 0644)
+	err = os.WriteFile("esp32/core/esptool-list.json", jsonData, 0644)
 	if err != nil {
 		fmt.Println("Error writing file:", err)
 		return
