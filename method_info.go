@@ -20,15 +20,24 @@ func (obj *MethodObj) Info() {
 		return
 	}
 
-	esp32, err := connectEsp32(serialPort, uint32(*CLI.Baud.Connect), uint32(*CLI.Baud.Transfer), *CLI.Conn.Retries, newLog)
-	if err != nil {
-		newLog.Error().Err(err).Msg("connect esp32 failed")
-		obj.EndInvalid()
-		return
-	}
+	//todo причесать нормально
+	{
+		esp32, err := connectEsp32(serialPort, uint32(*CLI.Baud.Connect), uint32(*CLI.Baud.Transfer), *CLI.Conn.Retries, newLog)
+		if err != nil {
+			newLog.Error().Err(err).Msg("connect esp32 failed")
+			obj.EndInvalid()
+			return
+		}
 
-	err = infoCommand(esp32)
-	newLog.Error().Err(err).Send()
+		err = infoCommand(esp32)
+		if err != nil {
+			newLog.Error().Err(err).Msg("esp32 info failed")
+			obj.EndInvalid()
+			return
+		}
+
+		newLog.Info().Msg("OK")
+	}
 
 	obj.End()
 }

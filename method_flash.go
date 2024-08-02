@@ -2,6 +2,7 @@ package main
 
 import (
 	"esptool/common/cmd"
+	"io/ioutil"
 	"os"
 )
 
@@ -44,21 +45,34 @@ func (obj *MethodObj) FlashRead() {
 		}
 	}
 
-	/*
-		esp32, err := connectEsp32(*flashReadPort, uint32(*flashReadConnectBaudrate), uint32(*flashReadTransferBaudrate), *flashReadRetries, logger)
+	//todo причесать нормально
+	{
+		esp32, err := connectEsp32(serialPort, uint32(*CLI.Baud.Connect), uint32(*CLI.Baud.Transfer), *CLI.Conn.Retries, newLog)
 		if err != nil {
-			return err
+			newLog.Error().Err(err).Msg("connect esp32 failed")
+			obj.EndInvalid()
+			return
 		}
-		bytes, err := esp32.ReadFlash(uint32(*flashReadOffset), uint32(*flashReadSize))
+		bytes, err := esp32.ReadFlash(uint32(*CLI.Flash.Offset), uint32(size))
 		if err != nil {
-			return err
+			newLog.Error().Err(err).Msg("read esp32 failed")
+			obj.EndInvalid()
+			return
 		}
-		os.Stdout.Write(bytes)
-		return nil
-	*/
 
+		_, err = os.Stdout.Write(bytes)
+		if err != nil {
+			newLog.Error().Err(err).Msg("write esp32 failed")
+			obj.EndInvalid()
+			return
+		}
+
+		newLog.Info().Msg("OK")
+	}
 	obj.End()
 }
+
+////////
 
 func (obj *MethodObj) FlashWrite() {
 	newLog := obj.log.NewLog("FlashWrite")
@@ -84,23 +98,30 @@ func (obj *MethodObj) FlashWrite() {
 		}
 	}
 
-	/*
-		contents, err := ioutil.ReadFile(*flashWriteFile)
+	//todo причесать нормально
+	{
+		contents, err := ioutil.ReadFile(file)
 		if err != nil {
-			return err
+			newLog.Error().Err(err).Msg("error when trying to create a file")
+			obj.EndInvalid()
+			return
 		}
-		esp32, err := connectEsp32(*flashWritePort, uint32(*flashWriteConnectBaudrate), uint32(*flashWriteTransferBaudrate), *flashWriteRetries, logger)
+		esp32, err := connectEsp32(serialPort, uint32(*CLI.Baud.Connect), uint32(*CLI.Baud.Transfer), *CLI.Conn.Retries, newLog)
 		if err != nil {
-			return err
+			newLog.Error().Err(err).Msg("connect esp32 failed")
+			obj.EndInvalid()
+			return
 		}
 
-		err = esp32.WriteFlash(uint32(*flashWriteOffset), contents, *flashWriteCompress)
+		err = esp32.WriteFlash(uint32(*CLI.Flash.Offset), contents, *CLI.Flash.Compress)
 		if err != nil {
-			panic(err)
+			newLog.Error().Err(err).Msg("write esp32 failed")
+			obj.EndInvalid()
+			return
 		}
-		logger.Print("Done")
-		return nil
-	*/
+
+		newLog.Info().Msg("OK")
+	}
 
 	obj.End()
 }
