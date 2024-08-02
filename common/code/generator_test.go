@@ -9,7 +9,7 @@ import (
 
 func TestErrorCode(t *testing.T) {
 	obj := generator.Init("Err", "error.go")
-	val := obj.GetVal()
+	val := obj.GetByteVal()
 
 	//
 
@@ -28,7 +28,7 @@ func TestErrorCode(t *testing.T) {
 
 func TestOpCode(t *testing.T) {
 	obj := generator.Init("Op", "op.go")
-	val := obj.GetVal()
+	val := obj.GetByteVal()
 
 	//
 

@@ -58,6 +58,11 @@ func (gen *GeneratorObj) Map() *GeneratorObj {
 	return gen
 }
 
+func (gen *GeneratorObj) TitleCase(text string) *GeneratorObj {
+	gen.Write([]byte(toTitleCase(text)))
+	return gen
+}
+
 func (gen *GeneratorObj) ConstCode(code string) *GeneratorObj {
 	gen.Write([]byte(gen.val.name + toTitleCase(code)))
 	return gen

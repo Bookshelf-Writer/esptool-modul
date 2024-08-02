@@ -8,7 +8,8 @@ import (
 //###########################################################//
 
 type GeneratorObj struct {
-	val GeneratorValueObj
+	val GeneratorByteValueObj
+	str GeneratorStringValueObj
 
 	filename string
 	buf      bytes.Buffer
@@ -16,10 +17,15 @@ type GeneratorObj struct {
 
 func Init(name string, file string) *GeneratorObj {
 	obj := GeneratorObj{}
+
 	obj.val.maps = make(map[byte]string)
 	obj.val.delim = make(map[byte]bool)
-
 	obj.val.name = name
+
+	obj.str.maps = make(map[string]string)
+	obj.str.delim = make(map[string]bool)
+	obj.str.name = name
+
 	obj.filename = file
 
 	return &obj

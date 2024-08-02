@@ -9,7 +9,7 @@ import (
 
 func TestFeatureCode(t *testing.T) {
 	obj := generator.Init("Feature", "feature.go")
-	val := obj.GetVal()
+	val := obj.GetByteVal()
 
 	//
 
@@ -40,7 +40,7 @@ func TestFeatureCode(t *testing.T) {
 
 func TestEspCode(t *testing.T) {
 	obj := generator.Init("Esp", "esp.go")
-	val := obj.GetVal()
+	val := obj.GetByteVal()
 
 	//
 

@@ -20,21 +20,21 @@ type CliCommand struct {
 }
 
 var (
-	versionFlagSet = flag.NewFlagSet("version", flag.ExitOnError)
-	versionJson    = versionFlagSet.Bool("json", false, "Display version info in JSON format")
+	versionFlagSet = flag.NewFlagSet("#version", flag.ExitOnError)
+	versionJson    = versionFlagSet.Bool("#json", false, "Display version info in JSON format")
 
-	help    = flag.Bool("help", false, "Show a help page")
-	devList = flag.Bool("list", false, "Show available devices")
+	help    = flag.Bool("#help", false, "Show a help page")
+	devList = flag.Bool("#list", false, "Show available devices")
 
-	infoFlagSet          = flag.NewFlagSet("info", flag.ExitOnError)
+	infoFlagSet          = flag.NewFlagSet("#info", flag.ExitOnError)
 	infoPort             = infoFlagSet.String("serial.port", "", "Serial port device file")
 	infoConnectBaudrate  = infoFlagSet.Uint("serial.baudrate.connect", defaultConnectBaudrate, "Serial signalling rate during connect phase")
 	infoTransferBaudrate = infoFlagSet.Uint("serial.baudrate.transfer", defaultTransferBaudrate, "Serial signalling rate during data transfer")
 	infoTimeout          = infoFlagSet.Duration("serial.connect.timeout", 500*time.Millisecond, "Timeout to wait for chip response upon connecting")
 	infoRetries          = infoFlagSet.Uint("serial.connect.retries", 5, "How often to retry connecting")
-	infoJson             = infoFlagSet.Bool("json", false, "Display chip info in JSON format")
+	infoJson             = infoFlagSet.Bool("#json", false, "Display chip info in JSON format")
 
-	flashReadFlagSet          = flag.NewFlagSet("flashRead", flag.ExitOnError)
+	flashReadFlagSet          = flag.NewFlagSet("#flashRead", flag.ExitOnError)
 	flashReadPort             = flashReadFlagSet.String("serial.port", "", "Serial port device file")
 	flashReadConnectBaudrate  = flashReadFlagSet.Uint("serial.baudrate.connect", defaultConnectBaudrate, "Serial signalling rate during connect phase")
 	flashReadTransferBaudrate = flashReadFlagSet.Uint("serial.baudrate.transfer", defaultTransferBaudrate, "Serial signalling rate during data transfer")
@@ -45,7 +45,7 @@ var (
 	flashReadFile             = flashReadFlagSet.String("flash.file", "", "File to read flash contents into")
 	flashReadPartitionName    = flashReadFlagSet.String("flash.partition.name", "", "Partition to read")
 
-	flashWriteFlagSet          = flag.NewFlagSet("flashWrite", flag.ExitOnError)
+	flashWriteFlagSet          = flag.NewFlagSet("#flashWrite", flag.ExitOnError)
 	flashWritePort             = flashWriteFlagSet.String("serial.port", "", "Serial port device file")
 	flashWriteConnectBaudrate  = flashWriteFlagSet.Uint("serial.baudrate.connect", defaultConnectBaudrate, "Serial signalling rate during connect phase")
 	flashWriteTransferBaudrate = flashWriteFlagSet.Uint("serial.baudrate.transfer", defaultTransferBaudrate, "Serial signalling rate during data transfer")
@@ -98,7 +98,7 @@ var (
 			},
 		},
 		&CliCommand{
-			Name:        "flashWrite",
+			Name:        flashWriteFlagSet.Name(),
 			Description: "Write flash contents",
 			FlagSet:     flashWriteFlagSet,
 			Callback: func(logger *log.Logger) error {
