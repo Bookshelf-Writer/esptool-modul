@@ -1,6 +1,7 @@
-package parser
+package main
 
 import (
+	"esptool/esp32/core"
 	"fmt"
 	"io/ioutil"
 	"net/http"
@@ -59,12 +60,12 @@ func parseMapX2(text string) map[string]string {
 	return chipDefMap
 }
 
-func parseMemoryMap(input string) map[string]ModulMapStruct {
+func parseMemoryMap(input string) map[string]core.ModulMapStruct {
 	pattern := `\[\s*(0x[0-9A-F]+)\s*,\s*(0x[0-9A-F]+)\s*,\s*"([^"]+)"\s*\]`
 	re := regexp.MustCompile(pattern)
 	matches := re.FindAllStringSubmatch(input, -1)
 
-	memoryMap := make(map[string]ModulMapStruct)
+	memoryMap := make(map[string]core.ModulMapStruct)
 	for _, match := range matches {
 		start, err := strconv.ParseUint(match[1], 0, 64)
 		if err != nil {
@@ -74,7 +75,7 @@ func parseMemoryMap(input string) map[string]ModulMapStruct {
 		if err != nil {
 			return memoryMap
 		}
-		memoryMap[match[3]] = ModulMapStruct{start, end}
+		memoryMap[match[3]] = core.ModulMapStruct{start, end}
 	}
 
 	return memoryMap

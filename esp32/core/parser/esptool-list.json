@@ -1,25 +1,20 @@
 {
   "ESP32C2ROM": {
     "name": "ESP32-C2",
-    "chipId": 0,
-    "lenStatus": 2,
-    "flashEncryptedWriteAlign": 0,
-    "IROM": {
-      "start": 1107296256,
-      "end": 1111490560
+    "sys": {
+      "chip": 12,
+      "len_status": 2,
+      "flash_offset": 0,
+      "uf2": 730387100
     },
-    "DROM": {
-      "start": 1006632960,
-      "end": 1010827264
+    "Encrypt": {
+      "write_align": 0,
+      "supports": false
     },
     "magicValue": [
       1867591791,
       2084675695
     ],
-    "bootloaderFlashOffset": 0,
-    "uf2FamilyId": 730387100,
-    "supportsEncryptedFlash": false,
-    "isStub": true,
     "memory": {
       "BYTE_ACCESSIBLE": {
         "start": 1070104576,
@@ -57,16 +52,15 @@
   },
   "ESP32C3ROM": {
     "name": "ESP32-C3",
-    "chipId": 0,
-    "lenStatus": 2,
-    "flashEncryptedWriteAlign": 16,
-    "IROM": {
-      "start": 1107296256,
-      "end": 1115684864
+    "sys": {
+      "chip": 5,
+      "len_status": 2,
+      "flash_offset": 0,
+      "uf2": 3559628908
     },
-    "DROM": {
-      "start": 1006632960,
-      "end": 1015021568
+    "Encrypt": {
+      "write_align": 16,
+      "supports": true
     },
     "magicValue": [
       1763790959,
@@ -74,10 +68,6 @@
       1216438383,
       1130455151
     ],
-    "bootloaderFlashOffset": 0,
-    "uf2FamilyId": 3559628908,
-    "supportsEncryptedFlash": true,
-    "isStub": true,
     "memory": {
       "BYTE_ACCESSIBLE": {
         "start": 1070104576,
@@ -127,24 +117,19 @@
   },
   "ESP32C5ROM": {
     "name": "ESP32-C5",
-    "chipId": 0,
-    "lenStatus": 2,
-    "flashEncryptedWriteAlign": 0,
-    "IROM": {
-      "start": 1107296256,
-      "end": 1115684864
+    "sys": {
+      "chip": 23,
+      "len_status": 2,
+      "flash_offset": 0,
+      "uf2": 4145808195
     },
-    "DROM": {
-      "start": 1115684864,
-      "end": 1124073472
+    "Encrypt": {
+      "write_align": 0,
+      "supports": false
     },
     "magicValue": [
       285294703
     ],
-    "bootloaderFlashOffset": 0,
-    "uf2FamilyId": 4145808195,
-    "supportsEncryptedFlash": false,
-    "isStub": true,
     "memory": {
       "BYTE_ACCESSIBLE": {
         "start": 1082130432,
@@ -194,24 +179,19 @@
   },
   "ESP32C61ROM": {
     "name": "ESP32-C61",
-    "chipId": 0,
-    "lenStatus": 0,
-    "flashEncryptedWriteAlign": 0,
-    "IROM": {
-      "start": 0,
-      "end": 0
+    "sys": {
+      "chip": 20,
+      "len_status": 0,
+      "flash_offset": 0,
+      "uf2": 2010665156
     },
-    "DROM": {
-      "start": 0,
-      "end": 0
+    "Encrypt": {
+      "write_align": 0,
+      "supports": false
     },
     "magicValue": [
       871374959
     ],
-    "bootloaderFlashOffset": 0,
-    "uf2FamilyId": 2010665156,
-    "supportsEncryptedFlash": false,
-    "isStub": false,
     "memory": {
       "BYTE_ACCESSIBLE": {
         "start": 1082130432,
@@ -261,24 +241,19 @@
   },
   "ESP32C6ROM": {
     "name": "ESP32-C6",
-    "chipId": 0,
-    "lenStatus": 2,
-    "flashEncryptedWriteAlign": 16,
-    "IROM": {
-      "start": 1107296256,
-      "end": 1115684864
+    "sys": {
+      "chip": 13,
+      "len_status": 2,
+      "flash_offset": 0,
+      "uf2": 1410195298
     },
-    "DROM": {
-      "start": 1115684864,
-      "end": 1124073472
+    "Encrypt": {
+      "write_align": 16,
+      "supports": true
     },
     "magicValue": [
       752910447
     ],
-    "bootloaderFlashOffset": 0,
-    "uf2FamilyId": 1410195298,
-    "supportsEncryptedFlash": true,
-    "isStub": true,
     "memory": {
       "BYTE_ACCESSIBLE": {
         "start": 1082130432,
@@ -328,47 +303,37 @@
   },
   "ESP32H2ROM": {
     "name": "ESP32-H2",
-    "chipId": 0,
-    "lenStatus": 2,
-    "flashEncryptedWriteAlign": 0,
-    "IROM": {
-      "start": 0,
-      "end": 0
+    "sys": {
+      "chip": 16,
+      "len_status": 2,
+      "flash_offset": 0,
+      "uf2": 858203894
     },
-    "DROM": {
-      "start": 0,
-      "end": 0
+    "Encrypt": {
+      "write_align": 0,
+      "supports": false
     },
     "magicValue": [
       3619110528
     ],
-    "bootloaderFlashOffset": 0,
-    "uf2FamilyId": 858203894,
-    "supportsEncryptedFlash": false,
-    "isStub": true,
     "memory": null
   },
   "ESP32P4ROM": {
     "name": "ESP32-P4",
-    "chipId": 0,
-    "lenStatus": 2,
-    "flashEncryptedWriteAlign": 16,
-    "IROM": {
-      "start": 1073741824,
-      "end": 1275068416
+    "sys": {
+      "chip": 18,
+      "len_status": 2,
+      "flash_offset": 8192,
+      "uf2": 1026592404
     },
-    "DROM": {
-      "start": 1073741824,
-      "end": 1275068416
+    "Encrypt": {
+      "write_align": 16,
+      "supports": true
     },
     "magicValue": [
       0,
       182303440
     ],
-    "bootloaderFlashOffset": 8192,
-    "uf2FamilyId": 1026592404,
-    "supportsEncryptedFlash": true,
-    "isStub": true,
     "memory": {
       "BYTE_ACCESSIBLE": {
         "start": 1341128704,
@@ -418,24 +383,19 @@
   },
   "ESP32ROM": {
     "name": "ESP32",
-    "chipId": 0,
-    "lenStatus": 2,
-    "flashEncryptedWriteAlign": 32,
-    "IROM": {
-      "start": 1074593792,
-      "end": 1077936128
+    "sys": {
+      "chip": 0,
+      "len_status": 2,
+      "flash_offset": 4096,
+      "uf2": 475996592
     },
-    "DROM": {
-      "start": 1061158912,
-      "end": 1065353216
+    "Encrypt": {
+      "write_align": 32,
+      "supports": false
     },
     "magicValue": [
       15736195
     ],
-    "bootloaderFlashOffset": 4096,
-    "uf2FamilyId": 475996592,
-    "supportsEncryptedFlash": false,
-    "isStub": true,
     "memory": {
       "BYTE_ACCESSIBLE": {
         "start": 1073283072,
@@ -497,24 +457,19 @@
   },
   "ESP32S2ROM": {
     "name": "ESP32-S2",
-    "chipId": 0,
-    "lenStatus": 2,
-    "flashEncryptedWriteAlign": 16,
-    "IROM": {
-      "start": 1074266112,
-      "end": 1085800448
+    "sys": {
+      "chip": 2,
+      "len_status": 2,
+      "flash_offset": 0,
+      "uf2": 3218951918
     },
-    "DROM": {
-      "start": 1056964608,
-      "end": 1061093376
+    "Encrypt": {
+      "write_align": 16,
+      "supports": true
     },
     "magicValue": [
       1990
     ],
-    "bootloaderFlashOffset": 0,
-    "uf2FamilyId": 3218951918,
-    "supportsEncryptedFlash": true,
-    "isStub": true,
     "memory": {
       "BYTE_ACCESSIBLE": {
         "start": 1073340416,
@@ -568,24 +523,19 @@
   },
   "ESP32S3ROM": {
     "name": "ESP32-S3",
-    "chipId": 0,
-    "lenStatus": 2,
-    "flashEncryptedWriteAlign": 16,
-    "IROM": {
-      "start": 1107296256,
-      "end": 1140850688
+    "sys": {
+      "chip": 9,
+      "len_status": 2,
+      "flash_offset": 0,
+      "uf2": 3296614247
     },
-    "DROM": {
-      "start": 1006632960,
-      "end": 1040187392
+    "Encrypt": {
+      "write_align": 16,
+      "supports": true
     },
     "magicValue": [
       9
     ],
-    "bootloaderFlashOffset": 0,
-    "uf2FamilyId": 3296614247,
-    "supportsEncryptedFlash": true,
-    "isStub": true,
     "memory": {
       "BYTE_ACCESSIBLE": {
         "start": 1070104576,
@@ -639,24 +589,19 @@
   },
   "ESP8266ROM": {
     "name": "ESP8266",
-    "chipId": 0,
-    "lenStatus": 0,
-    "flashEncryptedWriteAlign": 0,
-    "IROM": {
-      "start": 0,
-      "end": 0
+    "sys": {
+      "chip": 0,
+      "len_status": 0,
+      "flash_offset": 0,
+      "uf2": 2125160941
     },
-    "DROM": {
-      "start": 0,
-      "end": 0
+    "Encrypt": {
+      "write_align": 0,
+      "supports": false
     },
     "magicValue": [
       4293968129
     ],
-    "bootloaderFlashOffset": 0,
-    "uf2FamilyId": 2125160941,
-    "supportsEncryptedFlash": false,
-    "isStub": true,
     "memory": {
       "DPORT": {
         "start": 1072693248,

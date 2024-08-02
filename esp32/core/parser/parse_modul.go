@@ -1,6 +1,7 @@
-package parser
+package main
 
 import (
+	"esptool/esp32/core"
 	"fmt"
 	"regexp"
 	"strconv"
@@ -9,34 +10,7 @@ import (
 
 //###########################################################//
 
-type ModulMapStruct struct {
-	Start uint64 `json:"start"`
-	End   uint64 `json:"end"`
-}
-
-type ModulStruct struct {
-	Value     *map[string]string `json:"value,omitempty"`
-	Name      string             `json:"name"`
-	ChipId    int                `json:"chipId"`
-	LenStatus int                `json:"lenStatus"`
-
-	FlashEncryptedWriteAlign int `json:"flashEncryptedWriteAlign"`
-
-	IROM ModulMapStruct `json:"IROM"`
-	DROM ModulMapStruct `json:"DROM"`
-
-	MagicValue []uint64 `json:"magicValue"`
-
-	BootloaderFlashOffset uint64 `json:"bootloaderFlashOffset"`
-	Uf2FamilyId           uint64 `json:"uf2FamilyId"`
-
-	SupportsEncryptedFlash bool `json:"supportsEncryptedFlash"`
-	IsStub                 bool `json:"isStub"`
-
-	Memory map[string]ModulMapStruct `json:"memory"`
-}
-
-func LoadModul(file string) (*ModulStruct, error) {
+func LoadModul(file string) (*core.ModulStruct, error) {
 	body, err := Load(UrlPyDir + file + ".py")
 	if err != nil {
 		return nil, err
@@ -63,7 +37,7 @@ func LoadModul(file string) (*ModulStruct, error) {
 		return nil, fmt.Errorf("No variables found.")
 	}
 
-	obj := ModulStruct{}
+	obj := core.ModulStruct{}
 	bufValueMap := make(map[string]string)
 	obj.Value = &bufValueMap
 
@@ -84,31 +58,19 @@ func LoadModul(file string) (*ModulStruct, error) {
 					obj.MagicValue = parseHexValues(val)
 
 				case "STATUS_BYTES_LENGTH":
-					obj.LenStatus, _ = strconv.Atoi(val)
+					obj.Sys.LenStatus, _ = strconv.Atoi(val)
+				case "IMAGE_CHIP_ID":
+					obj.Sys.Chip, _ = strconv.Atoi(val)
+				case "BOOTLOADER_FLASH_OFFSET":
+					obj.Sys.FlashOffset = parseUint(val)
+				case "UF2_FAMILY_ID":
+					obj.Sys.UF2 = parseUint(val)
 
 				case "FLASH_ENCRYPTED_WRITE_ALIGN":
-					obj.FlashEncryptedWriteAlign, _ = strconv.Atoi(val)
+					obj.Encrypt.WriteAlign, _ = strconv.Atoi(val)
 
-				case "IS_STUB":
-					obj.IsStub, _ = strconv.ParseBool(val)
 				case "SUPPORTS_ENCRYPTED_FLASH":
-					obj.SupportsEncryptedFlash, _ = strconv.ParseBool(val)
-
-				case "BOOTLOADER_FLASH_OFFSET":
-					obj.BootloaderFlashOffset = parseUint(val)
-
-				case "UF2_FAMILY_ID":
-					obj.Uf2FamilyId = parseUint(val)
-
-				case "IROM_MAP_START":
-					obj.IROM.Start = parseUint(val)
-				case "IROM_MAP_END":
-					obj.IROM.End = parseUint(val)
-
-				case "DROM_MAP_START":
-					obj.DROM.Start = parseUint(val)
-				case "DROM_MAP_END":
-					obj.DROM.End = parseUint(val)
+					obj.Encrypt.Supports, _ = strconv.ParseBool(val)
 
 				default:
 					if val[0] != '[' && val[0] != '{' && val[0] != '(' {
