@@ -44,28 +44,24 @@ type CliTrigTypeObj struct {
 	FlashWrite *bool
 }
 
-var CliTrigType CliTrigTypeObj
-
-func init() {
-	CliTrigType = CliTrigTypeObj{
-		Help:       flag.Bool(CliTrigHelp, false, CliTrigTextHelp),
-		Version:    flag.Bool(CliTrigVersion, false, CliTrigTextVersion),
-		Json:       flag.Bool(CliTrigJson, false, CliTrigTextJson),
-		NoColor:    flag.Bool(CliTrigNoColor, false, CliTrigTextNoColor),
-		List:       flag.Bool(CliTrigList, false, CliTrigTextList),
-		Info:       flag.Bool(CliTrigInfo, false, CliTrigTextInfo),
-		FlashRead:  flag.Bool(CliTrigFlashRead, false, CliTrigTextFlashRead),
-		FlashWrite: flag.Bool(CliTrigFlashWrite, false, CliTrigTextFlashWrite),
-	}
+var CliTrigType = CliTrigTypeObj{
+	Help:       flag.Bool(CliTrigHelp, false, CliTrigTextHelp),
+	Version:    flag.Bool(CliTrigVersion, false, CliTrigTextVersion),
+	Json:       flag.Bool(CliTrigJson, false, CliTrigTextJson),
+	NoColor:    flag.Bool(CliTrigNoColor, false, CliTrigTextNoColor),
+	List:       flag.Bool(CliTrigList, false, CliTrigTextList),
+	Info:       flag.Bool(CliTrigInfo, false, CliTrigTextInfo),
+	FlashRead:  flag.Bool(CliTrigFlashRead, false, CliTrigTextFlashRead),
+	FlashWrite: flag.Bool(CliTrigFlashWrite, false, CliTrigTextFlashWrite),
 }
 
 var CliTrigTypeMap = map[string]*bool{
-	"help":       CliTrigType.Help,
-	"version":    CliTrigType.Version,
-	"json":       CliTrigType.Json,
-	"noColor":    CliTrigType.NoColor,
-	"list":       CliTrigType.List,
-	"info":       CliTrigType.Info,
-	"flashRead":  CliTrigType.FlashRead,
-	"flashWrite": CliTrigType.FlashWrite,
+	CliTrigHelp:       CliTrigType.Help,
+	CliTrigVersion:    CliTrigType.Version,
+	CliTrigJson:       CliTrigType.Json,
+	CliTrigNoColor:    CliTrigType.NoColor,
+	CliTrigList:       CliTrigType.List,
+	CliTrigInfo:       CliTrigType.Info,
+	CliTrigFlashRead:  CliTrigType.FlashRead,
+	CliTrigFlashWrite: CliTrigType.FlashWrite,
 }

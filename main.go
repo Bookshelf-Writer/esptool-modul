@@ -2,7 +2,6 @@ package main
 
 import (
 	"flag"
-	"os"
 	"strings"
 )
 
@@ -40,10 +39,6 @@ func main() {
 
 	logs := NewLog(bufLog.Level(logLVL), "CLI")
 	method := MethodObj{log: logs}
-	if len(os.Args) < 2 {
-		method.Help()
-		return
-	}
 
 	//move by group
 	switch {
