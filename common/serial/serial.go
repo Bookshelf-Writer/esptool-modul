@@ -18,16 +18,19 @@ type PortObj struct {
 	BaudRate PortBaudRateObj
 }
 
-func PortInit(config *ConfigObj) (obj *PortObj, err error) {
+func PortInit(config *ConfigObj) (*PortObj, error) {
+	obj := PortObj{}
+	var err error
+
 	obj.conf = config
-	obj.BaudRate.obj = obj
+	obj.BaudRate.obj = &obj
 
 	obj.port, err = serial.Open(config.PortName, config.Mode())
 	if err != nil {
 		return nil, err
 	}
 
-	return obj, nil
+	return &obj, nil
 }
 
 ////////

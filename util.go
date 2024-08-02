@@ -16,8 +16,7 @@ func underline(s string) string {
 }
 
 func connectEsp32(portPath string, connectBaudrate uint32, transferBaudrate uint32, retries uint, logger *log.Logger) (*esp32.ESP32ROM, error) {
-	serialConfig := serial.ConfigInit(portPath, connectBaudrate)
-	serialPort, err := serial.PortInit(serialConfig)
+	serialPort, err := serial.PortInit(serial.ConfigInit(portPath, connectBaudrate))
 	if err != nil {
 		return nil, fmt.Errorf("Failed to open serial port: %s", err.Error())
 	}
