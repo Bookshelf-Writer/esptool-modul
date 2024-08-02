@@ -5,7 +5,7 @@ import (
 	"esptool/common"
 	"esptool/common/serial"
 	"fmt"
-	"log"
+	"github.com/rs/zerolog"
 	"time"
 )
 
@@ -56,12 +56,12 @@ type ESP32ROM struct {
 	SerialPort     *serial.PortObj
 	SlipReadWriter *common.SlipReadWriter
 	flashAttached  bool
-	logger         *log.Logger
+	logger         *zerolog.Logger
 	defaultTimeout time.Duration
 	defaultRetries int
 }
 
-func NewESP32ROM(serialPort *serial.PortObj, logger *log.Logger) *ESP32ROM {
+func NewESP32ROM(serialPort *serial.PortObj, logger *zerolog.Logger) *ESP32ROM {
 	return &ESP32ROM{
 		SerialPort:     serialPort,
 		SlipReadWriter: common.NewSlipReadWriter(serialPort, logger),

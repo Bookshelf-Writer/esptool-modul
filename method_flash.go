@@ -44,6 +44,19 @@ func (obj *MethodObj) FlashRead() {
 		}
 	}
 
+	/*
+		esp32, err := connectEsp32(*flashReadPort, uint32(*flashReadConnectBaudrate), uint32(*flashReadTransferBaudrate), *flashReadRetries, logger)
+		if err != nil {
+			return err
+		}
+		bytes, err := esp32.ReadFlash(uint32(*flashReadOffset), uint32(*flashReadSize))
+		if err != nil {
+			return err
+		}
+		os.Stdout.Write(bytes)
+		return nil
+	*/
+
 	obj.End()
 }
 
@@ -70,6 +83,24 @@ func (obj *MethodObj) FlashWrite() {
 			return
 		}
 	}
+
+	/*
+		contents, err := ioutil.ReadFile(*flashWriteFile)
+		if err != nil {
+			return err
+		}
+		esp32, err := connectEsp32(*flashWritePort, uint32(*flashWriteConnectBaudrate), uint32(*flashWriteTransferBaudrate), *flashWriteRetries, logger)
+		if err != nil {
+			return err
+		}
+
+		err = esp32.WriteFlash(uint32(*flashWriteOffset), contents, *flashWriteCompress)
+		if err != nil {
+			panic(err)
+		}
+		logger.Print("Done")
+		return nil
+	*/
 
 	obj.End()
 }

@@ -4,17 +4,17 @@ import (
 	"bytes"
 	"esptool/common/serial"
 	"fmt"
-	"log"
+	"github.com/rs/zerolog"
 	"time"
 )
 
 type SlipReadWriter struct {
 	BaseReadWriter *serial.PortObj
 	Timeout        time.Duration
-	logger         *log.Logger
+	logger         *zerolog.Logger
 }
 
-func NewSlipReadWriter(base *serial.PortObj, logger *log.Logger) *SlipReadWriter {
+func NewSlipReadWriter(base *serial.PortObj, logger *zerolog.Logger) *SlipReadWriter {
 	return &SlipReadWriter{
 		BaseReadWriter: base,
 		logger:         logger,

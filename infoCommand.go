@@ -1,10 +1,8 @@
 package main
 
 import (
-	"encoding/json"
 	"esptool/esp32"
 	"fmt"
-	"os"
 	"strconv"
 	"strings"
 )
@@ -34,7 +32,7 @@ func (d *DeviceInfo) String() string {
 	return builder.String()
 }
 
-func infoCommand(jsonOutput bool, esp32 *esp32.ESP32ROM) error {
+func infoCommand(esp32 *esp32.ESP32ROM) error {
 	macAddress, err := esp32.GetChipMAC()
 	if err != nil {
 		return fmt.Errorf("Could not retrieve MAC address: %s", err.Error())
@@ -70,16 +68,6 @@ func infoCommand(jsonOutput bool, esp32 *esp32.ESP32ROM) error {
 	}
 	if err == nil {
 		deviceInfo.Partitions = partitionList
-	}
-
-	if jsonOutput {
-		prettyJson, err := json.MarshalIndent(deviceInfo, "", "  ")
-
-		if err != nil {
-			return fmt.Errorf("Could not generate JSON outputs: %s", err.Error())
-		}
-		_, err = os.Stdout.Write(prettyJson)
-		return err
 	}
 
 	_, err = fmt.Println(deviceInfo.String())
