@@ -65,3 +65,40 @@ func TestOpCode(t *testing.T) {
 
 	build(t, obj, val)
 }
+
+func TestFlashSizeCode(t *testing.T) {
+	obj := generator.Init("Size", "size.go")
+	val := obj.NewVal()
+
+	//
+
+	val.Add(0x12, "256Kb J1")
+	val.Add(0x13, "512Kb J1")
+	val.Add(0x14, "1Mb J1")
+	val.Add(0x15, "2Mb J1")
+	val.Add(0x16, "4Mb J1")
+	val.Add(0x17, "8Mb J1")
+	val.Add(0x18, "16Mb J1")
+	val.Add(0x19, "32Mb J1")
+	val.Add(0x1A, "64Mb J1")
+	val.Add(0x1B, "128Mb J1")
+	val.Add(0x1C, "256Mb J1").Delim()
+
+	val.Add(0x20, "64Mb J2")
+	val.Add(0x21, "128Mb J2")
+	val.Add(0x22, "256Mb J2").Delim()
+
+	val.Add(0x32, "256Kb J3")
+	val.Add(0x33, "512Kb J3")
+	val.Add(0x34, "1Mb J3")
+	val.Add(0x35, "2Mb J3")
+	val.Add(0x36, "4Mb J3")
+	val.Add(0x37, "8Mb J3")
+	val.Add(0x38, "16Mb J3")
+	val.Add(0x39, "32Mb J3")
+	val.Add(0x3A, "64Mb J3")
+
+	//
+
+	build(t, obj, val)
+}

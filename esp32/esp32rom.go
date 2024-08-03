@@ -15,43 +15,6 @@ const (
 	macEfuseReg     uint = 0x3f41A044 // ESP32-S2 has special block for MAC efuses
 )
 
-var (
-	flashSizes = map[byte]int{
-		0x00: 1048576,  // 1MB
-		0x10: 2097152,  // 2MB
-		0x20: 4194304,  // 4MB
-		0x30: 8388608,  // 8MB
-		0x40: 16777216, // 16MB
-	}
-	//DETECTED_FLASH_SIZES = {
-	//    0x12: "256KB",
-	//    0x13: "512KB",
-	//    0x14: "1MB",
-	//    0x15: "2MB",
-	//    0x16: "4MB",
-	//    0x17: "8MB",
-	//    0x18: "16MB",
-	//    0x19: "32MB",
-	//    0x1A: "64MB",
-	//    0x1B: "128MB",
-	//    0x1C: "256MB",
-	//    0x20: "64MB",
-	//    0x21: "128MB",
-	//    0x22: "256MB",
-	//    0x32: "256KB",
-	//    0x33: "512KB",
-	//    0x34: "1MB",
-	//    0x35: "2MB",
-	//    0x36: "4MB",
-	//    0x37: "8MB",
-	//    0x38: "16MB",
-	//    0x39: "32MB",
-	//    0x3A: "64MB",
-	//}
-	//
-	//FLASH_MODES = {"qio": 0, "qout": 1, "dio": 2, "dout": 3}
-)
-
 type ESP32ROM struct {
 	SerialPort     *serial.PortObj
 	SlipReadWriter *common.SlipReadWriter
