@@ -3,7 +3,7 @@ package common
 import (
 	"encoding/binary"
 	"fmt"
-	"github.com/Bookshelf-Writer/esptool-modul/common/code"
+	"github.com/Bookshelf-Writer/esptool-modul/esp32/code"
 )
 
 const (

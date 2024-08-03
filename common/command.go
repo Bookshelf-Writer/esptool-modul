@@ -3,7 +3,7 @@ package common
 import (
 	"bytes"
 	"encoding/binary"
-	"github.com/Bookshelf-Writer/esptool-modul/common/code"
+	"github.com/Bookshelf-Writer/esptool-modul/esp32/code"
 )
 
 type Command struct {
@@ -40,21 +40,17 @@ func NewCommand(opcode code.OpType, data []byte) *Command {
 	}
 }
 
+////
+
 func NewReadRegisterCommand(register uint32) *Command {
-	return NewCommand(
-		code.OpReadRegister,
-		Uint32ToBytes(register),
-	)
+	return NewCommand(code.OpReadRegister, Uint32ToBytes(register))
 }
 
 func NewSyncCommand() *Command {
 	payload := []byte{0x07, 0x07, 0x12, 0x20}
 	payload = append(payload, bytes.Repeat([]byte{0x55}, 32)...)
 
-	return NewCommand(
-		code.OpSync,
-		payload,
-	)
+	return NewCommand(code.OpSync, payload)
 }
 
 func NewAttachSpiFlashCommand() *Command {
