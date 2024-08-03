@@ -33,7 +33,7 @@ func (c *CommandObj) Bytes() []byte {
 	buffer.WriteByte(byte(c.direction))
 	buffer.WriteByte(byte(c.opcode))
 
-	buffer.Write(initBuffer().Uint16(uint16(c.length)).Bytes())
+	buffer.Write(Number.Uint16(uint16(c.length)))
 
 	buffer.Write(c.checksum)
 	buffer.Write(c.data)
@@ -48,7 +48,7 @@ func (c *CommandObj) Checksum(data []byte) *CommandObj {
 		state ^= uint32(d)
 	}
 
-	c.checksum = initBuffer().Uint32(state).Bytes()
+	c.checksum = Number.Uint32(state)
 	return c
 }
 
