@@ -7,14 +7,6 @@ import (
 	"github.com/Bookshelf-Writer/esptool-modul/esp32"
 )
 
-func bold(s string) string {
-	return fmt.Sprintf("\033[1m%s\033[0m", s)
-}
-
-func underline(s string) string {
-	return fmt.Sprintf("\033[4m%s\033[0m", s)
-}
-
 func ConnectEsp32(portPath string, connectBaudrate uint32, transferBaudrate uint32, retries uint, logger *output.LogObj) (*esp32.ESP32ROM, error) {
 	logger = logger.NewLog("ConnectESP")
 

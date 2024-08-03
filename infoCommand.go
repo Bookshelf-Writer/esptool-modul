@@ -17,13 +17,13 @@ type DeviceInfo struct {
 
 func (d *DeviceInfo) String() string {
 	builder := &strings.Builder{}
-	fmt.Fprint(builder, underline(bold(("Chip Information"))))
+	fmt.Fprint(builder, "Chip Information")
 	fmt.Fprint(builder, "\n")
-	fmt.Fprintf(builder, "%s: %s\n", bold("Chip Type"), d.ChipType)
-	fmt.Fprintf(builder, "%s: %s\n", bold("Revision"), d.Revision)
-	fmt.Fprintf(builder, "%s: %s\n", bold("MAC"), d.MacAddress)
-	fmt.Fprintf(builder, "%s: %s\n", bold("Features"), strings.Join(d.Features, ", "))
-	fmt.Fprintln(builder, bold("Partition Table"))
+	fmt.Fprintf(builder, "%s: %s\n", ("Chip Type"), d.ChipType)
+	fmt.Fprintf(builder, "%s: %s\n", ("Revision"), d.Revision)
+	fmt.Fprintf(builder, "%s: %s\n", ("MAC"), d.MacAddress)
+	fmt.Fprintf(builder, "%s: %s\n", ("Features"), strings.Join(d.Features, ", "))
+	fmt.Fprintln(builder, ("Partition Table"))
 	if d.Partitions != nil {
 		fmt.Fprint(builder, d.Partitions.String())
 	} else {

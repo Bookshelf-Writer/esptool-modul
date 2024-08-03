@@ -1,6 +1,7 @@
 package common
 
 import (
+	"encoding/binary"
 	"fmt"
 	"github.com/Bookshelf-Writer/esptool-modul/common/code"
 )
@@ -45,7 +46,7 @@ func NewResponse(data []byte) (*Response, error) {
 	response := &Response{
 		Direction: Direction(data[0]),
 		Opcode:    code.OpType(data[1]),
-		Size:      BytesToUint16(data[2:4]),
+		Size:      binary.BigEndian.Uint16(data[2:4]),
 		Data:      data[8 : len(data)-1],
 	}
 	for i := 0; i < 4; i++ {

@@ -11,6 +11,7 @@ VERSION=$(bash "$script_dir/sys.sh" -i -pa)
 echo "Updated patch-ver:" "$OLD_VER >> $VERSION"
 #############################################################################
 
+go mod vendor
 bash "$script_dir/creator_const_Go.sh"
 
 

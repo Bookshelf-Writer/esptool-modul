@@ -2,6 +2,7 @@ package common
 
 import (
 	"bytes"
+	"encoding/binary"
 	"github.com/Bookshelf-Writer/esptool-modul/common/code"
 )
 
@@ -9,26 +10,24 @@ type Command struct {
 	Direction Direction
 	Opcode    code.OpType
 	Data      []byte
+	Length    int
 	Checksum  []byte
 }
 
 func (c *Command) ToBytes() []byte {
-	sizeM := len(c.Data)
-	b := make([]byte, sizeM+8)
-	b[0] = byte(c.Direction)
-	b[1] = byte(c.Opcode)
-	size := Uint16ToBytes(uint16(sizeM))
-	b[2] = size[0]
-	b[3] = size[1]
-	b[4] = c.Checksum[0]
-	b[5] = c.Checksum[1]
-	b[6] = c.Checksum[2]
-	b[7] = c.Checksum[3]
+	var buffer bytes.Buffer
 
-	for i := 0; i < len(c.Data); i++ {
-		b[8+i] = c.Data[i]
-	}
-	return b
+	buffer.WriteByte(byte(c.Opcode))
+	buffer.WriteByte(byte(c.Direction))
+
+	var size []byte
+	binary.BigEndian.PutUint16(size, uint16(c.Length))
+	buffer.Write(size)
+
+	buffer.Write(c.Checksum)
+	buffer.Write(c.Data)
+
+	return buffer.Bytes()
 }
 
 func NewCommand(opcode code.OpType, data []byte) *Command {
@@ -36,6 +35,7 @@ func NewCommand(opcode code.OpType, data []byte) *Command {
 		Direction: DirectionRequest,
 		Opcode:    opcode,
 		Data:      data,
+		Length:    len(data),
 		Checksum:  make([]byte, 4),
 	}
 }
