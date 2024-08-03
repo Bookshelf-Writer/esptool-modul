@@ -71,7 +71,7 @@ jobs:
         if: ${{ matrix.os == 'ubuntu-latest' }}
         run: |
           echo "FILE_EX=bin" >> $GITHUB_ENV
-          chmod +x esptool        
+          chmod +x cmd/esptool        
 
       - name: Save build
         uses: actions/upload-release-asset@v1
