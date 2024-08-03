@@ -31,8 +31,8 @@ func newRequest(opcode code.OpType, data []byte) *CommandObj {
 func (c *CommandObj) Bytes() []byte {
 	var buffer bytes.Buffer
 
-	buffer.WriteByte(byte(c.opcode))
 	buffer.WriteByte(byte(c.direction))
+	buffer.WriteByte(byte(c.opcode))
 
 	size := make([]byte, 2)
 	binary.BigEndian.PutUint16(size, uint16(c.length))
