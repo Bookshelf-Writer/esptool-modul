@@ -33,3 +33,7 @@ ls -lh esptool.bin
 ```bash
 ./esptool.bin -info -port /dev/ttyACM0 logTrase
 ```
+
+```bash
+./esptool.bin -info -port /dev/ttyACM0
+```

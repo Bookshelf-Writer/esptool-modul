@@ -2,9 +2,8 @@ package esptool
 
 import (
 	"fmt"
+	"github.com/Bookshelf-Writer/esptool-modul/common/output"
 	"github.com/Bookshelf-Writer/esptool-modul/esp32"
-	"strconv"
-	"strings"
 )
 
 type DeviceInfo struct {
@@ -15,24 +14,7 @@ type DeviceInfo struct {
 	Partitions esp32.PartitionList
 }
 
-func (d *DeviceInfo) String() string {
-	builder := &strings.Builder{}
-	fmt.Fprint(builder, "Chip Information")
-	fmt.Fprint(builder, "\n")
-	fmt.Fprintf(builder, "%s: %s\n", ("Chip Type"), d.ChipType)
-	fmt.Fprintf(builder, "%s: %s\n", ("Revision"), d.Revision)
-	fmt.Fprintf(builder, "%s: %s\n", ("MAC"), d.MacAddress)
-	fmt.Fprintf(builder, "%s: %s\n", ("Features"), strings.Join(d.Features, ", "))
-	fmt.Fprintln(builder, ("Partition Table"))
-	if d.Partitions != nil {
-		fmt.Fprint(builder, d.Partitions.String())
-	} else {
-		fmt.Fprint(builder, "** invalid **")
-	}
-	return builder.String()
-}
-
-func InfoCommand(esp32 *esp32.ESP32ROM) error {
+func InfoCommand(esp32 *esp32.ESP32ROM, logs *output.LogObj) error {
 	macAddress, err := esp32.GetChipMAC()
 	if err != nil {
 		return fmt.Errorf("Could not retrieve MAC address: %s", err.Error())
@@ -55,22 +37,18 @@ func InfoCommand(esp32 *esp32.ESP32ROM) error {
 		}
 	}
 
-	deviceInfo := &DeviceInfo{
-		ChipType:   description.ChipType.String(),
-		Revision:   strconv.Itoa(int(description.Revision)),
-		Features:   featureList,
-		MacAddress: macAddress,
-	}
-
 	partitionList, err := esp32.ReadPartitionList()
 	if err != nil {
-		fmt.Printf("Error: %v", err)
-	}
-	if err == nil {
-		deviceInfo.Partitions = partitionList
+		logs.Debug().Err(err).Msg("Partition")
 	}
 
-	_, err = fmt.Println(deviceInfo.String())
+	pr := logs.Info()
 
+	pr.Str("mac", macAddress)
+	pr.Int("revision", int(description.Revision))
+	pr.Array("feature", output.StringArray(featureList))
+	pr.Interface("partition", partitionList)
+
+	pr.Msg(description.ChipType.String())
 	return err
 }

@@ -32,14 +32,12 @@ func (obj *MethodObj) Info() {
 			return
 		}
 
-		err = esptool.InfoCommand(esp32)
+		err = esptool.InfoCommand(esp32, newLog)
 		if err != nil {
 			newLog.Error().Err(err).Msg("esp32 info failed")
 			obj.EndInvalid()
 			return
 		}
-
-		newLog.Info().Msg("OK")
 	}
 
 	obj.End()
