@@ -6,6 +6,8 @@ This is a console application for working with esptool-mod
 
 ```bash
 go build -ldflags="-s -w" -o esptool.bin
+chmod +x esptool.bin
+ls -lh esptool.bin
 ```
 
 ## work
