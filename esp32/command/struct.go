@@ -54,3 +54,7 @@ func (c *CommandObj) Checksum(data []byte) *CommandObj {
 	binary.BigEndian.PutUint32(c.checksum, state)
 	return c
 }
+
+func (c *CommandObj) Opcode() string {
+	return c.opcode.String()
+}

@@ -62,7 +62,7 @@ func (FlashCommandObj) DataDeflate(data []byte, sequence uint32) *CommandObj {
 
 ////
 
-func End(reboot bool) *CommandObj {
+func (FlashCommandObj) End(reboot bool) *CommandObj {
 	buf := initBuffer()
 
 	if reboot {

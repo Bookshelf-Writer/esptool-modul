@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/Bookshelf-Writer/esptool-modul/common"
 	"github.com/Bookshelf-Writer/esptool-modul/common/serial"
+	"github.com/Bookshelf-Writer/esptool-modul/esp32/command"
 	"github.com/rs/zerolog"
 	"time"
 )
@@ -110,8 +111,8 @@ func (e *ESP32ROM) ReadRegister(register uint) ([4]byte, error) {
 	return response.Value, nil
 }
 
-func (e *ESP32ROM) ExecuteCommand(command *common.Command, timeout time.Duration) (*common.Response, error) {
-	err := e.SlipReadWriter.Write(command.ToBytes())
+func (e *ESP32ROM) ExecuteCommand(command *command.CommandObj, timeout time.Duration) (*common.Response, error) {
+	err := e.SlipReadWriter.Write(command.Bytes())
 	if err != nil {
 		return nil, err
 	}
@@ -121,7 +122,7 @@ func (e *ESP32ROM) ExecuteCommand(command *common.Command, timeout time.Duration
 		if err != nil {
 			return nil, err
 		}
-		if responseBuf[1] != byte(command.Opcode) {
+		if "Unknown OpType" == command.Opcode() {
 			e.logger.Printf("Opcode did not match %d/%d\n", retryCount, 16)
 			continue
 		} else {
@@ -131,16 +132,16 @@ func (e *ESP32ROM) ExecuteCommand(command *common.Command, timeout time.Duration
 	return nil, fmt.Errorf("Retrycount exceeded")
 }
 
-func (e *ESP32ROM) CheckExecuteCommand(command *common.Command, timeout time.Duration, retries int) (response *common.Response, err error) {
+func (e *ESP32ROM) CheckExecuteCommand(command *command.CommandObj, timeout time.Duration, retries int) (response *common.Response, err error) {
 	for retryCount := 0; retryCount < retries; retryCount++ {
 		response, err = e.ExecuteCommand(command, timeout)
 		if err != nil {
-			e.logger.Printf("Executing command %s failed. Retrying %d/%d", command.Opcode.String(), retryCount, retries)
+			e.logger.Printf("Executing command %s failed. Retrying %d/%d", command.Opcode(), retryCount, retries)
 			continue
 		}
 		if !response.Status.Success {
-			err = fmt.Errorf("Device returned for command %s status %s", command.Opcode.String(), response.Status.String())
-			e.logger.Printf("Received non success status for command %s. Retrying %d/%d\n", command.Opcode.String(), retryCount, retries)
+			err = fmt.Errorf("Device returned for command %s status %s", command.Opcode(), response.Status.String())
+			e.logger.Printf("Received non success status for command %s. Retrying %d/%d\n", command.Opcode(), retryCount, retries)
 			continue
 		} else {
 			break
