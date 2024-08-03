@@ -2,11 +2,11 @@ package esptool
 
 const (
 	GlobalName       string = "EspToolMod"
-	GlobalDateUpdate string = "08-03-2024"
-	GlobalHash       string = "d74eadf10c4a9bcc55ffa5b9f4be25814025f4bb"
+	GlobalDateUpdate string = "08-04-2024"
+	GlobalHash       string = "dc3776bb565988386972741f81980380d72b47ce"
 
-	GlobalVersion      string = "v1.0.5"
+	GlobalVersion      string = "v1.1.1"
 	GlobalVersionMajor string = "v1"
-	GlobalVersionMinor uint16 = 0
-	GlobalVersionPatch uint16 = 5
+	GlobalVersionMinor uint16 = 1
+	GlobalVersionPatch uint16 = 1
 )
