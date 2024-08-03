@@ -67,7 +67,9 @@ jobs:
         run: echo "FILE_EX=bin" >> $GITHUB_ENV
 
       - name: Run build
-        run: go build -o esptool
+        run: |
+          cd cmd
+          go build -o esptool
 
       - name: Save build
         uses: actions/upload-release-asset@v1
@@ -75,7 +77,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ github.event.release.upload_url }}
-          asset_path: esptool
+          asset_path: cmd/esptool
           asset_name: "esptool.${{ env.FILE_EX }}"
           asset_content_type: application/octet-stream
 

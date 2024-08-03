@@ -1,4 +1,4 @@
-package main
+package esptool
 
 import (
 	"esptool/esp32"
@@ -32,7 +32,7 @@ func (d *DeviceInfo) String() string {
 	return builder.String()
 }
 
-func infoCommand(esp32 *esp32.ESP32ROM) error {
+func InfoCommand(esp32 *esp32.ESP32ROM) error {
 	macAddress, err := esp32.GetChipMAC()
 	if err != nil {
 		return fmt.Errorf("Could not retrieve MAC address: %s", err.Error())

@@ -1,4 +1,4 @@
-package main
+package esptool
 
 import (
 	"esptool/common/output"
@@ -15,7 +15,7 @@ func underline(s string) string {
 	return fmt.Sprintf("\033[4m%s\033[0m", s)
 }
 
-func connectEsp32(portPath string, connectBaudrate uint32, transferBaudrate uint32, retries uint, logger *output.LogObj) (*esp32.ESP32ROM, error) {
+func ConnectEsp32(portPath string, connectBaudrate uint32, transferBaudrate uint32, retries uint, logger *output.LogObj) (*esp32.ESP32ROM, error) {
 	logger = logger.NewLog("ConnectESP")
 
 	serialPort, err := serial.PortInit(serial.ConfigInit(portPath, connectBaudrate))

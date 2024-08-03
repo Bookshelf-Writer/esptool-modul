@@ -1,6 +1,7 @@
 package main
 
 import (
+	"esptool"
 	"esptool/common/cmd"
 	"io/ioutil"
 	"os"
@@ -47,7 +48,7 @@ func (obj *MethodObj) FlashRead() {
 
 	//todo причесать нормально
 	{
-		esp32, err := connectEsp32(serialPort, uint32(*CLI.Baud.Connect), uint32(*CLI.Baud.Transfer), *CLI.Conn.Retries, newLog)
+		esp32, err := esptool.ConnectEsp32(serialPort, uint32(*CLI.Baud.Connect), uint32(*CLI.Baud.Transfer), *CLI.Conn.Retries, newLog)
 		if err != nil {
 			newLog.Error().Err(err).Msg("connect esp32 failed")
 			obj.EndInvalid()
@@ -106,7 +107,7 @@ func (obj *MethodObj) FlashWrite() {
 			obj.EndInvalid()
 			return
 		}
-		esp32, err := connectEsp32(serialPort, uint32(*CLI.Baud.Connect), uint32(*CLI.Baud.Transfer), *CLI.Conn.Retries, newLog)
+		esp32, err := esptool.ConnectEsp32(serialPort, uint32(*CLI.Baud.Connect), uint32(*CLI.Baud.Transfer), *CLI.Conn.Retries, newLog)
 		if err != nil {
 			newLog.Error().Err(err).Msg("connect esp32 failed")
 			obj.EndInvalid()

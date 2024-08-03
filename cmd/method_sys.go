@@ -1,6 +1,7 @@
 package main
 
 import (
+	"esptool"
 	"esptool/common/cmd"
 	"fmt"
 )
@@ -71,11 +72,11 @@ func (obj *MethodObj) Help() {
 func (obj *MethodObj) Version() {
 	newLogObj := obj.log.Info()
 
-	newLogObj.Str("name", GlobalName)
+	newLogObj.Str("name", esptool.GlobalName)
 	newLogObj.Str("description", "ESP32 flashing utility written in GoLang")
-	newLogObj.Str("ver", GlobalVersion)
-	newLogObj.Str("upd", GlobalDateUpdate)
-	newLogObj.Str("hash", GlobalHash[:8])
+	newLogObj.Str("ver", esptool.GlobalVersion)
+	newLogObj.Str("upd", esptool.GlobalDateUpdate)
+	newLogObj.Str("hash", esptool.GlobalHash[:8])
 
 	newLogObj.Msg("Version")
 	obj.End()
