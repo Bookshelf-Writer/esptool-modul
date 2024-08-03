@@ -127,13 +127,26 @@ func (e *ESP32ROM) WriteFlash(offset uint32, data []byte, useCompression bool) (
 
 	time.Sleep(10 * time.Millisecond)
 
+	pathTime := time.Now()
+	e.log.Info().
+		Uint("sent", uint(sent)).
+		Uint("total", uint(total)).
+		Msg(fmt.Sprintf("%.2f%", float64(sent)/float64(total)*100.0))
+
 	for {
 		if sent >= total {
 			break
 		}
-		fmt.Printf("%d of %d - %.2f \n", sent, total, float64(sent)/float64(total)*100.0)
 
-		blockLength := uint32(total - sent)
+		if pathTime.Add(time.Second).Before(time.Now()) {
+			e.log.Info().
+				Uint("sent", uint(sent)).
+				Uint("total", uint(total)).
+				Msg(fmt.Sprintf("%.2f%", float64(sent)/float64(total)*100.0))
+			pathTime = time.Now()
+		}
+
+		blockLength := total - sent
 		if blockLength > blockLengthWriteMax {
 			blockLength = blockLengthWriteMax
 		}
@@ -182,11 +195,11 @@ func (e *ESP32ROM) WriteFlash(offset uint32, data []byte, useCompression bool) (
 		sent += blockLength
 	}
 
-	//	_, err = e.CheckExecuteCommand(
-	//		command.Flash.End(false),
-	//		e.defaultTimeout,
-	//		e.defaultRetries,
-	//	)
+	_, err = e.CheckExecuteCommand(
+		command.Flash.End(false),
+		e.defaultTimeout,
+		e.defaultRetries,
+	)
 
 	return err
 }

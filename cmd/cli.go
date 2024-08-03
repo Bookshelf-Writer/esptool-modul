@@ -46,7 +46,7 @@ func init() {
 	CLI.Conn.Timeout = flag.Duration(CliValConnTimeout, 800*time.Millisecond, CliValTextConnTimeout)
 	CLI.Conn.Retries = flag.Uint(CliValConnRetries, 8, CliValTextConnRetries)
 
-	CLI.Flash.Compress = flag.Bool(CliValFlashCompress, false, CliValTextFlashCompress)
+	CLI.Flash.Compress = flag.Bool(CliValFlashCompress, true, CliValTextFlashCompress)
 	CLI.Flash.Offset = flag.Uint64(CliValFlashOffset, 0, CliValTextFlashOffset)
 	CLI.Flash.Size = flag.Uint64(CliValFlashSize, 0, CliValTextFlashSize)
 	CLI.Flash.FilePath = flag.String(CliValFlashFile, "", CliValTextFlashFile)
