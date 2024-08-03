@@ -2,7 +2,6 @@ package portal
 
 import (
 	"bytes"
-	"fmt"
 	"github.com/Bookshelf-Writer/esptool-modul/common/serial"
 	"github.com/Bookshelf-Writer/esptool-modul/esp32/code"
 	"time"
@@ -22,8 +21,7 @@ func Read(port *serial.PortObj, timeout time.Duration) ([]byte, error) {
 
 	for {
 		if time.Since(startTime) > timeout {
-			err = fmt.Errorf("Read timeout after %v. Received %d bytes", time.Since(startTime), buf.Len())
-			return nil, err
+			return nil, ErrTimeoutRead
 		}
 
 		byteBuf := make([]byte, 1)
@@ -39,6 +37,7 @@ func Read(port *serial.PortObj, timeout time.Duration) ([]byte, error) {
 		}
 
 		switch state {
+
 		case code.StateWaitingHeader:
 			if byteBuf[0] == code.SlipHeader.Byte() {
 				state = code.StateReadingContent
@@ -64,8 +63,9 @@ func Read(port *serial.PortObj, timeout time.Duration) ([]byte, error) {
 				buf.WriteByte(code.SlipEscapeChar.Byte())
 				state = code.StateReadingContent
 			default:
-				return nil, fmt.Errorf("Unexpected char %02X after escape character", byteBuf[0])
+				return nil, ErrUnexpectedChar
 			}
+
 		}
 	}
 }
