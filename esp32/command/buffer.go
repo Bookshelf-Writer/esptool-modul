@@ -32,7 +32,7 @@ func (b *bufferObj) Write(data []byte) *bufferObj {
 }
 
 func (b *bufferObj) Uint16(data uint16) *bufferObj {
-	var buf []byte
+	buf := make([]byte, 2)
 
 	binary.BigEndian.PutUint16(buf, data)
 	b.buf.Write(buf)
@@ -41,7 +41,7 @@ func (b *bufferObj) Uint16(data uint16) *bufferObj {
 }
 
 func (b *bufferObj) Uint32(data uint32) *bufferObj {
-	var buf []byte
+	buf := make([]byte, 4)
 
 	binary.BigEndian.PutUint32(buf, data)
 	b.buf.Write(buf)

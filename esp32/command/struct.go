@@ -34,7 +34,7 @@ func (c *CommandObj) Bytes() []byte {
 	buffer.WriteByte(byte(c.opcode))
 	buffer.WriteByte(byte(c.direction))
 
-	var size []byte
+	size := make([]byte, 2)
 	binary.BigEndian.PutUint16(size, uint16(c.length))
 	buffer.Write(size)
 

@@ -24,3 +24,10 @@ go build -o esptool.bin
 ```bash
 ./esptool.bin -list
 ```
+
+---
+
+### Info
+```bash
+./esptool.bin -info -port /dev/ttyACM0 logTrase
+```
