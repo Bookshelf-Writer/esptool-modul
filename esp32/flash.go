@@ -35,7 +35,7 @@ func (e *ESP32ROM) ReadFlash(offset uint32, size uint32) ([]byte, error) {
 
 	receivedData := make([]byte, 0)
 	for {
-		// e.logger.Printf("%d of %d\n", len(receivedData), size)
+		//e.logger.Printf("%d of %d\n", len(receivedData), size)
 		if len(receivedData) >= int(size) {
 			return receivedData, nil
 		}

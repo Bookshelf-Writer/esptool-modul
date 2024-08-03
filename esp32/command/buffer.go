@@ -2,7 +2,6 @@ package command
 
 import (
 	"bytes"
-	"encoding/binary"
 )
 
 //###########################################################//
@@ -32,19 +31,20 @@ func (b *bufferObj) Write(data []byte) *bufferObj {
 }
 
 func (b *bufferObj) Uint16(data uint16) *bufferObj {
-	buf := make([]byte, 2)
+	buf := []byte{byte(data & 0xFF),
+		byte((data >> 8) & 0xFF)}
 
-	binary.BigEndian.PutUint16(buf, data)
 	b.buf.Write(buf)
-
 	return b
 }
 
 func (b *bufferObj) Uint32(data uint32) *bufferObj {
-	buf := make([]byte, 4)
+	buf := []byte{byte(data & 0xFF),
+		byte((data >> 8) & 0xFF),
+		byte((data >> 16) & 0xFF),
+		byte((data >> 24) & 0xFF),
+	}
 
-	binary.BigEndian.PutUint32(buf, data)
 	b.buf.Write(buf)
-
 	return b
 }

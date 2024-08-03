@@ -41,7 +41,7 @@ var CLI = CliObj{}
 func init() {
 	CLI.Port = flag.String(CliValPort, "", CliValTextPort)
 	CLI.Baud.Connect = flag.Uint(CliValBaudConnect, 115200, CliValTextBaudConnect)
-	CLI.Baud.Transfer = flag.Uint(CliValBaudTransfer, 115200, CliValTextBaudTransfer)
+	CLI.Baud.Transfer = flag.Uint(CliValBaudTransfer, 921600, CliValTextBaudTransfer)
 
 	CLI.Conn.Timeout = flag.Duration(CliValConnTimeout, 800*time.Millisecond, CliValTextConnTimeout)
 	CLI.Conn.Retries = flag.Uint(CliValConnRetries, 8, CliValTextConnRetries)
