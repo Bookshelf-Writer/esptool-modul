@@ -5,84 +5,82 @@ package code
 type OpType byte
 
 const (
-	OpFlashBegin    OpType = 2  //0x02
-	OpFlashData     OpType = 3  //0x03
-	OpFlashEnd      OpType = 4  //0x04
-	OpMemoryBegin   OpType = 5  //0x05
-	OpMemoryEnd     OpType = 6  //0x06
-	OpMemoryData    OpType = 7  //0x07
-	OpSync          OpType = 8  //0x08
-	OpWriteRegister OpType = 9  //0x09
-	OpReadRegister  OpType = 10 //0x0a
+	OpSync           OpType = 8  //0x08
+	OpChangeBaudRate OpType = 15 //0x0f
+	OpSecurityInfo   OpType = 20 //0x14
+	OpWriteRegister  OpType = 9  //0x09
+	OpReadRegister   OpType = 10 //0x0a
 
-	OpSpiSetParams      OpType = 11 //0x0b
-	OpSpiAttachFlash    OpType = 13 //0x0d
-	OpReadFlash         OpType = 14 //0x0e
-	OpChangeBaudrate    OpType = 15 //0x0f
-	OpFlashDeflateBegin OpType = 16 //0x10
-	OpFlashDeflateLData OpType = 17 //0x11
-	OpFlashDeflateLEnd  OpType = 18 //0x12
-	OpSpiFlashMD5       OpType = 19 //0x13
+	OpFlashBegin        OpType = 2   //0x02
+	OpFlashReadSlow     OpType = 14  //0x0e
+	OpFlashData         OpType = 3   //0x03
+	OpFlashEnd          OpType = 4   //0x04
+	OpFlashDeflateBegin OpType = 16  //0x10
+	OpFlashDeflateData  OpType = 17  //0x11
+	OpFlashDeflateEnd   OpType = 18  //0x12
+	OpMemoryBegin       OpType = 5   //0x05
+	OpMemoryEnd         OpType = 6   //0x06
+	OpMemoryData        OpType = 7   //0x07
+	OpFlashEncryptData  OpType = 212 //0xd4
 
-	OpEraseFlash    OpType = 208 //0xd0
-	OpEraseRegion   OpType = 209 //0xd1
-	OpReadFlashFast OpType = 210 //0xd2
-	OpRunUserCode   OpType = 211 //0xd3
+	OpSpiSetParams   OpType = 11 //0x0b
+	OpSpiAttachFlash OpType = 13 //0x0d
+	OpSpiFlashMD5    OpType = 19 //0x13
 
-	OpFlashEncryptData OpType = 212 //0xd4
+	OpEraseFlash  OpType = 208 //0xd0
+	OpEraseRegion OpType = 209 //0xd1
+
 )
 
 const (
-	OpTextFlashBegin    = "Flash Begin"
-	OpTextFlashData     = "Flash Data"
-	OpTextFlashEnd      = "Flash End"
-	OpTextMemoryBegin   = "Memory Begin"
-	OpTextMemoryEnd     = "Memory End"
-	OpTextMemoryData    = "Memory Data"
-	OpTextSync          = "Sync"
-	OpTextWriteRegister = "Write Register"
-	OpTextReadRegister  = "Read Register"
+	OpTextSync           = "Sync"
+	OpTextChangeBaudRate = "Change BaudRate"
+	OpTextSecurityInfo   = "Security Info"
+	OpTextWriteRegister  = "Write Register"
+	OpTextReadRegister   = "Read Register"
 
-	OpTextSpiSetParams      = "Spi Set Params"
-	OpTextSpiAttachFlash    = "Spi Attach Flash"
-	OpTextReadFlash         = "Read Flash"
-	OpTextChangeBaudrate    = "Change Baudrate"
+	OpTextFlashBegin        = "Flash Begin"
+	OpTextFlashReadSlow     = "Flash Read Slow"
+	OpTextFlashData         = "Flash Data"
+	OpTextFlashEnd          = "Flash End"
 	OpTextFlashDeflateBegin = "Flash Deflate Begin"
-	OpTextFlashDeflateLData = "Flash Deflate lData"
-	OpTextFlashDeflateLEnd  = "Flash Deflate lEnd"
-	OpTextSpiFlashMD5       = "Spi Flash MD5"
+	OpTextFlashDeflateData  = "Flash Deflate Data"
+	OpTextFlashDeflateEnd   = "Flash Deflate End"
+	OpTextMemoryBegin       = "Memory Begin"
+	OpTextMemoryEnd         = "Memory End"
+	OpTextMemoryData        = "Memory Data"
+	OpTextFlashEncryptData  = "Flash Encrypt Data"
 
-	OpTextEraseFlash    = "Erase Flash"
-	OpTextEraseRegion   = "Erase Region"
-	OpTextReadFlashFast = "Read Flash Fast"
-	OpTextRunUserCode   = "Run User Code"
+	OpTextSpiSetParams   = "Spi Set Params"
+	OpTextSpiAttachFlash = "Spi Attach Flash"
+	OpTextSpiFlashMD5    = "Spi Flash MD5"
 
-	OpTextFlashEncryptData = "Flash Encrypt Data"
+	OpTextEraseFlash  = "Erase Flash"
+	OpTextEraseRegion = "Erase Region"
 )
 
 var OpMap = map[OpType]string{
+	OpSync:              OpTextSync,
+	OpChangeBaudRate:    OpTextChangeBaudRate,
+	OpSecurityInfo:      OpTextSecurityInfo,
+	OpWriteRegister:     OpTextWriteRegister,
+	OpReadRegister:      OpTextReadRegister,
 	OpFlashBegin:        OpTextFlashBegin,
+	OpFlashReadSlow:     OpTextFlashReadSlow,
 	OpFlashData:         OpTextFlashData,
 	OpFlashEnd:          OpTextFlashEnd,
+	OpFlashDeflateBegin: OpTextFlashDeflateBegin,
+	OpFlashDeflateData:  OpTextFlashDeflateData,
+	OpFlashDeflateEnd:   OpTextFlashDeflateEnd,
 	OpMemoryBegin:       OpTextMemoryBegin,
 	OpMemoryEnd:         OpTextMemoryEnd,
 	OpMemoryData:        OpTextMemoryData,
-	OpSync:              OpTextSync,
-	OpWriteRegister:     OpTextWriteRegister,
-	OpReadRegister:      OpTextReadRegister,
+	OpFlashEncryptData:  OpTextFlashEncryptData,
 	OpSpiSetParams:      OpTextSpiSetParams,
 	OpSpiAttachFlash:    OpTextSpiAttachFlash,
-	OpReadFlash:         OpTextReadFlash,
-	OpChangeBaudrate:    OpTextChangeBaudrate,
-	OpFlashDeflateBegin: OpTextFlashDeflateBegin,
-	OpFlashDeflateLData: OpTextFlashDeflateLData,
-	OpFlashDeflateLEnd:  OpTextFlashDeflateLEnd,
 	OpSpiFlashMD5:       OpTextSpiFlashMD5,
 	OpEraseFlash:        OpTextEraseFlash,
 	OpEraseRegion:       OpTextEraseRegion,
-	OpReadFlashFast:     OpTextReadFlashFast,
-	OpRunUserCode:       OpTextRunUserCode,
-	OpFlashEncryptData:  OpTextFlashEncryptData,
 }
 
 func (obj OpType) String() string {

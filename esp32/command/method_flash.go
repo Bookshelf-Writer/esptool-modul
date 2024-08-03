@@ -57,7 +57,7 @@ func (FlashCommandObj) DataDeflate(data []byte, sequence uint32) *CommandObj {
 	buf.Uint32(0)
 	buf.Write(data)
 
-	return newRequest(code.OpFlashDeflateLData, buf.Bytes()).Checksum(data)
+	return newRequest(code.OpFlashDeflateData, buf.Bytes()).Checksum(data)
 }
 
 ////

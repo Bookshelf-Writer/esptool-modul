@@ -24,5 +24,5 @@ func (ReadCommandObj) Flash(offset uint32, size uint32) *CommandObj {
 	buf.Uint32(offset)
 	buf.Uint32(size)
 
-	return newRequest(code.OpReadFlash, buf.Bytes())
+	return newRequest(code.OpFlashReadSlow, buf.Bytes())
 }

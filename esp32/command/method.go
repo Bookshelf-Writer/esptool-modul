@@ -28,5 +28,5 @@ func ChangeBaudRate(newBaudrate uint32, oldBaudrate uint32) *CommandObj {
 	buf.Uint32(newBaudrate)
 	buf.Uint32(oldBaudrate)
 
-	return newRequest(code.OpChangeBaudrate, buf.Bytes())
+	return newRequest(code.OpChangeBaudRate, buf.Bytes())
 }
