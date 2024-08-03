@@ -2,7 +2,6 @@ package command
 
 import (
 	"bytes"
-	"encoding/binary"
 	"github.com/Bookshelf-Writer/esptool-modul/esp32/code"
 )
 
@@ -49,10 +48,14 @@ func (c *CommandObj) Checksum(data []byte) *CommandObj {
 		state ^= uint32(d)
 	}
 
-	binary.BigEndian.PutUint32(c.checksum, state)
+	c.checksum = initBuffer().Uint32(state).Bytes()
 	return c
 }
 
 func (c *CommandObj) Opcode() string {
 	return c.opcode.String()
+}
+
+func (c *CommandObj) OpcodeToByte() byte {
+	return byte(c.opcode)
 }

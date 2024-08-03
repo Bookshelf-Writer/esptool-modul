@@ -122,7 +122,7 @@ func (e *ESP32ROM) ExecuteCommand(command *command.CommandObj, timeout time.Dura
 		if err != nil {
 			return nil, err
 		}
-		if "Unknown OpType" == command.Opcode() {
+		if responseBuf[1] != command.OpcodeToByte() {
 			e.logger.Printf("Opcode did not match %d/%d\n", retryCount, 16)
 			continue
 		} else {
