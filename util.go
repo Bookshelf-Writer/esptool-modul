@@ -1,10 +1,10 @@
 package esptool
 
 import (
-	"esptool/common/output"
-	"esptool/common/serial"
-	"esptool/esp32"
 	"fmt"
+	"github.com/Bookshelf-Writer/esptool-modul/common/output"
+	"github.com/Bookshelf-Writer/esptool-modul/common/serial"
+	"github.com/Bookshelf-Writer/esptool-modul/esp32"
 )
 
 func bold(s string) string {

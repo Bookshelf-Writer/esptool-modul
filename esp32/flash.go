@@ -3,8 +3,8 @@ package esp32
 import (
 	"bytes"
 	"compress/zlib"
-	"esptool/common"
 	"fmt"
+	"github.com/Bookshelf-Writer/esptool-modul/common"
 	"time"
 )
 

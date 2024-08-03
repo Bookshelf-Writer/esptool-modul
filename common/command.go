@@ -2,7 +2,7 @@ package common
 
 import (
 	"bytes"
-	"esptool/common/code"
+	"github.com/Bookshelf-Writer/esptool-modul/common/code"
 )
 
 type Command struct {

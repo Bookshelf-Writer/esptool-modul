@@ -1,8 +1,8 @@
 package cmd
 
 import (
-	"esptool/common/serial"
 	"fmt"
+	"github.com/Bookshelf-Writer/esptool-modul/common/serial"
 	"runtime"
 	"strings"
 )

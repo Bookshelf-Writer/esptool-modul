@@ -1,9 +1,9 @@
 package main
 
 import (
-	"esptool"
-	"esptool/common/cmd"
 	"fmt"
+	"github.com/Bookshelf-Writer/esptool-modul"
+	"github.com/Bookshelf-Writer/esptool-modul/common/cmd"
 )
 
 //###########################################################//

@@ -1,7 +1,7 @@
 package esp32
 
 import (
-	"esptool/esp32/code"
+	"github.com/Bookshelf-Writer/esptool-modul/esp32/code"
 	"strings"
 )
 

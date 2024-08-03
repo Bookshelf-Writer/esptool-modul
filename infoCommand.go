@@ -1,8 +1,8 @@
 package esptool
 
 import (
-	"esptool/esp32"
 	"fmt"
+	"github.com/Bookshelf-Writer/esptool-modul/esp32"
 	"strconv"
 	"strings"
 )

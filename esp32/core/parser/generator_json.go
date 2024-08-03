@@ -2,8 +2,8 @@ package main
 
 import (
 	"encoding/json"
-	"esptool/esp32/core"
 	"fmt"
+	"github.com/Bookshelf-Writer/esptool-modul/esp32/core"
 	"os"
 )
 

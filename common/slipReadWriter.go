@@ -2,8 +2,8 @@ package common
 
 import (
 	"bytes"
-	"esptool/common/serial"
 	"fmt"
+	"github.com/Bookshelf-Writer/esptool-modul/common/serial"
 	"github.com/rs/zerolog"
 	"time"
 )

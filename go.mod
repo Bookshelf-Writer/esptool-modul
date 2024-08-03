@@ -1,4 +1,4 @@
-module esptool
+module github.com/Bookshelf-Writer/esptool-modul
 
 go 1.22
 

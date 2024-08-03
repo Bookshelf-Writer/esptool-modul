@@ -1,8 +1,8 @@
 package main
 
 import (
-	"esptool/esp32/core"
 	"fmt"
+	"github.com/Bookshelf-Writer/esptool-modul/esp32/core"
 	"regexp"
 	"strconv"
 	"strings"

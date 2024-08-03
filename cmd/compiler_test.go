@@ -1,7 +1,7 @@
 package main
 
 import (
-	"esptool/common/generator"
+	"github.com/Bookshelf-Writer/esptool-modul/common/generator"
 	"testing"
 )
 

@@ -2,9 +2,9 @@ package esp32
 
 import (
 	"bytes"
-	"esptool/common"
-	"esptool/common/serial"
 	"fmt"
+	"github.com/Bookshelf-Writer/esptool-modul/common"
+	"github.com/Bookshelf-Writer/esptool-modul/common/serial"
 	"github.com/rs/zerolog"
 	"time"
 )

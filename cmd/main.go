@@ -1,8 +1,8 @@
 package main
 
 import (
-	"esptool/common/output"
 	"flag"
+	"github.com/Bookshelf-Writer/esptool-modul/common/output"
 	"strings"
 )
 

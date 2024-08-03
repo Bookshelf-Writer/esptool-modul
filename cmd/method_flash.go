@@ -1,8 +1,8 @@
 package main
 
 import (
-	"esptool"
-	"esptool/common/cmd"
+	"github.com/Bookshelf-Writer/esptool-modul"
+	"github.com/Bookshelf-Writer/esptool-modul/common/cmd"
 	"io/ioutil"
 	"os"
 )

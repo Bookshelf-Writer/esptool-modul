@@ -1,8 +1,8 @@
 package common
 
 import (
-	"esptool/common/code"
 	"fmt"
+	"github.com/Bookshelf-Writer/esptool-modul/common/code"
 )
 
 const (
