@@ -34,23 +34,24 @@ func (save *GeneratorSaveObj) End() error {
 
 	switch {
 	case len(save.imports) == 1:
-		file.WriteString("import \"" + save.imports[0] + "\";\n")
+		file.WriteString("import \"" + save.imports[0] + "\";\n\n")
 
 	case len(save.imports) > 1:
+		file.WriteString("import (\n")
 		for _, i := range save.imports {
-			file.WriteString("import (\n")
 			file.WriteString("\t\"" + i + "\"\n")
-			file.WriteString(")\n")
 		}
-
+		file.WriteString(")\n\n")
 	}
 
-	file.WriteString(hText + "\n//######################################//\n\n")
+	file.WriteString(hText + "\n\n")
 
-	for _, i := range save.types {
-		file.WriteString("type " + i + "\n")
+	if len(save.types) > 0 {
+		for _, i := range save.types {
+			file.WriteString("type " + i + "\n")
+		}
+		file.WriteString("\n")
 	}
-	file.WriteString("\n")
 
 	file.Write(save.gen.buf.Bytes())
 	return nil

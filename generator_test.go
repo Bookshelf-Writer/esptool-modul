@@ -26,40 +26,42 @@ func TestCliTrig(t *testing.T) {
 
 	//
 
-	obj.PrintLN("import \"flag\"").LN()
-	build(t, obj)
+	build(t, obj, val)
 
 	//
 
-	obj.Print("type ").Type().PrintLN("Obj struct {")
-	for _, code := range obj.GetStrings() {
-		obj.Repeat(1).TitleCase(code).PrintLN(" *bool")
-		obj.SetDelimString(code)
+	obj.Print("type ").Name.Type().PrintLN("Obj struct {")
+	for _, code := range val.Get.Strings() {
+		obj.Offset(1).PrintLN(obj.Name.ToTitleCase(code) + " *bool")
+
+		if val.Get.IsDelim(code) {
+			obj.LN()
+		}
 	}
 	obj.PrintLN("}").LN()
 
 	//
 
-	obj.Print("var ").Type().Print(" = ").Type().PrintLN("Obj{")
-	for _, code := range obj.GetStrings() {
-		obj.Repeat(1).TitleCase(code).Print(": flag.Bool( ")
-		obj.ConstCode(code).Print(", false, ")
-		obj.ConstText(code).PrintLN("),")
+	obj.Print("var ").Name.Type().Print(" = ").Name.Type().PrintLN("Obj{")
+	for _, code := range val.Get.Strings() {
+		obj.Offset(1).Print(obj.Name.ToTitleCase(code) + ": flag.Bool( ")
+		obj.Name.SelfCode(code).Print(", false, ")
+		obj.Name.TextCode(code).PrintLN("),")
 	}
 	obj.PrintLN("}").LN()
 
 	//
 
-	obj.Print("var ").Type().PrintLN("Map = map[string]*bool{")
-	for _, code := range obj.GetStrings() {
-		obj.Repeat(1).ConstCode(code).Print(": ")
-		obj.Type().Print(".").TitleCase(code).PrintLN(",")
+	obj.Print("var ").Name.Type().PrintLN("Map = map[string]*bool{")
+	for _, code := range val.Get.Strings() {
+		obj.Offset(1).Name.SelfCode(code).Print(": ")
+		obj.Name.Type().PrintLN("." + obj.Name.ToTitleCase(code) + ",")
 	}
 	obj.PrintLN("}")
 
 	//
 
-	err := obj.SaveFileBuf("main")
+	err := obj.Save("main").Add.Import("flag").End()
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -87,11 +89,11 @@ func TestCliValue(t *testing.T) {
 
 	//
 
-	build(t, obj)
+	build(t, obj, val)
 
 	//
 
-	err := obj.SaveFileBuf("main")
+	err := obj.Save("main").End()
 	if err != nil {
 		t.Fatal(err)
 	}

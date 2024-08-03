@@ -35,7 +35,7 @@ func TestFeatureCode(t *testing.T) {
 
 	//
 
-	build(t, obj)
+	build(t, obj, val)
 }
 
 func TestEspCode(t *testing.T) {
@@ -51,5 +51,5 @@ func TestEspCode(t *testing.T) {
 
 	//
 
-	build(t, obj)
+	build(t, obj, val)
 }

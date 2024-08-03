@@ -5,21 +5,27 @@ import (
 	"testing"
 )
 
-func build(t *testing.T, obj *generator.GeneratorObj) {
+func build(t *testing.T, obj *generator.GeneratorObj, val *generator.GeneratorValueObj) {
 
 	obj.PrintLN("const (")
-	for _, code := range obj.GetStrings() {
-		obj.Repeat(1).ConstCode(code).Print(" ").Print(" = ").PrintString(code).LN()
-		obj.SetDelimString(code)
+	for _, code := range val.Get.Strings() {
+		obj.Offset(1).Name.SelfCode(code).Print(" ").Print(" = ").String(code).LN()
+
+		if val.Get.IsDelim(code) {
+			obj.LN()
+		}
 	}
 	obj.PrintLN(")").LN()
 
 	//
 
 	obj.PrintLN("const (")
-	for _, code := range obj.GetStrings() {
-		obj.Repeat(1).ConstText(code).Print(" = ").PrintString(obj.GetTextString(code)).LN()
-		obj.SetDelimString(code)
+	for _, code := range val.Get.Strings() {
+		obj.Offset(1).Name.TextCode(code).Print(" = ").String(val.Get.Text(code)).LN()
+
+		if val.Get.IsDelim(code) {
+			obj.LN()
+		}
 	}
 	obj.PrintLN(")").LN()
 

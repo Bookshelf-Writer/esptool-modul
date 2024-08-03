@@ -5,49 +5,58 @@ import (
 	"testing"
 )
 
-func build(t *testing.T, obj *generator.GeneratorObj) {
+func build(t *testing.T, obj *generator.GeneratorObj, val *generator.GeneratorValueObj) {
 
 	obj.PrintLN("const (")
-	for _, code := range obj.GetList() {
-		text := obj.GetText(code)
+	for _, code := range val.Get.Ints() {
+		text := val.Get.Text(code)
 
-		obj.Repeat(1).ConstCode(text).Print(" ").Type().Print(" = ").Byte(code).LN()
+		obj.Offset(1).Name.SelfCode(text).Print(" ")
+		obj.Name.Type().Print(" = ")
+		obj.Number(code).Print("\t//").Hex(code).LN()
 
-		obj.SetDelim(code)
+		if val.Get.IsDelim(code) {
+			obj.LN()
+		}
 	}
 	obj.PrintLN(")").LN()
 
 	//
 
 	obj.PrintLN("const (")
-	for _, code := range obj.GetList() {
-		text := obj.GetText(code)
+	for _, code := range val.Get.Ints() {
+		text := val.Get.Text(code)
 
-		obj.Repeat(1).ConstText(text).Print(" = ").PrintString(text).LN()
+		obj.Offset(1).Name.TextCode(text).Print(" = ")
+		obj.String(text).LN()
 
-		obj.SetDelim(code)
+		if val.Get.IsDelim(code) {
+			obj.LN()
+		}
 	}
 	obj.PrintLN(")").LN()
 
 	//
 
-	obj.Print("var ").Map().Print(" = map[").Type().PrintLN("]string{")
-	for _, code := range obj.GetList() {
-		text := obj.GetText(code)
+	obj.Print("var ").Name.Map().Print(" = map[").Name.Type().PrintLN("]string{")
+	for _, code := range val.Get.Ints() {
+		text := val.Get.Text(code)
 
-		obj.Repeat(1).ConstCode(text).Print(": ").ConstText(text).PrintLN(",")
+		obj.Offset(1).Name.SelfCode(text).Print(": ")
+		obj.Name.TextCode(text).PrintLN(",")
+
 	}
 	obj.PrintLN("}").LN()
 
-	obj.Print("func (obj ").Type().PrintLN(") String() string {")
-	obj.Repeat(1).Print("val, ok := ").Map().PrintLN("[obj]")
-	obj.Repeat(1).PrintLN("if ok {").Repeat(2).PrintLN("return val").Repeat(1).PrintLN("}")
-	obj.Repeat(1).Print("return \"Unknown ").Type().PrintLN("\"")
+	obj.Print("func (obj ").Name.Type().PrintLN(") String() string {")
+	obj.Offset(1).Print("val, ok := ").Name.Map().PrintLN("[obj]")
+	obj.Offset(1).PrintLN("if ok {").Offset(2).PrintLN("return val").Offset(1).PrintLN("}")
+	obj.Offset(1).Print("return \"Unknown ").Name.Type().PrintLN("\"")
 	obj.PrintLN("}")
 
 	//
 
-	err := obj.SaveFile("code")
+	err := obj.Save("code").Add.Type(obj.Name.GetType(), "byte").End()
 	if err != nil {
 		t.Fatal(err)
 	}

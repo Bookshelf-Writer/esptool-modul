@@ -15,6 +15,7 @@ func buildGO(maps map[string]*core.ModulStruct, namespace map[string]string) {
 	objMap := generator.Init("Esp", "esp32/core/map.go")
 	objMap.PrintLN("var EspList = []*ModulStruct{")
 
+	//todo переписать на новый генератор и спользованием val
 	for filename, key := range namespace {
 		if strings.Contains(key, "beta") {
 			continue
@@ -26,29 +27,29 @@ func buildGO(maps map[string]*core.ModulStruct, namespace map[string]string) {
 			continue
 		}
 		mod := *buf
-		objMap.Repeat(1).PrintLN("&" + key + ",")
+		objMap.Offset(1).PrintLN("&" + key + ",")
 
 		obj.Print("var ").Print(key).PrintLN(" = ModulStruct{")
-		obj.Repeat(1).Print("Name: ").PrintString(mod.Name).PrintLN(",").LN()
+		obj.Offset(1).Print("Name: ").String(mod.Name).PrintLN(",").LN()
 
-		obj.Repeat(1).PrintLN("Sys: ModulSystemStruct{")
-		obj.Repeat(2).Print("UF2: " + strconv.FormatUint(mod.Sys.UF2, 10)).PrintLN("," + fmt.Sprintf(" //0x%02x", mod.Sys.UF2))
-		obj.Repeat(2).Print("Chip: " + strconv.Itoa(mod.Sys.Chip)).PrintLN(",")
-		obj.Repeat(2).Print("LenStatus: " + strconv.Itoa(mod.Sys.LenStatus)).PrintLN(",")
-		obj.Repeat(2).Print("FlashOffset: " + strconv.FormatUint(mod.Sys.FlashOffset, 10)).PrintLN(",")
-		obj.Repeat(1).PrintLN("},")
+		obj.Offset(1).PrintLN("Sys: ModulSystemStruct{")
+		obj.Offset(2).Print("UF2: " + strconv.FormatUint(mod.Sys.UF2, 10)).PrintLN("," + fmt.Sprintf(" //0x%02x", mod.Sys.UF2))
+		obj.Offset(2).Print("Chip: " + strconv.Itoa(mod.Sys.Chip)).PrintLN(",")
+		obj.Offset(2).Print("LenStatus: " + strconv.Itoa(mod.Sys.LenStatus)).PrintLN(",")
+		obj.Offset(2).Print("FlashOffset: " + strconv.FormatUint(mod.Sys.FlashOffset, 10)).PrintLN(",")
+		obj.Offset(1).PrintLN("},")
 
-		obj.Repeat(1).PrintLN("Encrypt: ModulEncryptStruct{")
-		obj.Repeat(2).Print("WriteAlign: " + strconv.Itoa(mod.Encrypt.WriteAlign)).PrintLN(",")
-		obj.Repeat(2).Print("Supports: " + strconv.FormatBool(mod.Encrypt.Supports)).PrintLN(",")
-		obj.Repeat(1).PrintLN("},")
+		obj.Offset(1).PrintLN("Encrypt: ModulEncryptStruct{")
+		obj.Offset(2).Print("WriteAlign: " + strconv.Itoa(mod.Encrypt.WriteAlign)).PrintLN(",")
+		obj.Offset(2).Print("Supports: " + strconv.FormatBool(mod.Encrypt.Supports)).PrintLN(",")
+		obj.Offset(1).PrintLN("},")
 
-		obj.Repeat(1).PrintLN("MagicValue: []uint64{")
+		obj.Offset(1).PrintLN("MagicValue: []uint64{")
 		for _, number := range mod.MagicValue {
-			obj.Repeat(2).Print(strconv.FormatUint(number, 10) + ",")
+			obj.Offset(2).Print(strconv.FormatUint(number, 10) + ",")
 			obj.PrintLN(fmt.Sprintf(" //0x%02x", number))
 		}
-		obj.Repeat(1).PrintLN("},")
+		obj.Offset(1).PrintLN("},")
 
 		var bufMapKeys []string
 		bufKey := make(map[string]string)
@@ -59,24 +60,24 @@ func buildGO(maps map[string]*core.ModulStruct, namespace map[string]string) {
 		}
 		sort.Strings(bufMapKeys)
 
-		obj.Repeat(1).PrintLN("Memory: map[string]ModulMapStruct{")
+		obj.Offset(1).PrintLN("Memory: map[string]ModulMapStruct{")
 		for _, posKey := range bufMapKeys {
 			keyMemo := bufKey[posKey]
 			objMemo := mod.Memory[keyMemo]
 
-			obj.Repeat(2).PrintString(keyMemo).Print(": {")
+			obj.Offset(2).String(keyMemo).Print(": {")
 			obj.Print(strconv.FormatUint(objMemo.Start, 10) + ",")
 			obj.Print(strconv.FormatUint(objMemo.End, 10))
 			obj.Print("},").PrintLN(fmt.Sprintf(" //0x%02x 0x%02x", objMemo.Start, objMemo.End))
 		}
-		obj.Repeat(1).PrintLN("},")
+		obj.Offset(1).PrintLN("},")
 
 		obj.PrintLN("}")
-		obj.SaveFileBuf("core")
+		obj.Save("core").End()
 	}
 
 	objMap.PrintLN("}")
-	objMap.SaveFileBuf("core")
+	objMap.Save("core").End()
 
 	fmt.Println("GO generated")
 }
