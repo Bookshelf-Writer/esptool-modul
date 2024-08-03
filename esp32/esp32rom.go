@@ -3,10 +3,10 @@ package esp32
 import (
 	"bytes"
 	"fmt"
-	"github.com/Bookshelf-Writer/esptool-modul/common"
 	"github.com/Bookshelf-Writer/esptool-modul/common/output"
 	"github.com/Bookshelf-Writer/esptool-modul/common/serial"
 	"github.com/Bookshelf-Writer/esptool-modul/esp32/command"
+	"github.com/Bookshelf-Writer/esptool-modul/esp32/portal"
 	"github.com/rs/zerolog"
 	"time"
 )
@@ -19,7 +19,6 @@ const (
 
 type ESP32ROM struct {
 	SerialPort     *serial.PortObj
-	SlipReadWriter *common.SlipReadWriter
 	flashAttached  bool
 	logger         *zerolog.Logger
 	defaultTimeout time.Duration
@@ -32,7 +31,6 @@ func NewESP32ROM(serialPort *serial.PortObj, logger *output.LogObj) *ESP32ROM {
 
 	return &ESP32ROM{
 		SerialPort:     serialPort,
-		SlipReadWriter: common.NewSlipReadWriter(serialPort, logger.ZeroLog()),
 		logger:         logger.ZeroLog(),
 		defaultTimeout: 100 * time.Millisecond,
 		defaultRetries: 3,
@@ -95,7 +93,7 @@ func (e *ESP32ROM) Sync() (err error) {
 	if err != nil {
 		return err
 	}
-	if response.Status.Success != true {
+	if response.Status != true {
 		err = fmt.Errorf("Command failed")
 	}
 	return
@@ -113,17 +111,17 @@ func (e *ESP32ROM) ReadRegister(register uint) ([4]byte, error) {
 	if err != nil {
 		return [4]byte{}, err
 	}
-	return response.Value, nil
+	return [4]byte(response.Checksum()), nil
 }
 
-func (e *ESP32ROM) ExecuteCommand(command *command.CommandObj, timeout time.Duration) (*common.Response, error) {
-	err := e.SlipReadWriter.Write(command.Bytes())
+func (e *ESP32ROM) ExecuteCommand(command *command.CommandObj, timeout time.Duration) (*portal.ResponseObj, error) {
+	err := portal.Write(e.SerialPort, command.Bytes())
 	if err != nil {
 		return nil, err
 	}
 	for retryCount := 0; retryCount < 16; retryCount++ {
 
-		responseBuf, err := e.SlipReadWriter.Read(timeout)
+		responseBuf, err := portal.Read(e.SerialPort, timeout)
 		if err != nil {
 			return nil, err
 		}
@@ -131,21 +129,21 @@ func (e *ESP32ROM) ExecuteCommand(command *command.CommandObj, timeout time.Dura
 			e.log.Trace().Msg("Opcode did not match")
 			continue
 		} else {
-			return common.NewResponse(responseBuf)
+			return portal.Response(responseBuf)
 		}
 	}
 	return nil, fmt.Errorf("Retrycount exceeded")
 }
 
-func (e *ESP32ROM) CheckExecuteCommand(command *command.CommandObj, timeout time.Duration, retries int) (response *common.Response, err error) {
+func (e *ESP32ROM) CheckExecuteCommand(command *command.CommandObj, timeout time.Duration, retries int) (response *portal.ResponseObj, err error) {
 	for retryCount := 0; retryCount < retries; retryCount++ {
 		response, err = e.ExecuteCommand(command, timeout)
 		if err != nil {
 			e.log.Debug().Str("command", command.Opcode()).Msg("Executing command failed. Retrying")
 			continue
 		}
-		if !response.Status.Success {
-			err = fmt.Errorf("Device returned for command %s status %s", command.Opcode(), response.Status.String())
+		if !response.Status {
+			err = fmt.Errorf("Device returned for command %s status %s", command.Opcode(), response.String())
 			e.log.Debug().Str("command", command.Opcode()).Msg("Received non success status for command. Retrying")
 			continue
 		} else {

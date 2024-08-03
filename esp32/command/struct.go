@@ -3,26 +3,25 @@ package command
 import (
 	"bytes"
 	"github.com/Bookshelf-Writer/esptool-modul/esp32/code"
+	"github.com/Bookshelf-Writer/esptool-modul/esp32/portal"
 )
 
 //###########################################################//
 
 type CommandObj struct {
-	direction code.DirectionType
-	opcode    code.OpType
-	data      []byte
-	length    int
-	checksum  []byte
+	msg portal.MsgObj
 }
 
 func newRequest(opcode code.OpType, data []byte) *CommandObj {
-	return &CommandObj{
-		direction: code.DirectionRequest,
-		opcode:    opcode,
-		data:      data,
-		length:    len(data),
-		checksum:  make([]byte, 4),
-	}
+	obj := CommandObj{}
+
+	obj.msg.Direction = code.DirectionRequest
+	obj.msg.Opcode = opcode
+	obj.msg.Data = data
+	obj.msg.Length = len(data)
+	obj.msg.Checksum = make([]byte, 4)
+
+	return &obj
 }
 
 ////
@@ -30,13 +29,13 @@ func newRequest(opcode code.OpType, data []byte) *CommandObj {
 func (c *CommandObj) Bytes() []byte {
 	var buffer bytes.Buffer
 
-	buffer.WriteByte(byte(c.direction))
-	buffer.WriteByte(byte(c.opcode))
+	buffer.WriteByte(byte(c.msg.Direction))
+	buffer.WriteByte(byte(c.msg.Opcode))
 
-	buffer.Write(Number.Uint16(uint16(c.length)))
+	buffer.Write(Number.Uint16(uint16(c.msg.Length)))
 
-	buffer.Write(c.checksum)
-	buffer.Write(c.data)
+	buffer.Write(c.msg.Checksum)
+	buffer.Write(c.msg.Data)
 
 	return buffer.Bytes()
 }
@@ -48,14 +47,14 @@ func (c *CommandObj) Checksum(data []byte) *CommandObj {
 		state ^= uint32(d)
 	}
 
-	c.checksum = Number.Uint32(state)
+	c.msg.Checksum = Number.Uint32(state)
 	return c
 }
 
 func (c *CommandObj) Opcode() string {
-	return c.opcode.String()
+	return c.msg.Opcode.String()
 }
 
 func (c *CommandObj) OpcodeToByte() byte {
-	return byte(c.opcode)
+	return byte(c.msg.Opcode)
 }

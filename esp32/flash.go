@@ -68,7 +68,7 @@ func (e *ESP32ROM) ReadFlash(offset uint32, size uint32) ([]byte, error) {
 			return receivedData, err
 		}
 
-		receivedData = append(receivedData, response.Data[:blockLength]...)
+		receivedData = append(receivedData, response.Data()[:blockLength]...)
 	}
 }
 
