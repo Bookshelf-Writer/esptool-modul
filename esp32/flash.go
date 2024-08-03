@@ -4,7 +4,7 @@ import (
 	"bytes"
 	"compress/zlib"
 	"fmt"
-	"github.com/Bookshelf-Writer/esptool-modul/common"
+	"github.com/Bookshelf-Writer/esptool-modul/esp32/command"
 	"time"
 )
 
@@ -13,7 +13,7 @@ const blockLengthWriteMax uint32 = 0x400
 
 func (e *ESP32ROM) AttachSpiFlash() (err error) {
 	_, err = e.CheckExecuteCommand(
-		common.NewAttachSpiFlashCommand(),
+		command.AttachSpiFlash(),
 		e.defaultTimeout,
 		e.defaultRetries,
 	)
@@ -46,7 +46,7 @@ func (e *ESP32ROM) ReadFlash(offset uint32, size uint32) ([]byte, error) {
 		}
 
 		response, err := e.CheckExecuteCommand(
-			common.NewReadFlashCommand(offset+uint32(len(receivedData)), blockLength),
+			command.Read.Flash(offset+uint32(len(receivedData)), blockLength),
 			e.defaultTimeout,
 			e.defaultRetries,
 		)
@@ -91,9 +91,9 @@ func (e *ESP32ROM) WriteFlash(offset uint32, data []byte, useCompression bool) (
 		numBlocks = (uint32(len(remaining)) + blockLengthWriteMax - 1) / blockLengthWriteMax
 		e.logger.Printf("Compressed %d bytes to %d bytes. Ration = %.1f", len(data), len(remaining), float64(len(remaining))/float64(len(data)))
 		_, err = e.CheckExecuteCommand(
-			common.NewBeginFlashDeflCommand(
-				uint32(uncompressedNumBlocks)*blockLengthWriteMax,
-				uint32(numBlocks),
+			command.Flash.BeginDeflate(
+				uncompressedNumBlocks*blockLengthWriteMax,
+				numBlocks,
 				blockLengthWriteMax,
 				offset,
 			),
@@ -103,9 +103,9 @@ func (e *ESP32ROM) WriteFlash(offset uint32, data []byte, useCompression bool) (
 		remaining = make([]byte, len(data))
 		copy(remaining, data)
 		_, err = e.CheckExecuteCommand(
-			common.NewBeginFlashCommand(
+			command.Flash.Begin(
 				uint32(len(data)),
-				uint32(numBlocks),
+				numBlocks,
 				blockLengthWriteMax,
 				offset,
 			),
@@ -149,7 +149,7 @@ func (e *ESP32ROM) WriteFlash(offset uint32, data []byte, useCompression bool) (
 			}
 			if useCompression {
 				_, err = e.CheckExecuteCommand(
-					common.NewFlashDataDeflCommand(
+					command.Flash.DataDeflate(
 						block,
 						sequence,
 					),
@@ -161,7 +161,7 @@ func (e *ESP32ROM) WriteFlash(offset uint32, data []byte, useCompression bool) (
 				}
 			} else {
 				_, err = e.CheckExecuteCommand(
-					common.NewFlashDataCommand(
+					command.Flash.Data(
 						block,
 						sequence,
 					),
@@ -183,7 +183,7 @@ func (e *ESP32ROM) WriteFlash(offset uint32, data []byte, useCompression bool) (
 	}
 
 	//	_, err = e.CheckExecuteCommand(
-	//		common.NewFlashEndCommand(false),
+	//		command.Flash.End(false),
 	//		e.defaultTimeout,
 	//		e.defaultRetries,
 	//	)

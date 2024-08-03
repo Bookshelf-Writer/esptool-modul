@@ -84,7 +84,7 @@ func (e *ESP32ROM) Connect(maxRetries uint) (err error) {
 
 func (e *ESP32ROM) Sync() (err error) {
 	response, err := e.ExecuteCommand(
-		common.NewSyncCommand(),
+		command.Sync(),
 		1000*time.Millisecond,
 	)
 	if err != nil {
@@ -102,7 +102,7 @@ func (e *ESP32ROM) ReadEfuse(efuseIndex uint) ([4]byte, error) {
 
 func (e *ESP32ROM) ReadRegister(register uint) ([4]byte, error) {
 	response, err := e.ExecuteCommand(
-		common.NewReadRegisterCommand(uint32(register)),
+		command.Read.Register(uint32(register)),
 		e.defaultTimeout,
 	)
 	if err != nil {
@@ -153,7 +153,7 @@ func (e *ESP32ROM) CheckExecuteCommand(command *command.CommandObj, timeout time
 func (e *ESP32ROM) ChangeBaudrate(newBaudrate uint32) error {
 	e.logger.Printf("Changing baudrate to %d\n", newBaudrate)
 	_, err := e.CheckExecuteCommand(
-		common.NewChangeBaudrateCommand(newBaudrate, 0), //e.SerialPort.Config.BaudRate),
+		command.ChangeBaudRate(newBaudrate, 0),
 		e.defaultTimeout,
 		e.defaultRetries,
 	)
