@@ -1,13 +1,14 @@
 package main
 
 import (
+	"esptool/common/output"
 	"flag"
 	"strings"
 )
 
 func main() {
-	logLVL := LvlLogDef
-	bufLog := LogConsoleColor
+	logLVL := output.LvlLogDef
+	bufLog := output.LogConsoleColor
 	flag.Parse()
 
 	//manual rechecking of parameters
@@ -17,9 +18,9 @@ func main() {
 			*CliTrigType.Help = true
 
 		case "logtrase":
-			logLVL = LvlLogTrase
+			logLVL = output.LvlLogTrase
 		case "logdebug":
-			logLVL = LvlLogDebug
+			logLVL = output.LvlLogDebug
 
 		case "v", "ver":
 			*CliTrigType.Version = true
@@ -35,12 +36,12 @@ func main() {
 	//preliminary interception of conditions
 	switch {
 	case *CliTrigType.NoColor:
-		bufLog = LogConsole
+		bufLog = output.LogConsole
 	case *CliTrigType.Json:
-		bufLog = LogJson
+		bufLog = output.LogJson
 	}
 
-	logs := NewLog(bufLog.Level(logLVL), "CLI")
+	logs := output.NewLog(bufLog.Level(logLVL), "CLI")
 	method := MethodObj{log: logs}
 
 	//move by group

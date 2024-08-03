@@ -1,11 +1,14 @@
 package main
 
-import "os"
+import (
+	"esptool/common/output"
+	"os"
+)
 
 //###########################################################//
 
 type MethodObj struct {
-	log    *LogObj
+	log    *output.LogObj
 	isTest bool
 }
 
