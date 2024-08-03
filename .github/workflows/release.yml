@@ -78,7 +78,7 @@ jobs:
         with:
           upload_url: ${{ github.event.release.upload_url }}
           asset_path: cmd/esptool
-          asset_name: "esptool.${{ env.FILE_EX }}"
+          asset_name: "esptool.mini.${{ env.FILE_EX }}"
           asset_content_type: application/octet-stream
 
    ########################################################################################################################

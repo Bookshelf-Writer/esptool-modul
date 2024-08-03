@@ -72,11 +72,11 @@ func (obj *MethodObj) Help() {
 func (obj *MethodObj) Version() {
 	newLogObj := obj.log.Info()
 
-	newLogObj.Str("name", esptool.GlobalName)
-	newLogObj.Str("description", "ESP32 flashing utility written in GoLang")
+	newLogObj.Str("name", "esptool-mini")
+	newLogObj.Str("description", "Minimalistic console utility, partial functionality of esptool.py")
 	newLogObj.Str("ver", esptool.GlobalVersion)
 	newLogObj.Str("upd", esptool.GlobalDateUpdate)
-	newLogObj.Str("hash", esptool.GlobalHash[:8])
+	newLogObj.Str("hash", esptool.GlobalHash[len(esptool.GlobalHash)-8:])
 
 	newLogObj.Msg("Version")
 	obj.End()

@@ -22,7 +22,7 @@ const (
 	CliTrigTextVersion = "Show application build information"
 
 	CliTrigTextJson    = "Output responses in json"
-	CliTrigTextNoColor = "Display answers without colorization"
+	CliTrigTextNoColor = "Display output without colorization"
 
 	CliTrigTextList       = "Get a list of available COM devices"
 	CliTrigTextInfo       = "Show ESP information"

@@ -17,7 +17,7 @@ func TestCliTrig(t *testing.T) {
 	val.Add("version", "Show application build information").Delim()
 
 	val.Add("json", "Output responses in json")
-	val.Add("noColor", "Display answers without colorization").Delim()
+	val.Add("noColor", "Display output without colorization").Delim()
 
 	val.Add("list", "Get a list of available COM devices")
 	val.Add("info", "Show ESP information")
