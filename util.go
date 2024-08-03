@@ -1,7 +1,6 @@
 package esptool
 
 import (
-	"fmt"
 	"github.com/Bookshelf-Writer/esptool-modul/common/output"
 	"github.com/Bookshelf-Writer/esptool-modul/common/serial"
 	"github.com/Bookshelf-Writer/esptool-modul/esp32"
@@ -12,15 +11,15 @@ func ConnectEsp32(portPath string, connectBaudrate uint32, transferBaudrate uint
 
 	serialPort, err := serial.PortInit(serial.ConfigInit(portPath, connectBaudrate))
 	if err != nil {
-		logger.Debug().Err(err).Msg("serial.PortInit")
-		return nil, fmt.Errorf("Failed to open serial port: %s", err.Error())
+		logger.Trace().Err(err).Msg("serial.PortInit")
+		return nil, err
 	}
 
-	esp32 := esp32.NewESP32ROM(serialPort, logger.ZeroLog())
+	esp32 := esp32.NewESP32ROM(serialPort, logger)
 	err = esp32.Connect(retries)
 	if err != nil {
-		logger.Debug().Err(err).Msg("esp32.Connect")
-		return nil, fmt.Errorf("Failed to connect to ESP32: %s", err.Error())
+		logger.Trace().Err(err).Msg("esp32.Connect")
+		return nil, err
 	}
 
 	return esp32, esp32.ChangeBaudrate(transferBaudrate)

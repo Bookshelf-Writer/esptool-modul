@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"fmt"
 	"github.com/Bookshelf-Writer/esptool-modul/common"
+	"github.com/Bookshelf-Writer/esptool-modul/common/output"
 	"github.com/Bookshelf-Writer/esptool-modul/common/serial"
 	"github.com/Bookshelf-Writer/esptool-modul/esp32/command"
 	"github.com/rs/zerolog"
@@ -23,15 +24,19 @@ type ESP32ROM struct {
 	logger         *zerolog.Logger
 	defaultTimeout time.Duration
 	defaultRetries int
+	log            output.LogObj
 }
 
-func NewESP32ROM(serialPort *serial.PortObj, logger *zerolog.Logger) *ESP32ROM {
+func NewESP32ROM(serialPort *serial.PortObj, logger *output.LogObj) *ESP32ROM {
+	logger = logger.NewLog("NewESP32ROM")
+
 	return &ESP32ROM{
 		SerialPort:     serialPort,
-		SlipReadWriter: common.NewSlipReadWriter(serialPort, logger),
-		logger:         logger,
+		SlipReadWriter: common.NewSlipReadWriter(serialPort, logger.ZeroLog()),
+		logger:         logger.ZeroLog(),
 		defaultTimeout: 100 * time.Millisecond,
 		defaultRetries: 3,
+		log:            *logger,
 	}
 }
 
@@ -73,7 +78,7 @@ func (e *ESP32ROM) Connect(maxRetries uint) (err error) {
 	}
 
 	for i := uint(0); i < maxRetries; i++ {
-		e.logger.Printf("Connecting %d/%d ...\n", i, maxRetries)
+		e.log.Debug().Msg("Connecting")
 		err = e.Sync()
 		if err == nil {
 			break
@@ -123,7 +128,7 @@ func (e *ESP32ROM) ExecuteCommand(command *command.CommandObj, timeout time.Dura
 			return nil, err
 		}
 		if responseBuf[1] != command.OpcodeToByte() {
-			e.logger.Printf("Opcode did not match %d/%d\n", retryCount, 16)
+			e.log.Trace().Msg("Opcode did not match")
 			continue
 		} else {
 			return common.NewResponse(responseBuf)
@@ -136,12 +141,12 @@ func (e *ESP32ROM) CheckExecuteCommand(command *command.CommandObj, timeout time
 	for retryCount := 0; retryCount < retries; retryCount++ {
 		response, err = e.ExecuteCommand(command, timeout)
 		if err != nil {
-			e.logger.Printf("Executing command %s failed. Retrying %d/%d", command.Opcode(), retryCount, retries)
+			e.log.Debug().Str("command", command.Opcode()).Msg("Executing command failed. Retrying")
 			continue
 		}
 		if !response.Status.Success {
 			err = fmt.Errorf("Device returned for command %s status %s", command.Opcode(), response.Status.String())
-			e.logger.Printf("Received non success status for command %s. Retrying %d/%d\n", command.Opcode(), retryCount, retries)
+			e.log.Debug().Str("command", command.Opcode()).Msg("Received non success status for command. Retrying")
 			continue
 		} else {
 			break
@@ -151,7 +156,7 @@ func (e *ESP32ROM) CheckExecuteCommand(command *command.CommandObj, timeout time
 }
 
 func (e *ESP32ROM) ChangeBaudrate(newBaudrate uint32) error {
-	e.logger.Printf("Changing baudrate to %d\n", newBaudrate)
+	e.log.Trace().Uint("rate", uint(newBaudrate)).Msg("Changing BaudRate")
 	_, err := e.CheckExecuteCommand(
 		command.ChangeBaudRate(newBaudrate, 0),
 		e.defaultTimeout,
@@ -166,14 +171,14 @@ func (e *ESP32ROM) ChangeBaudrate(newBaudrate uint32) error {
 		return err
 	}
 
-	e.logger.Printf("Changed baudrate to %d", e.SerialPort.BaudRate.Get())
+	e.log.Debug().Uint("rate", uint(e.SerialPort.BaudRate.Get())).Msg("Changed BaudRate")
 	time.Sleep(10 * time.Millisecond)
 	e.SerialPort.Flush() // get rid of crap sent during baud rate change
 	return nil
 }
 
 func (e *ESP32ROM) ReadPartitionList() (PartitionList, error) {
-	e.logger.Print("Reading partiton table from ESP32")
+	e.log.Debug().Msg("Reading partiton table")
 
 	bindata, err := e.ReadFlash(uint32(partitionTableOffset), uint32(partitionTableMaxSize))
 

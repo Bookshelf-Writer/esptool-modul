@@ -42,7 +42,7 @@ func (s *SlipReadWriter) Write(b []byte) error {
 	}
 	if n != len(data) {
 		err := fmt.Errorf("Expected to send %d bytes but transfered only %d bytes.", len(data), n)
-		s.logger.Print(err.Error())
+		s.logger.Trace().Msg(err.Error())
 		return err
 	}
 	return nil
@@ -70,7 +70,7 @@ func (s *SlipReadWriter) Read(timeout time.Duration) ([]byte, error) {
 	for {
 		if time.Since(startTime) > timeout {
 			err := fmt.Errorf("Read timeout after %v. Received %d bytes", time.Since(startTime), len(result))
-			s.logger.Print(err)
+			s.logger.Trace().Msg(err.Error())
 			return nil, err
 		}
 
