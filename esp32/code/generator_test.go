@@ -169,3 +169,40 @@ func TestDirectionCode(t *testing.T) {
 
 	build(t, obj, val)
 }
+
+////////////////
+
+func TestSlipCode(t *testing.T) {
+	obj := generator.Init("Slip", "slip.go")
+	val := obj.NewVal()
+
+	//
+
+	val.Add(0xC0, "Header")
+	val.Add(0xDB, "Escape Char")
+
+	//
+
+	obj.Print("func (obj ").Name.Type().PrintLN(") Byte() byte {")
+	obj.Offset(1).PrintLN("return byte(obj) ")
+	obj.PrintLN("}")
+
+	build(t, obj, val)
+}
+
+////////////////
+
+func TestStateCode(t *testing.T) {
+	obj := generator.Init("State", "state.go")
+	val := obj.NewVal()
+
+	//
+
+	val.Add(0, "Waiting Header")
+	val.Add(1, "Reading Content")
+	val.Add(2, "In Escape")
+
+	//
+
+	build(t, obj, val)
+}

@@ -17,7 +17,7 @@ type ResponseStatus struct {
 }
 
 type Response struct {
-	Direction Direction
+	Direction byte
 	Opcode    code.OpType
 	Size      uint16
 	Value     [4]byte
@@ -44,7 +44,7 @@ func NewResponse(data []byte) (*Response, error) {
 		return nil, fmt.Errorf("Invalid response length. Received %d bytes, expected at least %d bytes", len(data), minResponseSize)
 	}
 	response := &Response{
-		Direction: Direction(data[0]),
+		Direction: data[0],
 		Opcode:    code.OpType(data[1]),
 		Size:      binary.BigEndian.Uint16(data[2:4]),
 		Data:      data[8 : len(data)-1],
