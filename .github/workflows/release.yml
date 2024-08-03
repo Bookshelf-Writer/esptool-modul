@@ -69,7 +69,7 @@ jobs:
       - name: Run build
         run: |
           cd cmd
-          go build -o esptool
+          go build -ldflags="-s -w" -o esptool
 
       - name: Save build
         uses: actions/upload-release-asset@v1

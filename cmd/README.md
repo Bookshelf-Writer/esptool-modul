@@ -5,7 +5,7 @@ This is a console application for working with esptool-mod
 ## Build
 
 ```bash
-go build -o esptool.bin
+go build -ldflags="-s -w" -o esptool.bin
 ```
 
 ## work
