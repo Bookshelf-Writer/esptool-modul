@@ -1,4 +1,4 @@
-package generator_2
+package generator
 
 //###########################################################//
 
@@ -34,6 +34,11 @@ func (arr *GeneratorValueObj) Add(code any, text string) *GeneratorValueObj {
 	return arr
 }
 
+func (arr *GeneratorValueObj) AddByte(code byte, text string) *GeneratorValueObj {
+	arr.Add(code, text)
+	return arr
+}
+
 func (arr *GeneratorValueObj) Delim() {
 	arr.delim[arr.lastKey] = true
 }
@@ -58,7 +63,23 @@ func (get *GeneratorValueGetObj) IsDelim(code any) bool {
 func (get *GeneratorValueGetObj) Bytes() []byte {
 	bufArr := make([]byte, len(get.arr.list))
 	for pos, val := range get.arr.list {
-		bufArr[pos] = val.(byte)
+		bufArr[pos] = val.(uint8)
+	}
+	return bufArr
+}
+
+func (get *GeneratorValueGetObj) Ints() []int {
+	bufArr := make([]int, len(get.arr.list))
+	for pos, val := range get.arr.list {
+		bufArr[pos] = val.(int)
+	}
+	return bufArr
+}
+
+func (get *GeneratorValueGetObj) Uints() []uint {
+	bufArr := make([]uint, len(get.arr.list))
+	for pos, val := range get.arr.list {
+		bufArr[pos] = val.(uint)
 	}
 	return bufArr
 }

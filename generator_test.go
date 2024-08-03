@@ -9,7 +9,7 @@ import (
 
 func TestCliTrig(t *testing.T) {
 	obj := generator.Init("CliTrig", "cli_trig.go")
-	val := obj.GetStringVal()
+	val := obj.NewVal()
 
 	//
 
@@ -68,7 +68,7 @@ func TestCliTrig(t *testing.T) {
 
 func TestCliValue(t *testing.T) {
 	obj := generator.Init("CliVal", "cli_val.go")
-	val := obj.GetStringVal()
+	val := obj.NewVal()
 
 	//
 

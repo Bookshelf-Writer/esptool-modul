@@ -7,28 +7,18 @@ import (
 
 //###########################################################//
 
-func (gen *GeneratorObj) LN() *GeneratorObj {
-	gen.Write([]byte("\n"))
-	return gen
+func (gen *GeneratorObj) NewVal() *GeneratorValueObj {
+	return generatorValueInit(&gen.name)
 }
 
-func (gen *GeneratorObj) Byte(b byte) *GeneratorObj {
-	gen.Write([]byte(fmt.Sprintf("%d", b)))
-	return gen
+////
+
+func (gen *GeneratorObj) Len() int {
+	return gen.buf.Len()
 }
 
-func (gen *GeneratorObj) Print(text string) *GeneratorObj {
-	gen.Write([]byte(text))
-	return gen
-}
-
-func (gen *GeneratorObj) PrintString(text string) *GeneratorObj {
-	gen.Write([]byte("\"" + text + "\""))
-	return gen
-}
-
-func (gen *GeneratorObj) PrintLN(text string) *GeneratorObj {
-	gen.Print(text).LN()
+func (gen *GeneratorObj) Write(data []byte) *GeneratorObj {
+	gen.buf.Write(data)
 	return gen
 }
 
@@ -37,38 +27,46 @@ func (gen *GeneratorObj) Del(len int) *GeneratorObj {
 	return gen
 }
 
-func (gen *GeneratorObj) Repeat(pos int) *GeneratorObj {
-	gen.buf.Write([]byte(strings.Repeat("\t", pos)))
+//
+
+func (gen *GeneratorObj) LN() *GeneratorObj {
+	gen.Write([]byte("\n"))
 	return gen
 }
 
-////
-
-func (gen *GeneratorObj) TypeName() string {
-	return gen.val.name + "Type"
-}
-
-func (gen *GeneratorObj) Type() *GeneratorObj {
-	gen.Write([]byte(gen.TypeName()))
+func (gen *GeneratorObj) Print(text string) *GeneratorObj {
+	gen.Write([]byte(text))
 	return gen
 }
 
-func (gen *GeneratorObj) Map() *GeneratorObj {
-	gen.Write([]byte(gen.val.name + "Map"))
+func (gen *GeneratorObj) PrintLN(text string) *GeneratorObj {
+	gen.Print(text).LN()
 	return gen
 }
 
-func (gen *GeneratorObj) TitleCase(text string) *GeneratorObj {
-	gen.Write([]byte(toTitleCase(text)))
+func (gen *GeneratorObj) Repeat(chat string, size int) *GeneratorObj {
+	gen.Print(strings.Repeat(chat, size))
 	return gen
 }
 
-func (gen *GeneratorObj) ConstCode(code string) *GeneratorObj {
-	gen.Write([]byte(gen.val.name + toTitleCase(code)))
+func (gen *GeneratorObj) Offset(size int) *GeneratorObj {
+	gen.Repeat("\t", size)
 	return gen
 }
 
-func (gen *GeneratorObj) ConstText(code string) *GeneratorObj {
-	gen.Write([]byte(gen.val.name + "Text" + toTitleCase(code)))
+//
+
+func (gen *GeneratorObj) String(a any) *GeneratorObj {
+	gen.Print(fmt.Sprintf("\"%s\"", a))
+	return gen
+}
+
+func (gen *GeneratorObj) Hex(a any) *GeneratorObj {
+	gen.Print(fmt.Sprintf("0x%02x", a))
+	return gen
+}
+
+func (gen *GeneratorObj) Number(a any) *GeneratorObj {
+	gen.Print(fmt.Sprintf("%d", a))
 	return gen
 }

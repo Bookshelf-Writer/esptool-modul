@@ -1,4 +1,4 @@
-package generator_2
+package generator
 
 import (
 	"regexp"

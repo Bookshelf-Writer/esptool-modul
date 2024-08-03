@@ -6,15 +6,15 @@ package code
 type ErrType byte
 
 const (
-	ErrReceivedMessageIsInvalid     ErrType = 5
-	ErrFailedToActOnReceivedMessage ErrType = 6
-	ErrInvalidCRCInMessage          ErrType = 7
+	ErrReceivedMessageIsInvalid     ErrType = 5 //0x05
+	ErrFailedToActOnReceivedMessage ErrType = 6 //0x06
+	ErrInvalidCRCInMessage          ErrType = 7 //0x07
 
-	ErrFlashWriteError      ErrType = 8
-	ErrFlashReadError       ErrType = 9
-	ErrFlashReadLengthError ErrType = 10
+	ErrFlashWriteError      ErrType = 8  //0x08
+	ErrFlashReadError       ErrType = 9  //0x09
+	ErrFlashReadLengthError ErrType = 10 //0x0a
 
-	ErrDeflateError ErrType = 11
+	ErrDeflateError ErrType = 11 //0x0b
 )
 
 const (

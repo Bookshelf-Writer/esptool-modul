@@ -6,31 +6,31 @@ package code
 type OpType byte
 
 const (
-	OpFlashBegin    OpType = 2
-	OpFlashData     OpType = 3
-	OpFlashEnd      OpType = 4
-	OpMemoryBegin   OpType = 5
-	OpMemoryEnd     OpType = 6
-	OpMemoryData    OpType = 7
-	OpSync          OpType = 8
-	OpWriteRegister OpType = 9
-	OpReadRegister  OpType = 10
+	OpFlashBegin    OpType = 2  //0x02
+	OpFlashData     OpType = 3  //0x03
+	OpFlashEnd      OpType = 4  //0x04
+	OpMemoryBegin   OpType = 5  //0x05
+	OpMemoryEnd     OpType = 6  //0x06
+	OpMemoryData    OpType = 7  //0x07
+	OpSync          OpType = 8  //0x08
+	OpWriteRegister OpType = 9  //0x09
+	OpReadRegister  OpType = 10 //0x0a
 
-	OpSpiSetParams      OpType = 11
-	OpSpiAttachFlash    OpType = 13
-	OpReadFlash         OpType = 14
-	OpChangeBaudrate    OpType = 15
-	OpFlashDeflateBegin OpType = 16
-	OpFlashDeflateLData OpType = 17
-	OpFlashDeflateLEnd  OpType = 18
-	OpSpiFlashMD5       OpType = 19
+	OpSpiSetParams      OpType = 11 //0x0b
+	OpSpiAttachFlash    OpType = 13 //0x0d
+	OpReadFlash         OpType = 14 //0x0e
+	OpChangeBaudrate    OpType = 15 //0x0f
+	OpFlashDeflateBegin OpType = 16 //0x10
+	OpFlashDeflateLData OpType = 17 //0x11
+	OpFlashDeflateLEnd  OpType = 18 //0x12
+	OpSpiFlashMD5       OpType = 19 //0x13
 
-	OpEraseFlash    OpType = 208
-	OpEraseRegion   OpType = 209
-	OpReadFlashFast OpType = 210
-	OpRunUserCode   OpType = 211
+	OpEraseFlash    OpType = 208 //0xd0
+	OpEraseRegion   OpType = 209 //0xd1
+	OpReadFlashFast OpType = 210 //0xd2
+	OpRunUserCode   OpType = 211 //0xd3
 
-	OpFlashEncryptData OpType = 212
+	OpFlashEncryptData OpType = 212 //0xd4
 )
 
 const (
