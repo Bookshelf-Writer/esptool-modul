@@ -12,7 +12,7 @@ import (
 func (obj *MethodObj) FlashRead() {
 	newLog := obj.log.NewLog("FlashRead")
 	serialPort := *CLI.Port
-	file := *CLI.Flash.FilePath
+	filename := *CLI.Flash.FilePath
 	size := *CLI.Flash.Size
 
 	{
@@ -21,7 +21,7 @@ func (obj *MethodObj) FlashRead() {
 			obj.EndInvalid()
 			return
 		}
-		if len(file) == 0 {
+		if len(filename) == 0 {
 			newLog.Error().Str("param", CliValFlashFile).Msg(MethodRequiredParameterMissing)
 			obj.EndInvalid()
 			return
@@ -32,19 +32,20 @@ func (obj *MethodObj) FlashRead() {
 			return
 		}
 
-		_, err := os.Stat(file)
-		if err == nil {
-			newLog.Error().Msg(MethodFileNotFound)
-			obj.EndInvalid()
-			return
-		}
-
 		if !cmd.IsAccessible(serialPort) {
 			newLog.Error().Msg(MethodDevNotAvailable)
 			obj.EndInvalid()
 			return
 		}
 	}
+
+	file, err := os.OpenFile(filename, os.O_RDWR|os.O_CREATE|os.O_TRUNC, 0644)
+	if err != nil {
+		newLog.Error().Err(err).Msg(MethodFileNotFound)
+		obj.EndInvalid()
+		return
+	}
+	defer file.Close()
 
 	//todo причесать нормально
 	{
@@ -61,7 +62,7 @@ func (obj *MethodObj) FlashRead() {
 			return
 		}
 
-		_, err = os.Stdout.Write(bytes)
+		_, err = file.Write(bytes)
 		if err != nil {
 			newLog.Error().Err(err).Msg("write esp32 failed")
 			obj.EndInvalid()
@@ -114,6 +115,7 @@ func (obj *MethodObj) FlashWrite() {
 			return
 		}
 
+		newLog.Debug().Int("size", len(contents)).Msg("file")
 		err = esp32.WriteFlash(uint32(*CLI.Flash.Offset), contents, *CLI.Flash.Compress)
 		if err != nil {
 			newLog.Error().Err(err).Msg("write esp32 failed")

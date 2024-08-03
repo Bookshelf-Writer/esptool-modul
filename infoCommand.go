@@ -37,15 +37,23 @@ func InfoCommand(esp32 *esp32.ESP32ROM, logs *output.LogObj) error {
 		}
 	}
 
+	maxSize := uint64(0)
 	partitionList, err := esp32.ReadPartitionList()
 	if err != nil {
 		logs.Debug().Err(err).Msg("Partition")
+	} else {
+		for _, partition := range partitionList {
+			if maxSize < uint64(partition.Size+partition.Offset) {
+				maxSize = uint64(partition.Size + partition.Offset)
+			}
+		}
 	}
 
 	pr := logs.Info()
 
 	pr.Str("mac", macAddress)
 	pr.Int("revision", int(description.Revision))
+	pr.Uint64("maxSize", maxSize)
 	pr.Array("feature", output.StringArray(featureList))
 	pr.Interface("partition", partitionList)
 

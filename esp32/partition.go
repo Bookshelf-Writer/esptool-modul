@@ -249,7 +249,7 @@ type Partition struct {
 	Name    string           `json:"name"`
 	Type    PartitionType    `json:"type"`
 	SubType PartitionSubType `json:"subtype"`
-	Offset  int              `json:"offset'`
+	Offset  int              `json:"offset"`
 	Size    int              `json:"size"`
 	//Flags   PartitionFlags   `json:"flags"`
 }

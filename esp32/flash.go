@@ -34,8 +34,22 @@ func (e *ESP32ROM) ReadFlash(offset uint32, size uint32) ([]byte, error) {
 	}
 
 	receivedData := make([]byte, 0)
+	pathTime := time.Now()
+	e.log.Info().
+		Int("load", len(receivedData)).
+		Uint("total", uint(size)).
+		Msg(fmt.Sprintf("\t%.2f%s", float64(len(receivedData))/float64(size)*100.0, "%"))
+
 	for {
-		//e.logger.Printf("%d of %d\n", len(receivedData), size)
+
+		if pathTime.Add(time.Second).Before(time.Now()) {
+			e.log.Info().
+				Int("load", len(receivedData)).
+				Uint("total", uint(size)).
+				Msg(fmt.Sprintf("\t%.2f%s", float64(len(receivedData))/float64(size)*100.0, "%"))
+			pathTime = time.Now()
+		}
+
 		if len(receivedData) >= int(size) {
 			return receivedData, nil
 		}
@@ -68,8 +82,6 @@ func compressImage(data []byte) ([]byte, error) {
 }
 
 func (e *ESP32ROM) WriteFlash(offset uint32, data []byte, useCompression bool) (err error) {
-	fmt.Println("Write...")
-
 	if !e.flashAttached {
 		err = e.AttachSpiFlash()
 		if err != nil {
@@ -125,13 +137,13 @@ func (e *ESP32ROM) WriteFlash(offset uint32, data []byte, useCompression bool) (
 	sent := uint32(0)
 	total := uint32(len(remaining))
 
-	time.Sleep(10 * time.Millisecond)
+	time.Sleep(20 * time.Millisecond)
 
 	pathTime := time.Now()
 	e.log.Info().
 		Uint("sent", uint(sent)).
 		Uint("total", uint(total)).
-		Msg(fmt.Sprintf("%.2f%", float64(sent)/float64(total)*100.0))
+		Msg(fmt.Sprintf("\t%.2f%s", float64(sent)/float64(total)*100.0, "%"))
 
 	for {
 		if sent >= total {
@@ -142,7 +154,7 @@ func (e *ESP32ROM) WriteFlash(offset uint32, data []byte, useCompression bool) (
 			e.log.Info().
 				Uint("sent", uint(sent)).
 				Uint("total", uint(total)).
-				Msg(fmt.Sprintf("%.2f%", float64(sent)/float64(total)*100.0))
+				Msg(fmt.Sprintf("\t%.2f%s", float64(sent)/float64(total)*100.0, "%"))
 			pathTime = time.Now()
 		}
 
@@ -158,7 +170,7 @@ func (e *ESP32ROM) WriteFlash(offset uint32, data []byte, useCompression bool) (
 
 		for retryCount := 0; retryCount < 3; retryCount++ {
 			if retryCount > 0 {
-				e.logger.Printf("Received error while writing to Flash")
+				e.log.Debug().Msg("Received error while writing to Flash")
 			}
 			if useCompression {
 				_, err = e.CheckExecuteCommand(
@@ -178,7 +190,7 @@ func (e *ESP32ROM) WriteFlash(offset uint32, data []byte, useCompression bool) (
 						block,
 						sequence,
 					),
-					e.defaultTimeout,
+					e.defaultTimeout*10,
 					e.defaultRetries,
 				)
 
@@ -196,7 +208,7 @@ func (e *ESP32ROM) WriteFlash(offset uint32, data []byte, useCompression bool) (
 	}
 
 	_, err = e.CheckExecuteCommand(
-		command.Flash.End(false),
+		command.Flash.End(true),
 		e.defaultTimeout,
 		e.defaultRetries,
 	)
