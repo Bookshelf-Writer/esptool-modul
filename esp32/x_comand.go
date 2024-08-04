@@ -60,7 +60,7 @@ func CheckExecuteCommand(port *serial.PortObj, command *command.CommandObj, time
 		if !response.Status {
 			continue
 		} else {
-			return nil, err
+			return response, err
 		}
 
 	}
