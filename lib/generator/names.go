@@ -112,6 +112,11 @@ func (n *GeneratorNameObj) Text() *GeneratorObj {
 
 //
 
+func (n *GeneratorNameObj) CodeToTitleCase(code string) *GeneratorObj {
+	n.gen.Print(n.ToTitleCase(code))
+	return n.gen
+}
+
 func (n *GeneratorNameObj) SelfCode(code string) *GeneratorObj {
 	n.gen.Print(n.GetCode(code))
 	return n.gen
@@ -119,6 +124,11 @@ func (n *GeneratorNameObj) SelfCode(code string) *GeneratorObj {
 
 func (n *GeneratorNameObj) SelfParam(param string, code string) *GeneratorObj {
 	n.gen.Print(n.GetParamCode(param, code))
+	return n.gen
+}
+
+func (n *GeneratorNameObj) SelfParamCode(param string, code string) *GeneratorObj {
+	n.gen.Print(n.ToTitleCase(param) + n.ToTitleCase(code))
 	return n.gen
 }
 
