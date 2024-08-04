@@ -1,10 +1,10 @@
 package esptool
 
 import (
-	"github.com/Bookshelf-Writer/esptool-modul/common/output"
 	"github.com/Bookshelf-Writer/esptool-modul/common/serial"
 	"github.com/Bookshelf-Writer/esptool-modul/esp32"
 	"github.com/Bookshelf-Writer/esptool-modul/esp32/command"
+	"github.com/Bookshelf-Writer/esptool-modul/lib/output"
 	"time"
 )
 

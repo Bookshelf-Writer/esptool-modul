@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/Bookshelf-Writer/esptool-modul/common/output"
+	"github.com/Bookshelf-Writer/esptool-modul/lib/output"
 	"os"
 )
 

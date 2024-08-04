@@ -2,7 +2,7 @@ package main
 
 import (
 	"flag"
-	"github.com/Bookshelf-Writer/esptool-modul/common/output"
+	"github.com/Bookshelf-Writer/esptool-modul/lib/output"
 	"strings"
 )
 

@@ -2,8 +2,8 @@ package esptool
 
 import (
 	"fmt"
-	"github.com/Bookshelf-Writer/esptool-modul/common/output"
 	"github.com/Bookshelf-Writer/esptool-modul/esp32"
+	"github.com/Bookshelf-Writer/esptool-modul/lib/output"
 )
 
 type DeviceInfo struct {
