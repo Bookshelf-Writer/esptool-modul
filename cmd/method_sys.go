@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 	"github.com/Bookshelf-Writer/esptool-modul"
-	"github.com/Bookshelf-Writer/esptool-modul/common/cmd"
+	cmd "github.com/Bookshelf-Writer/esptool-modul/lib/serial"
 )
 
 //###########################################################//

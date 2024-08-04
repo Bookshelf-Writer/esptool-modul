@@ -2,7 +2,7 @@ package main
 
 import (
 	"github.com/Bookshelf-Writer/esptool-modul"
-	"github.com/Bookshelf-Writer/esptool-modul/common/cmd"
+	cmd "github.com/Bookshelf-Writer/esptool-modul/lib/serial"
 	"io/ioutil"
 	"os"
 )
@@ -32,7 +32,7 @@ func (obj *MethodObj) FlashRead() {
 			return
 		}
 
-		if !cmd.IsAccessible(serialPort) {
+		if !cmd.Check(serialPort) {
 			newLog.Error().Msg(MethodDevNotAvailable)
 			obj.EndInvalid()
 			return
@@ -93,7 +93,7 @@ func (obj *MethodObj) FlashWrite() {
 			return
 		}
 
-		if !cmd.IsAccessible(serialPort) {
+		if !cmd.Check(serialPort) {
 			newLog.Error().Msg(MethodDevNotAvailable)
 			obj.EndInvalid()
 			return

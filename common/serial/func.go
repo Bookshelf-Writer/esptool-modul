@@ -5,7 +5,7 @@ import "time"
 //###########################################################//
 
 func (p *PortObj) Flush() error {
-	err := p.port.ResetInputBuffer()
+	err := p.port.ResetOutputBuffer()
 	if err != nil {
 		return err
 	}
