@@ -32,6 +32,8 @@ func buildGO(maps map[string]*core.ModulStruct, namespace map[string]string) {
 		obj.Print("var ").Print(key).PrintLN(" = ModulStruct{")
 		obj.Offset(1).Print("Name: ").String(mod.Name).PrintLN(",").LN()
 
+		fmt.Println(mod.Name, (byte(mod.Sys.Chip)>>1)&0x07)
+
 		obj.Offset(1).PrintLN("Sys: ModulSystemStruct{")
 		obj.Offset(2).Print("UF2: " + strconv.FormatUint(mod.Sys.UF2, 10)).PrintLN("," + fmt.Sprintf(" //0x%02x", mod.Sys.UF2))
 		obj.Offset(2).Print("Chip: " + strconv.Itoa(mod.Sys.Chip)).PrintLN(",")

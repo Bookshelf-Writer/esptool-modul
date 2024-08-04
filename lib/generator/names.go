@@ -32,26 +32,34 @@ func (n *GeneratorNameObj) Get() string {
 	return n.ToTitleCase(n.gen.name)
 }
 
+func (n *GeneratorNameObj) GetParam(param string) string {
+	return n.Get() + n.ToTitleCase(param)
+}
+
 func (n *GeneratorNameObj) GetObj() string {
-	return n.Get() + "Obj"
+	return n.GetParam("Obj")
 }
 
 func (n *GeneratorNameObj) GetMap() string {
-	return n.Get() + "Map"
+	return n.GetParam("Map")
 }
 
 func (n *GeneratorNameObj) GetType() string {
-	return n.Get() + "Type"
+	return n.GetParam("Type")
 }
 
 func (n *GeneratorNameObj) GetText() string {
-	return n.Get() + "Text"
+	return n.GetParam("Text")
 }
 
 //
 
 func (n *GeneratorNameObj) GetCode(code string) string {
 	return n.Get() + n.ToTitleCase(code)
+}
+
+func (n *GeneratorNameObj) GetParamCode(param string, code string) string {
+	return n.GetParam(param) + n.ToTitleCase(code)
 }
 
 func (n *GeneratorNameObj) GetObjCode(code string) string {
@@ -74,6 +82,11 @@ func (n *GeneratorNameObj) GetTextCode(code string) string {
 
 func (n *GeneratorNameObj) Self() *GeneratorObj {
 	n.gen.Print(n.Get())
+	return n.gen
+}
+
+func (n *GeneratorNameObj) Param(param string) *GeneratorObj {
+	n.gen.Print(n.GetParam(param))
 	return n.gen
 }
 
@@ -101,6 +114,11 @@ func (n *GeneratorNameObj) Text() *GeneratorObj {
 
 func (n *GeneratorNameObj) SelfCode(code string) *GeneratorObj {
 	n.gen.Print(n.GetCode(code))
+	return n.gen
+}
+
+func (n *GeneratorNameObj) SelfParam(param string, code string) *GeneratorObj {
+	n.gen.Print(n.GetParamCode(param, code))
 	return n.gen
 }
 
