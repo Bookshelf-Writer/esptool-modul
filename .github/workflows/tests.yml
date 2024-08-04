@@ -7,12 +7,14 @@ on:
       - 'const.go'
       - '**/*.txt'
       - '*.md'
+      - '*.pdf'
   pull_request:
     paths-ignore:
       - '**/*.yml'
       - 'const.go'
       - '**/*.txt'
       - '*.md'
+      - '*.pdf'
 
 jobs:
   test:
