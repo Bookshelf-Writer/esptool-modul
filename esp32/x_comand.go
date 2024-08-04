@@ -46,3 +46,24 @@ func ReadRegister(port *serial.PortObj, timeout time.Duration, register uint32) 
 func ReadEfuse(port *serial.PortObj, timeout time.Duration, eFuseIndex uint32) ([]byte, error) {
 	return ReadRegister(port, timeout, 0x6001a000+(4*eFuseIndex))
 }
+
+//////
+
+func CheckExecuteCommand(port *serial.PortObj, command *command.CommandObj, timeout time.Duration, retries int) (*portal.ResponseObj, error) {
+	for retryCount := 0; retryCount < retries; retryCount++ {
+
+		response, err := RunCommand(port, command, timeout)
+		if err != nil {
+			continue
+		}
+
+		if !response.Status {
+			continue
+		} else {
+			return nil, err
+		}
+
+	}
+
+	return nil, fmt.Errorf("unexpected ending")
+}

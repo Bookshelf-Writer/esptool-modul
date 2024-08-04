@@ -42,26 +42,10 @@ func (e *ESP32ROM) Reset() error {
 	return e.SerialPort.Reset()
 }
 
-func (e *ESP32ROM) Connect(maxRetries uint) error {
-	err := e.SerialPort.Connect()
-	if err != nil {
-		return err
-	}
-
-	for i := uint(0); i < maxRetries; i++ {
-		e.log.Debug().Uint("retry", i).Msg("Connecting")
-
-		err = e.Sync()
-		if err == nil {
-			return nil
-		}
-	}
-
-	return err
-}
+////
 
 func (e *ESP32ROM) Sync() (err error) {
-	response, err := RunCommand(e.SerialPort, command.Sync(), 1000*time.Millisecond)
+	response, err := RunCommand(e.SerialPort, command.Sync(), 400*time.Millisecond)
 	if err != nil {
 		return err
 	}
@@ -72,26 +56,31 @@ func (e *ESP32ROM) Sync() (err error) {
 	return
 }
 
-func (e *ESP32ROM) CheckExecuteCommand(command *command.CommandObj, timeout time.Duration, retries int) (response *portal.ResponseObj, err error) {
-	for retryCount := 0; retryCount < retries; retryCount++ {
-		response, err = RunCommand(e.SerialPort, command, timeout)
-		if err != nil {
-			e.log.Debug().Str("command", command.Opcode()).Msg("Executing command failed. Retrying")
-			continue
-		}
-		if !response.Status {
-			err = fmt.Errorf("Device returned for command %s status %s", command.Opcode(), response.String())
-			e.log.Debug().Str("command", command.Opcode()).Msg("Received non success status for command. Retrying")
-			continue
+func (e *ESP32ROM) Connect(maxRetries uint) error {
+	err := e.SerialPort.Connect()
+	if err != nil {
+		return err
+	}
+
+	for i := uint(0); i < maxRetries; i++ {
+		err = e.Sync()
+		if err == nil {
+			return nil
 		} else {
-			break
+			e.log.Trace().Err(err).Uint("retry", i).Msg("Connecting")
 		}
 	}
-	return
+
+	return err
+}
+
+////
+
+func (e *ESP32ROM) CheckExecuteCommand(command *command.CommandObj, timeout time.Duration, retries int) (*portal.ResponseObj, error) {
+	return CheckExecuteCommand(e.SerialPort, command, timeout, retries)
 }
 
 func (e *ESP32ROM) ChangeBaudrate(newBaudrate uint32) error {
-	e.log.Trace().Uint("rate", uint(newBaudrate)).Msg("Changing BaudRate")
 	_, err := e.CheckExecuteCommand(
 		command.ChangeBaudRate(newBaudrate, 0),
 		e.defaultTimeout,
@@ -106,8 +95,9 @@ func (e *ESP32ROM) ChangeBaudrate(newBaudrate uint32) error {
 		return err
 	}
 
-	e.log.Debug().Uint("rate", uint(e.SerialPort.BaudRate.Get())).Msg("Changed BaudRate")
+	e.log.Trace().Uint32("rate", e.SerialPort.BaudRate.Get()).Msg("Changed BaudRate")
 	time.Sleep(10 * time.Millisecond)
+
 	e.SerialPort.Flush() // get rid of crap sent during baud rate change
 	return nil
 }
