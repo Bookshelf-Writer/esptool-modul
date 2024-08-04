@@ -38,51 +38,26 @@ func NewESP32ROM(serialPort *serial.PortObj, logger *output.LogObj) *ESP32ROM {
 	}
 }
 
-func (e *ESP32ROM) Reset() (err error) {
-	// set IO0=HIGH
-	err = e.SerialPort.SetDTR(false)
-	if err != nil {
-		return
-	}
-	// set EN=LOW, chip in reset
-	err = e.SerialPort.SetRTS(true)
-	if err != nil {
-		return
-	}
-
-	time.Sleep(100 * time.Millisecond)
-
-	// set IO0=LOW
-	err = e.SerialPort.SetDTR(true)
-	if err != nil {
-		return
-	}
-	// EN=HIGH, chip out of reset
-	err = e.SerialPort.SetRTS(false)
-
-	time.Sleep(5 * time.Millisecond)
-	return
+func (e *ESP32ROM) Reset() error {
+	return e.SerialPort.Reset()
 }
 
-func (e *ESP32ROM) Connect(maxRetries uint) (err error) {
-	err = e.Reset()
+func (e *ESP32ROM) Connect(maxRetries uint) error {
+	err := e.SerialPort.Connect()
 	if err != nil {
-		return
-	}
-
-	err = e.SerialPort.Flush()
-	if err != nil {
-		return
+		return err
 	}
 
 	for i := uint(0); i < maxRetries; i++ {
-		e.log.Debug().Msg("Connecting")
+		e.log.Debug().Uint("retry", i).Msg("Connecting")
+
 		err = e.Sync()
 		if err == nil {
-			break
+			return nil
 		}
 	}
-	return
+
+	return err
 }
 
 func (e *ESP32ROM) Sync() (err error) {

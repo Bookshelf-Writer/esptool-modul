@@ -1,5 +1,7 @@
 package serial
 
+import "time"
+
 //###########################################################//
 
 func (p *PortObj) Flush() error {
@@ -13,11 +15,44 @@ func (p *PortObj) Flush() error {
 
 ////////
 
-func (br *PortBaudRateObj) Set(newBaudrate uint32) error {
-	br.obj.conf.BaudRate = newBaudrate
-	return br.obj.port.SetMode(br.obj.conf.Mode())
+func (p *PortObj) Reset() error {
+	// set IO0=HIGH
+	err := p.port.SetDTR(false)
+	if err != nil {
+		return err
+	}
+
+	// set EN=LOW, chip in reset
+	err = p.port.SetRTS(true)
+	if err != nil {
+		return err
+	}
+
+	time.Sleep(100 * time.Millisecond)
+
+	// set IO0=LOW
+	err = p.port.SetDTR(true)
+	if err != nil {
+		return err
+	}
+
+	// EN=HIGH, chip out of reset
+	err = p.port.SetRTS(false)
+
+	time.Sleep(5 * time.Millisecond)
+	return nil
 }
 
-func (br *PortBaudRateObj) Get() uint32 {
-	return br.obj.conf.BaudRate
+func (p *PortObj) Connect() error {
+	err := p.Reset()
+	if err != nil {
+		return err
+	}
+
+	err = p.Flush()
+	if err != nil {
+		return err
+	}
+
+	return nil
 }

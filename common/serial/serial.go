@@ -7,10 +7,6 @@ import (
 
 //###########################################################//
 
-type PortBaudRateObj struct {
-	obj *PortObj
-}
-
 type PortObj struct {
 	port serial.Port
 	conf *ConfigObj
@@ -45,14 +41,6 @@ func (p *PortObj) Write(b []byte) (int, error) {
 
 func (p *PortObj) Read(b []byte) (int, error) {
 	return p.port.Read(b)
-}
-
-func (p *PortObj) SetDTR(dtr bool) error {
-	return p.port.SetDTR(dtr)
-}
-
-func (p *PortObj) SetRTS(rts bool) error {
-	return p.port.SetRTS(rts)
 }
 
 func (p *PortObj) SetReadTimeout(t time.Duration) error {
