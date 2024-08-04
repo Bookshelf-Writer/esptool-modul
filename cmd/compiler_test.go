@@ -1,11 +1,11 @@
 package main
 
 import (
-	"github.com/Bookshelf-Writer/esptool-modul/common/generator"
+	generator2 "github.com/Bookshelf-Writer/esptool-modul/lib/generator"
 	"testing"
 )
 
-func build(t *testing.T, obj *generator.GeneratorObj, val *generator.GeneratorValueObj) {
+func build(t *testing.T, obj *generator2.GeneratorObj, val *generator2.GeneratorValueObj) {
 
 	obj.PrintLN("const (")
 	for _, code := range val.Get.Strings() {

@@ -2,8 +2,8 @@ package main
 
 import (
 	"fmt"
-	"github.com/Bookshelf-Writer/esptool-modul/common/generator"
 	"github.com/Bookshelf-Writer/esptool-modul/esp32/core"
+	"github.com/Bookshelf-Writer/esptool-modul/lib/generator"
 	"sort"
 	"strconv"
 	"strings"
