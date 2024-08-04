@@ -38,6 +38,9 @@ func (p *PortObj) Reset() error {
 
 	// EN=HIGH, chip out of reset
 	err = p.port.SetRTS(false)
+	if err != nil {
+		return err
+	}
 
 	time.Sleep(5 * time.Millisecond)
 	return nil

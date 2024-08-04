@@ -6,15 +6,8 @@ import (
 	"github.com/Bookshelf-Writer/esptool-modul/common/output"
 	"github.com/Bookshelf-Writer/esptool-modul/common/serial"
 	"github.com/Bookshelf-Writer/esptool-modul/esp32/command"
-	"github.com/Bookshelf-Writer/esptool-modul/esp32/portal"
 	"github.com/rs/zerolog"
 	"time"
-)
-
-const (
-	efuseRegBase    uint = 0x6001a000
-	drRegSysconBase uint = 0x3ff66000
-	macEfuseReg     uint = 0x3f41A044 // ESP32-S2 has special block for MAC efuses
 )
 
 type ESP32ROM struct {
@@ -75,32 +68,6 @@ func (e *ESP32ROM) Connect(maxRetries uint) error {
 }
 
 ////
-
-func (e *ESP32ROM) CheckExecuteCommand(command *command.CommandObj, timeout time.Duration, retries int) (*portal.ResponseObj, error) {
-	return CheckExecuteCommand(e.SerialPort, command, timeout, retries)
-}
-
-func (e *ESP32ROM) ChangeBaudrate(newBaudrate uint32) error {
-	_, err := e.CheckExecuteCommand(
-		command.ChangeBaudRate(newBaudrate, 0),
-		e.defaultTimeout,
-		e.defaultRetries,
-	)
-	if err != nil {
-		return err
-	}
-
-	err = e.SerialPort.BaudRate.Set(newBaudrate)
-	if err != nil {
-		return err
-	}
-
-	e.log.Trace().Uint32("rate", e.SerialPort.BaudRate.Get()).Msg("Changed BaudRate")
-	time.Sleep(10 * time.Millisecond)
-
-	e.SerialPort.Flush() // get rid of crap sent during baud rate change
-	return nil
-}
 
 func (e *ESP32ROM) ReadPartitionList() (PartitionList, error) {
 	e.log.Debug().Msg("Reading partiton table")

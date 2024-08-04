@@ -5,25 +5,19 @@ import (
 )
 
 func (e *ESP32ROM) GetChipMAC() (string, error) {
-	buf := make([]byte, 6)
-
-	mac0, err := ReadEfuse(e.SerialPort, e.defaultTimeout, 2)
+	data, err := GetUID(e.SerialPort, e.defaultTimeout)
 	if err != nil {
 		return "", err
 	}
 
-	mac1, err := ReadEfuse(e.SerialPort, e.defaultTimeout, 1)
-	if err != nil {
-		return "", err
-	}
+	macBuf := make([]byte, 6)
+	macBuf[0] = data[1]
+	macBuf[1] = data[0]
+	macBuf[2] = data[7]
+	macBuf[3] = data[6]
+	macBuf[4] = data[5]
+	macBuf[5] = data[4]
 
-	buf[0] = mac0[1]
-	buf[1] = mac0[0]
-	buf[2] = mac1[3]
-	buf[3] = mac1[2]
-	buf[4] = mac1[1]
-	buf[5] = mac1[0]
-
-	mac := net.HardwareAddr(buf[:])
+	mac := net.HardwareAddr(macBuf)
 	return mac.String(), nil
 }

@@ -12,7 +12,7 @@ const blockLengthReadMax uint32 = 64 // TODO check if this value taken from the 
 const blockLengthWriteMax uint32 = 0x400
 
 func (e *ESP32ROM) AttachSpiFlash() (err error) {
-	_, err = e.CheckExecuteCommand(
+	_, err = CheckExecuteCommand(e.SerialPort,
 		command.AttachSpiFlash(),
 		e.defaultTimeout,
 		e.defaultRetries,
@@ -59,7 +59,7 @@ func (e *ESP32ROM) ReadFlash(offset uint32, size uint32) ([]byte, error) {
 			blockLength = blockLengthReadMax
 		}
 
-		response, err := e.CheckExecuteCommand(
+		response, err := CheckExecuteCommand(e.SerialPort,
 			command.Read.Flash(offset+uint32(len(receivedData)), blockLength),
 			e.defaultTimeout,
 			e.defaultRetries,
@@ -102,7 +102,7 @@ func (e *ESP32ROM) WriteFlash(offset uint32, data []byte, useCompression bool) (
 		uncompressedNumBlocks := numBlocks
 		numBlocks = (uint32(len(remaining)) + blockLengthWriteMax - 1) / blockLengthWriteMax
 		e.logger.Printf("Compressed %d bytes to %d bytes. Ration = %.1f", len(data), len(remaining), float64(len(remaining))/float64(len(data)))
-		_, err = e.CheckExecuteCommand(
+		_, err = CheckExecuteCommand(e.SerialPort,
 			command.Flash.BeginDeflate(
 				uncompressedNumBlocks*blockLengthWriteMax,
 				numBlocks,
@@ -114,7 +114,7 @@ func (e *ESP32ROM) WriteFlash(offset uint32, data []byte, useCompression bool) (
 	} else {
 		remaining = make([]byte, len(data))
 		copy(remaining, data)
-		_, err = e.CheckExecuteCommand(
+		_, err = CheckExecuteCommand(e.SerialPort,
 			command.Flash.Begin(
 				uint32(len(data)),
 				numBlocks,
@@ -173,7 +173,7 @@ func (e *ESP32ROM) WriteFlash(offset uint32, data []byte, useCompression bool) (
 				e.log.Debug().Msg("Received error while writing to Flash")
 			}
 			if useCompression {
-				_, err = e.CheckExecuteCommand(
+				_, err = CheckExecuteCommand(e.SerialPort,
 					command.Flash.DataDeflate(
 						block,
 						sequence,
@@ -185,7 +185,7 @@ func (e *ESP32ROM) WriteFlash(offset uint32, data []byte, useCompression bool) (
 					break
 				}
 			} else {
-				_, err = e.CheckExecuteCommand(
+				_, err = CheckExecuteCommand(e.SerialPort,
 					command.Flash.Data(
 						block,
 						sequence,
@@ -207,7 +207,7 @@ func (e *ESP32ROM) WriteFlash(offset uint32, data []byte, useCompression bool) (
 		sent += blockLength
 	}
 
-	_, err = e.CheckExecuteCommand(
+	_, err = CheckExecuteCommand(e.SerialPort,
 		command.Flash.End(true),
 		e.defaultTimeout,
 		e.defaultRetries,
