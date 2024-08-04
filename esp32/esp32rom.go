@@ -86,58 +86,20 @@ func (e *ESP32ROM) Connect(maxRetries uint) (err error) {
 }
 
 func (e *ESP32ROM) Sync() (err error) {
-	response, err := e.ExecuteCommand(
-		command.Sync(),
-		1000*time.Millisecond,
-	)
+	response, err := RunCommand(e.SerialPort, command.Sync(), 1000*time.Millisecond)
 	if err != nil {
 		return err
 	}
+
 	if response.Status != true {
 		err = fmt.Errorf("Command failed")
 	}
 	return
 }
 
-func (e *ESP32ROM) ReadEfuse(efuseIndex uint) ([4]byte, error) {
-	return e.ReadRegister(efuseRegBase + (4 * efuseIndex))
-}
-
-func (e *ESP32ROM) ReadRegister(register uint) ([4]byte, error) {
-	response, err := e.ExecuteCommand(
-		command.Read.Register(uint32(register)),
-		e.defaultTimeout,
-	)
-	if err != nil {
-		return [4]byte{}, err
-	}
-	return [4]byte(response.Checksum()), nil
-}
-
-func (e *ESP32ROM) ExecuteCommand(command *command.CommandObj, timeout time.Duration) (*portal.ResponseObj, error) {
-	err := portal.Write(e.SerialPort, command.Bytes())
-	if err != nil {
-		return nil, err
-	}
-	for retryCount := 0; retryCount < 16; retryCount++ {
-
-		responseBuf, err := portal.Read(e.SerialPort, timeout)
-		if err != nil {
-			return nil, err
-		}
-		if responseBuf[1] != command.OpcodeToByte() {
-			e.log.Trace().Msg("Opcode did not match")
-			continue
-		} else {
-			return portal.Response(responseBuf)
-		}
-	}
-	return nil, fmt.Errorf("Retrycount exceeded")
-}
-
 func (e *ESP32ROM) CheckExecuteCommand(command *command.CommandObj, timeout time.Duration, retries int) (response *portal.ResponseObj, err error) {
 	for retryCount := 0; retryCount < retries; retryCount++ {
-		response, err = e.ExecuteCommand(command, timeout)
+		response, err = RunCommand(e.SerialPort, command, timeout)
 		if err != nil {
 			e.log.Debug().Str("command", command.Opcode()).Msg("Executing command failed. Retrying")
 			continue

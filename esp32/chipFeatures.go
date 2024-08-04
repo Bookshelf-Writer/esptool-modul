@@ -23,7 +23,7 @@ func (e *ESP32ROM) GetFeatures() (Features, error) {
 		code.FeatureWiFi: true,
 	}
 
-	word3, err := e.ReadEfuse(3)
+	word3, err := ReadEfuse(e.SerialPort, e.defaultTimeout, 3)
 	if err != nil {
 		return features, err
 	}
@@ -39,7 +39,7 @@ func (e *ESP32ROM) GetFeatures() (Features, error) {
 	pkgVersion := (word3[1] >> 1) & 0x07
 	features[code.FeatureEmbeddedFlash] = pkgVersion == 2 || pkgVersion == 4 || pkgVersion == 5
 
-	word4, err := e.ReadEfuse(4)
+	word4, err := ReadEfuse(e.SerialPort, e.defaultTimeout, 4)
 	if err != nil {
 		return features, err
 	}
@@ -47,7 +47,7 @@ func (e *ESP32ROM) GetFeatures() (Features, error) {
 	features[code.FeatureVRefCalibration] = word4[1]&0x1F > 0
 	features[code.FeatureBLK3PartiallyReserved] = word4[1]>>6&0x01 > 0
 
-	word6, err := e.ReadEfuse(6)
+	word6, err := ReadEfuse(e.SerialPort, e.defaultTimeout, 6)
 	if err != nil {
 		return features, err
 	}

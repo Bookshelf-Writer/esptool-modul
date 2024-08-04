@@ -15,15 +15,17 @@ func (c *ChipDescription) String() string {
 }
 
 func (e *ESP32ROM) GetChipDescription() (*ChipDescription, error) {
-	word3, err := e.ReadEfuse(3)
+	word3, err := ReadEfuse(e.SerialPort, e.defaultTimeout, 3)
 	if err != nil {
 		return nil, err
 	}
-	word5, err := e.ReadEfuse(5)
+
+	word5, err := ReadEfuse(e.SerialPort, e.defaultTimeout, 5)
 	if err != nil {
 		return nil, err
 	}
-	apbCtlBase, err := e.ReadRegister(drRegSysconBase + 0x7C)
+
+	apbCtlBase, err := ReadRegister(e.SerialPort, e.defaultTimeout, uint32(0x3ff66000+0x7C))
 
 	revisionBit0 := (word3[1] >> 7) & 0x01
 	revisionBit1 := (word5[2] >> 4) & 0x01
