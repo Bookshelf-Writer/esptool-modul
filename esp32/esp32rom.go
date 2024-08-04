@@ -3,15 +3,15 @@ package esp32
 import (
 	"bytes"
 	"fmt"
-	"github.com/Bookshelf-Writer/esptool-modul/common/serial"
 	"github.com/Bookshelf-Writer/esptool-modul/esp32/command"
 	"github.com/Bookshelf-Writer/esptool-modul/lib/output"
+	"github.com/Bookshelf-Writer/esptool-modul/lib/serial"
 	"github.com/rs/zerolog"
 	"time"
 )
 
 type ESP32ROM struct {
-	SerialPort     *serial.PortObj
+	SerialPort     *serial.SerialObj
 	flashAttached  bool
 	logger         *zerolog.Logger
 	defaultTimeout time.Duration
@@ -19,7 +19,7 @@ type ESP32ROM struct {
 	log            output.LogObj
 }
 
-func NewESP32ROM(serialPort *serial.PortObj, logger *output.LogObj) *ESP32ROM {
+func NewESP32ROM(serialPort *serial.SerialObj, logger *output.LogObj) *ESP32ROM {
 	logger = logger.NewLog("NewESP32ROM")
 
 	return &ESP32ROM{
@@ -50,7 +50,12 @@ func (e *ESP32ROM) Sync() (err error) {
 }
 
 func (e *ESP32ROM) Connect(maxRetries uint) error {
-	err := e.SerialPort.Connect()
+	err := e.SerialPort.Reset()
+	if err != nil {
+		return err
+	}
+
+	err = e.SerialPort.Flush()
 	if err != nil {
 		return err
 	}

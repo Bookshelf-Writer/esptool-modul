@@ -2,19 +2,19 @@ package portal
 
 import (
 	"bytes"
-	"github.com/Bookshelf-Writer/esptool-modul/common/serial"
 	"github.com/Bookshelf-Writer/esptool-modul/esp32/code"
+	"github.com/Bookshelf-Writer/esptool-modul/lib/serial"
 	"time"
 )
 
 //###########################################################//
 
-func Read(port *serial.PortObj, timeout time.Duration) ([]byte, error) {
+func Read(port *serial.SerialObj, timeout time.Duration) ([]byte, error) {
 	state := code.StateWaitingHeader
 	startTime := time.Now()
 	var buf bytes.Buffer
 
-	err := port.SetReadTimeout(timeout)
+	err := port.Timeout.Set(timeout)
 	if err != nil {
 		return nil, err
 	}

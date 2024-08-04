@@ -17,6 +17,9 @@ type SerialObj struct {
 	parity   serial.Parity
 
 	serial serial.Port
+
+	Timeout  ReadTimeoutObj
+	BaudRate BaudRateObj
 }
 
 func New(port string, baudRate int, dataBits int, stopBits serial.StopBits, parity serial.Parity) (*SerialObj, error) {
@@ -31,6 +34,9 @@ func New(port string, baudRate int, dataBits int, stopBits serial.StopBits, pari
 	obj.dataBits = dataBits
 	obj.stopBits = stopBits
 	obj.parity = parity
+
+	obj.Timeout.ss = &obj
+	obj.BaudRate.ss = &obj
 
 	return obj.start()
 }

@@ -1,17 +1,17 @@
 package esptool
 
 import (
-	"github.com/Bookshelf-Writer/esptool-modul/common/serial"
 	"github.com/Bookshelf-Writer/esptool-modul/esp32"
 	"github.com/Bookshelf-Writer/esptool-modul/esp32/command"
 	"github.com/Bookshelf-Writer/esptool-modul/lib/output"
+	"github.com/Bookshelf-Writer/esptool-modul/lib/serial"
 	"time"
 )
 
 func ConnectEsp32(portPath string, connectBaudrate uint32, transferBaudrate uint32, retries uint, logger *output.LogObj) (*esp32.ESP32ROM, error) {
 	logger = logger.NewLog("ConnectESP")
 
-	serialPort, err := serial.PortInit(serial.ConfigInit(portPath, connectBaudrate))
+	serialPort, err := serial.NewEsp(portPath, int(connectBaudrate))
 	if err != nil {
 		logger.Trace().Err(err).Msg("serial.PortInit")
 		return nil, err
@@ -35,7 +35,7 @@ func ConnectEsp32(portPath string, connectBaudrate uint32, transferBaudrate uint
 			return nil, err
 		}
 
-		err = serialPort.BaudRate.Set(transferBaudrate)
+		err = serialPort.BaudRate.Set(int(transferBaudrate))
 		if err != nil {
 			return nil, err
 		}

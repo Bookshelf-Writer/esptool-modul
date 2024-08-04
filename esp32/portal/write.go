@@ -1,12 +1,12 @@
 package portal
 
 import (
-	"github.com/Bookshelf-Writer/esptool-modul/common/serial"
+	"github.com/Bookshelf-Writer/esptool-modul/lib/serial"
 )
 
 //###########################################################//
 
-func Write(port *serial.PortObj, data []byte) error {
+func Write(port *serial.SerialObj, data []byte) error {
 	data = encode(data)
 
 	n, err := port.Write(data)

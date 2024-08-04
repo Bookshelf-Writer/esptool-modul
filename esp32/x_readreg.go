@@ -2,13 +2,13 @@ package esp32
 
 import (
 	"bytes"
-	"github.com/Bookshelf-Writer/esptool-modul/common/serial"
+	"github.com/Bookshelf-Writer/esptool-modul/lib/serial"
 	"time"
 )
 
 //###########################################################//
 
-func GetUID(port *serial.PortObj, timeout time.Duration) ([]byte, error) {
+func GetUID(port *serial.SerialObj, timeout time.Duration) ([]byte, error) {
 	var buf bytes.Buffer
 
 	mac, err := ReadEfuse(port, timeout, 2)
